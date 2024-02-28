@@ -33,6 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
       return MaterialApp(
+        debugShowCheckedModeBanner: false ,
         home: Scaffold(
           appBar: AppBar(
             leading: Icon(Icons.local_hospital),
