@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gradution_project/core/route/routes.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -8,17 +9,21 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MainScreen());
+  runApp(const MainScreen());
 }
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
 
   int?  sensorReading  ;
+  // ignore: deprecated_member_use
   final dataBase = FirebaseDatabase.instance.reference();
 
   _MainScreenState() {
@@ -34,47 +39,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
       return MaterialApp(
         debugShowCheckedModeBanner: false ,
-        home: Scaffold(
-          appBar: AppBar(
-            leading: Icon(Icons.local_hospital),
-            title: Text('Glucor'),
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Control Your Devices',
-                style: TextStyle(
-                    color: Colors.blueGrey,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-        
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'the Sensor reading is',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    '${sensorReading}',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
+        routes: Routes.allRoutes,
       );
     }
   }
