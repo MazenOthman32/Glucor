@@ -6,8 +6,10 @@ import '../../../core/widgets/buttons.dart';
 import '../../../core/widgets/rowas.dart';
 
 class SetProfile extends StatelessWidget {
-  const SetProfile({super.key});
+   SetProfile({super.key});
   static const String routeName = "ProfileUpdateOne";
+
+  final profilekey= GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +38,17 @@ class SetProfile extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 75),
-              const ProfileForm(),
+              ProfileForm(profilekey: profilekey,),
               const SizedBox(height: 60),
               SizedBox(
                 width: 133,
                 child: BlueButton(
                   buttonName: "Set",
                   fn: () {
+                    if(profilekey.currentState!.validate()){
+                      
                     Navigator.pushNamed(context, VerifyPhoneNumber.routeName);
+                    }
                   },
                 ),
               ),

@@ -4,9 +4,21 @@ import '../../../../core/widgets/buttons.dart';
 import '../../../../core/widgets/rowas.dart';
 import '../../../../core/widgets/textfield.dart';
 
-class Qf2 extends StatelessWidget {
+class Qf2 extends StatefulWidget {
   const Qf2({super.key});
   static const String routeName = "qf2";
+
+  @override
+  State<Qf2> createState() => _Qf2State();
+}
+
+class _Qf2State extends State<Qf2> {
+  final TextEditingController type = TextEditingController();
+
+  final TextEditingController years = TextEditingController();
+
+  final qukey= GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +40,8 @@ class Qf2 extends StatelessWidget {
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
               ),
-              const Form(
+              Form(
+                key: qukey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,10 +49,14 @@ class Qf2 extends StatelessWidget {
                     MainTextField(
                       hint: 'ex : Type1',
                       keyboard: TextInputType.text,
-                      label: '',
+                      // ignore: body_might_complete_normally_nullable
+                      label: '', controller:type, vaidator: (val ) {
+              if(val!.isEmpty) {
+                return "this Question is Required";
+              } } ,
                     ),
-                    SizedBox(height: 70),
-                    SizedBox(
+                    const SizedBox(height: 70),
+                    const SizedBox(
                       width: 250,
                       child: Text(
                         "How Long Have You Had this disease ? ",
@@ -47,11 +64,15 @@ class Qf2 extends StatelessWidget {
                         style: TextStyle(color: Colors.grey, fontSize: 20),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     MainTextField(
                       hint: 'ex: 2 Years',
                       keyboard: TextInputType.text,
-                      label: '',
+                      // ignore: body_might_complete_normally_nullable
+                      label: '', controller: years, vaidator: (val ) {
+              if(val!.isEmpty) {
+                return "This Question is Required";
+              } },
                     ),
                   ],
                 ),
@@ -61,7 +82,8 @@ class Qf2 extends StatelessWidget {
                 child: BlueButton(
                   buttonName: "Next",
                   fn: () {
-                    Navigator.pushNamed(context, HomePageScreen.routeName);
+                    if(qukey.currentState!.validate()){
+                    Navigator.pushNamed(context, HomePageScreen.routeName);}
                   },
                 ),
               )
@@ -70,5 +92,11 @@ class Qf2 extends StatelessWidget {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    type.dispose();
+    years.dispose();
+    super.dispose();
   }
 }

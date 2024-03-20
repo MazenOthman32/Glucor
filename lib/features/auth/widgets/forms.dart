@@ -1,14 +1,32 @@
+// ignore_for_file: curly_braces_in_flow_control_structures, body_might_complete_normally_nullable, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/widgets/textfield.dart';
 
-class SiggnUpForm extends StatelessWidget {
+class SiggnUpForm extends StatefulWidget {
   const SiggnUpForm({
     super.key,
+    required this.signUpKey,
   });
+  final Key signUpKey;
+
+  @override
+  State<SiggnUpForm> createState() => _SiggnUpFormState();
+}
+
+class _SiggnUpFormState extends State<SiggnUpForm> {
+  final TextEditingController email = TextEditingController();
+
+  final TextEditingController phone = TextEditingController();
+
+  final TextEditingController pass = TextEditingController();
+
+  final TextEditingController confirmpass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return const Form(
+    return Form(
+      key: widget.signUpKey,
       child: Column(
         children: [
           MainTextField(
@@ -17,43 +35,85 @@ class SiggnUpForm extends StatelessWidget {
             hint: 'example@gmail.com',
             label: 'Email Address',
             keyboard: TextInputType.emailAddress,
+            controller: email,
+            vaidator: (val) {
+              print(val);
+              if (val!.isEmpty) {
+                return "This Field is empty";
+              
+              } else if (!val.contains("@")) return "wrong email";
+            },
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           MainTextField(
             hint: '+20 01234567890',
-            keyboard: TextInputType.text,
+            keyboard: TextInputType.phone,
             label: '* Phone Number',
+            controller: phone,
+            vaidator: (val) {
+              if (val!.isEmpty) return "This Field is empty";
+              else if (val.length>11 || val.length<11)return "phone number should be 11 ";
+            },
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           MainTextField(
             visibleFalse: Icons.visibility,
             visibleTrue: Icons.visibility_off_sharp,
             hint: '',
             label: 'Password',
             keyboard: TextInputType.emailAddress,
+            controller: pass,
+            vaidator: (val) {
+              if (val!.isEmpty) return "This Field is empty";
+              else if ( val.length<6)return "password should be longer than 6";
+            },
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           MainTextField(
             visibleFalse: Icons.visibility,
             visibleTrue: Icons.visibility_off_sharp,
             hint: '',
             label: 'Confirm Password',
             keyboard: TextInputType.emailAddress,
+            controller: confirmpass,
+            vaidator: (val) {
+              if (val!.isEmpty) return "This Field is empty";
+              else if ( val != pass.text)return "confirm password is wrong ";
+            },
           ),
         ],
       ),
     );
   }
+  @override
+  void dispose() {
+    email.dispose();
+    phone.dispose();
+    pass.dispose();
+    confirmpass.dispose();
+    super.dispose();
+  }
 }
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
-    super.key,
+    super.key, required this.loginkey,
   });
+  final Key loginkey ;
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final TextEditingController email = TextEditingController();
+
+  final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return const Form(
+    return Form(
+      key: widget.loginkey,
       child: Column(
         children: [
           MainTextField(
@@ -62,70 +122,127 @@ class LoginForm extends StatelessWidget {
             hint: 'example@gmail.com',
             label: 'Email Address',
             keyboard: TextInputType.emailAddress,
+            controller: email,
+            vaidator: (value) {
+              if (value!.isEmpty) {
+                return "This Field is empty";
+              } else if (!value.contains("@")) return "wrong email";
+            },
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           MainTextField(
             visibleFalse: Icons.visibility,
             visibleTrue: Icons.visibility_off_sharp,
             hint: '',
             label: 'Password',
             keyboard: TextInputType.emailAddress,
+            controller: password,
+            vaidator: (val) {
+              if (val!.isEmpty) {
+                return "This Field is empty";
+              } else if ( val.length<6)return "password should be longer than 6";
+            },
           ),
-          SizedBox(height: 30),
-          MainTextField(
-            visibleFalse: Icons.visibility,
-            visibleTrue: Icons.visibility_off_sharp,
-            hint: '',
-            label: 'Confirm Password',
-            keyboard: TextInputType.emailAddress,
-          ),
+          const SizedBox(height: 30),
         ],
       ),
     );
   }
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
 }
 
-class ProfileForm extends StatelessWidget {
+class ProfileForm extends StatefulWidget {
   const ProfileForm({
-    super.key,
+    super.key, required this.profilekey,
   });
+  final Key profilekey  ;
+
+  @override
+  State<ProfileForm> createState() => _ProfileFormState();
+}
+
+class _ProfileFormState extends State<ProfileForm> {
+  final TextEditingController fname = TextEditingController();
+
+  final TextEditingController lname = TextEditingController();
+
+  final TextEditingController age = TextEditingController();
+
+  final TextEditingController weight = TextEditingController();
+
+  final TextEditingController height = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return const Form(
+    return Form(
+      key: widget.profilekey,
       child: Column(
         children: [
           MainTextField(
             hint: 'John',
             keyboard: TextInputType.text,
             label: 'First Name',
+            controller: fname,
+            vaidator: (val) {
+              if (val!.isEmpty) return "First Name is Empty";
+            },
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           MainTextField(
             hint: 'Smith',
             keyboard: TextInputType.text,
             label: 'Last Name',
+            controller: lname,
+            vaidator: (val) {
+              if (val!.isEmpty) return "Last Name is Empty";
+            },
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           MainTextField(
             hint: 'ex: 30',
-            keyboard: TextInputType.text,
+            keyboard: TextInputType.phone,
             label: 'Age',
+            controller: age,
+            vaidator: (val) {
+              if (val!.isEmpty) return "Age is Empty";
+            },
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           MainTextField(
             hint: 'ex: 70 Kg',
-            keyboard: TextInputType.text,
+            keyboard: TextInputType.phone,
             label: 'Weight',
+            controller: weight,
+            vaidator: (val) {
+              if (val!.isEmpty) return "Weight is Empty";
+            },
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           MainTextField(
             hint: 'ex: 177 Cm',
-            keyboard: TextInputType.text,
+            keyboard: TextInputType.phone,
             label: 'Height',
+            controller: height,
+            vaidator: (val) {
+              if (val!.isEmpty) return "Height is Empty";
+            },
           ),
         ],
       ),
     );
+  }
+  @override
+  void dispose() {
+    fname.dispose();
+    lname.dispose();
+    age.dispose();
+    weight.dispose();
+    height.dispose();
+    super.dispose();
   }
 }

@@ -62,9 +62,7 @@ class ProfileHomePage extends StatelessWidget {
                   ListOfProfileOptions(
                     iconData: FontAwesomeIcons.wallet,
                     name: 'Payment Method',
-                    fn: () => MenuBar(children: [
-                      ElevatedButton(onPressed: () {}, child: Text("asdasd"))
-                    ]),
+                    fn: () {},
                   ),
                   Dividerf(size: size),
                   ListOfProfileOptions(

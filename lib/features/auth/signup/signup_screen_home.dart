@@ -9,7 +9,8 @@ import '../login/loginpage.dart';
 import '../profileupdate.dart/set_profile.dart';
 
 class SignUpScreenHome extends StatelessWidget {
-  const SignUpScreenHome({super.key});
+   SignUpScreenHome({super.key});
+  final signUpKey =GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +33,16 @@ class SignUpScreenHome extends StatelessWidget {
               fontsize: 30,
             ),
             const SizedBox(height: 20),
-            const SiggnUpForm(),
+            SiggnUpForm(signUpKey: signUpKey,),
             const SizedBox(height: 55),
             Center(
                 child: BlueButton(
                     buttonName: "Sign Up",
                     fn: () {
-                      Navigator.pushNamed(context, SetProfile.routeName);
+                      if(signUpKey.currentState!.validate()){
+                        Navigator.pushNamed(context, SetProfile.routeName);
+                      }
+                      
                     })),
             const SizedBox(height: 35),
             const LineORRow(),

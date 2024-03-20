@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable, curly_braces_in_flow_control_structures, overridden_fields, annotate_overrides
+
 import 'package:flutter/material.dart';
 import 'package:gradution_project/features/auth/profileupdate.dart/qf2.dart';
 
@@ -7,8 +9,10 @@ import '../../../core/widgets/textfield.dart';
 
 
 class VerifyPhoneNumber extends StatelessWidget {
-  const VerifyPhoneNumber({super.key});
+  VerifyPhoneNumber({super.key});
   static const String routeName = "verifyPhoneNumber";
+  final key =GlobalKey<FormState>();
+  final TextEditingController phone = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +36,16 @@ class VerifyPhoneNumber extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 85),
-              const Form(
+               Form(
+                key: key,
                 child: Column(
                   children: [
                     MainTextField(
                       hint: '56234',
                       keyboard: TextInputType.text,
-                      label: 'Enter verification code (5-digit)',
+                      label: 'Enter verification code (5-digit)', controller: phone, vaidator:  (val ) {
+              if(val!.isEmpty)
+              return "Code is empty"; },
                     ),
                   ],
                 ),

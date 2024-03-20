@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradution_project/core/util/constant.dart';
 
@@ -20,11 +18,11 @@ class ChatScreenDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Chat",
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 25),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Center(
                     child: Container(
                       decoration: BoxDecoration(
@@ -52,11 +50,11 @@ class ChatScreenDetails extends StatelessWidget {
                   const SizedBox(height: 20),
                   ListView.separated(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) => ChatItem(size: size),
                       separatorBuilder: (context, index) =>
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                       itemCount: 10)
                 ],
               ),
@@ -83,14 +81,14 @@ class ChatItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 30,
             backgroundColor: Colors.grey,
             backgroundImage: AssetImage(
               "assets/images/ff.png",
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,14 +96,14 @@ class ChatItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Dr. Mohammed Ahmed",
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                     ),
-                    Container(
+                    SizedBox(
                       width: size.width / 1.7,
-                      child: Text(
+                      child: const Text(
                         "Hello Doctor , i need Your help ,need Your help",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -114,7 +112,7 @@ class ChatItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                Column(
+                const Column(
                   children: [
                     Text("09:56"),
                     Icon(

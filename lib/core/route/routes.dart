@@ -16,10 +16,10 @@ class Routes {
     PageViewDemo.routeName: (context) => const PageViewDemo(),
     LoginScreen.routeName: (context) => const LoginScreen(),
     SignUpScreen.routeName: (context) => const SignUpScreen(),
-    SetProfile.routeName: (context) => const SetProfile(),
+    SetProfile.routeName: (context) =>  SetProfile(),
 
-    VerifyPhoneNumber.routeName: (context) => const VerifyPhoneNumber(),
+    VerifyPhoneNumber.routeName: (context) =>  VerifyPhoneNumber(),
     HomePageScreen.routeName: (context) => const HomePageScreen(),
-    Qf2.routeName: (context) => const Qf2(),
+    Qf2.routeName: (context) =>  const Qf2(),
   };
 }

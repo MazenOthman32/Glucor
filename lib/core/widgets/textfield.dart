@@ -9,13 +9,15 @@ class MainTextField extends StatefulWidget {
     required this.hint,
     this.visibleTrue,
     this.visibleFalse,
-    required this.keyboard, 
+    required this.keyboard, required this.controller, required this.vaidator, 
   });
   final String label;
   final String hint;
   final IconData? visibleTrue;
   final IconData? visibleFalse;
   final TextInputType keyboard;
+  final TextEditingController controller;
+  final  String? Function(String?) vaidator;
   
 
   @override
@@ -27,6 +29,8 @@ class _MainTextFieldState extends State<MainTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller:widget.controller ,
+      validator: widget.vaidator,
       cursorColor: MainAssets.blue,
       obscureText: isVisble,
       keyboardType: widget.keyboard,
