@@ -7,10 +7,75 @@ import '../../../core/widgets/rowas.dart';
 import '../../../core/widgets/texts.dart';
 import '../login/loginpage.dart';
 import '../profileupdate.dart/set_profile.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class SignUpScreenHome extends StatelessWidget {
+
+class SignUpScreenHome extends StatefulWidget {
    SignUpScreenHome({super.key});
+
+  @override
+  State<SignUpScreenHome> createState() => _SignUpScreenHomeState();
+}
+
+class _SignUpScreenHomeState extends State<SignUpScreenHome> {
   final signUpKey =GlobalKey<FormState>();
+
+  final TextEditingController email= TextEditingController();
+
+  final TextEditingController phone= TextEditingController();
+
+  final TextEditingController pass= TextEditingController();
+
+  final TextEditingController confirmpass= TextEditingController();
+    Future<void> _submit() async {
+    final String phonee = phone.text.trim();
+    final String emaill =email.text.trim();
+    final String passwordd =pass.text.trim();
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.5:8000/signup'), // Adjust this URL as needed
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          'name': phonee,
+          'email': emaill,
+          'password': passwordd,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Signup successful
+        print('Signup successful');
+        // Navigate to the next screen or perform further actions
+      } else {
+        // Signup failed
+        print('Signup failed. Status code: ${response.statusCode}');
+        // Show error message or handle the failure accordingly
+      }
+    } catch (e) {
+      // Handle connection error
+      print('Failed to connect to the server: $e');
+      // Show error message to the user
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Connection Error'),
+          content:
+              const Text('Failed to connect to the server. Please try again later.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +98,19 @@ class SignUpScreenHome extends StatelessWidget {
               fontsize: 30,
             ),
             const SizedBox(height: 20),
-            SiggnUpForm(signUpKey: signUpKey,),
+            SiggnUpForm(signUpKey: signUpKey, email: email, phone:phone, pass: pass , confirmpass: confirmpass,),
             const SizedBox(height: 55),
             Center(
                 child: BlueButton(
                     buttonName: "Sign Up",
                     fn: () {
+                      _submit();
                       if(signUpKey.currentState!.validate()){
+
                         Navigator.pushNamed(context, SetProfile.routeName);
+                        
                       }
+                      
                       
                     })),
             const SizedBox(height: 35),
@@ -60,5 +129,13 @@ class SignUpScreenHome extends StatelessWidget {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    email.dispose();
+    phone.dispose();
+    pass.dispose();
+    confirmpass.dispose();
+    super.dispose();
   }
 }

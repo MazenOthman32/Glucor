@@ -1,32 +1,27 @@
-// ignore_for_file: curly_braces_in_flow_control_structures, body_might_complete_normally_nullable, avoid_print
+// ignore_for_file: curly_braces_in_flow_control_structures, body_might_complete_normally_nullable, avoid_print, use_build_context_synchronously
+
 
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/widgets/textfield.dart';
 
-class SiggnUpForm extends StatefulWidget {
+class SiggnUpForm extends StatelessWidget {
   const SiggnUpForm({
     super.key,
-    required this.signUpKey,
+    required this.signUpKey, required this.email, required this.phone, required this.pass, required this.confirmpass,
   });
   final Key signUpKey;
+  final TextEditingController email ;
 
-  @override
-  State<SiggnUpForm> createState() => _SiggnUpFormState();
-}
+  final TextEditingController phone ;
 
-class _SiggnUpFormState extends State<SiggnUpForm> {
-  final TextEditingController email = TextEditingController();
+  final TextEditingController pass ;
 
-  final TextEditingController phone = TextEditingController();
-
-  final TextEditingController pass = TextEditingController();
-
-  final TextEditingController confirmpass = TextEditingController();
+  final TextEditingController confirmpass ;
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.signUpKey,
+      key: signUpKey,
       child: Column(
         children: [
           MainTextField(
@@ -35,7 +30,7 @@ class _SiggnUpFormState extends State<SiggnUpForm> {
             hint: 'example@gmail.com',
             label: 'Email Address',
             keyboard: TextInputType.emailAddress,
-            controller: email,
+            controller:email,
             vaidator: (val) {
               print(val);
               if (val!.isEmpty) {
@@ -49,7 +44,7 @@ class _SiggnUpFormState extends State<SiggnUpForm> {
             hint: '+20 01234567890',
             keyboard: TextInputType.phone,
             label: '* Phone Number',
-            controller: phone,
+            controller:phone,
             vaidator: (val) {
               if (val!.isEmpty) return "This Field is empty";
               else if (val.length>11 || val.length<11)return "phone number should be 11 ";
@@ -62,7 +57,7 @@ class _SiggnUpFormState extends State<SiggnUpForm> {
             hint: '',
             label: 'Password',
             keyboard: TextInputType.emailAddress,
-            controller: pass,
+            controller:pass,
             vaidator: (val) {
               if (val!.isEmpty) return "This Field is empty";
               else if ( val.length<6)return "password should be longer than 6";
@@ -75,7 +70,7 @@ class _SiggnUpFormState extends State<SiggnUpForm> {
             hint: '',
             label: 'Confirm Password',
             keyboard: TextInputType.emailAddress,
-            controller: confirmpass,
+            controller:confirmpass,
             vaidator: (val) {
               if (val!.isEmpty) return "This Field is empty";
               else if ( val != pass.text)return "confirm password is wrong ";
@@ -85,35 +80,23 @@ class _SiggnUpFormState extends State<SiggnUpForm> {
       ),
     );
   }
-  @override
-  void dispose() {
-    email.dispose();
-    phone.dispose();
-    pass.dispose();
-    confirmpass.dispose();
-    super.dispose();
-  }
 }
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends StatelessWidget {
   const LoginForm({
-    super.key, required this.loginkey,
+    super.key, required this.loginkey, required this.email, required this.password,
   });
   final Key loginkey ;
+  
+   final TextEditingController email ;
 
-  @override
-  State<LoginForm> createState() => _LoginFormState();
-}
-
-class _LoginFormState extends State<LoginForm> {
-  final TextEditingController email = TextEditingController();
-
-  final TextEditingController password = TextEditingController();
+  final TextEditingController password ;
+  
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.loginkey,
+      key: loginkey,
       child: Column(
         children: [
           MainTextField(
@@ -147,12 +130,6 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
-  }
-  @override
-  void dispose() {
-    email.dispose();
-    password.dispose();
-    super.dispose();
   }
 }
 
