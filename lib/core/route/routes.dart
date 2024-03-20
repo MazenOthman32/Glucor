@@ -7,11 +7,12 @@ import 'package:gradution_project/features/buttom_nav_bar/buttom_nav_bar.dart';
 import 'package:gradution_project/features/homepage/homepage.dart';
 import 'package:gradution_project/features/onboarding/page_view.dart';
 import 'package:gradution_project/features/auth/profileupdate.dart/qf2.dart';
+import 'package:gradution_project/features/start_screen/start_screen.dart';
 
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> allRoutes = {
-    '/': (context) => const BottomNavBarScreen(), //StartScreen(),
+    '/': (context) => const BottomNavBarScreen() ,//StartScreen(), 
     PageViewDemo.routeName: (context) => const PageViewDemo(),
     LoginScreen.routeName: (context) => const LoginScreen(),
     SignUpScreen.routeName: (context) => const SignUpScreen(),

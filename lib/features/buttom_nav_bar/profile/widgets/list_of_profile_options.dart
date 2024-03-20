@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 
@@ -45,7 +44,6 @@ class ListOfProfileOptions extends StatelessWidget {
     );
   }
 }
-
 
 class Dividerf extends StatelessWidget {
   const Dividerf({

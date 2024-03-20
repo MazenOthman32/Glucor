@@ -13,34 +13,33 @@ class ProfileHomePage extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: MainAssets.blue,
-      body: Column(
-        children: [
-          SizedBox(
-            height: size.height / 2,
-            child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage("assets/images/ff.png"),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "John Mac",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20),
-                  ),
-                  SizedBox(height: 30),
-                  DetailsRow()
-                ]),
-          ),
-          Expanded(
-            child: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: size.height / 2,
+              child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage("assets/images/profile.jpg"),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "John Mac",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20),
+                    ),
+                    SizedBox(height: 30),
+                    DetailsRow()
+                  ]),
+            ),
+            Container(
               padding: const EdgeInsets.only(top: 30),
-              height: double.infinity,
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -55,9 +54,17 @@ class ProfileHomePage extends StatelessWidget {
                   ),
                   Dividerf(size: size),
                   ListOfProfileOptions(
+                    iconData: FontAwesomeIcons.notesMedical,
+                    name: 'Report',
+                    fn: () {},
+                  ),
+                  Dividerf(size: size),
+                  ListOfProfileOptions(
                     iconData: FontAwesomeIcons.wallet,
                     name: 'Payment Method',
-                    fn: () {},
+                    fn: () => MenuBar(children: [
+                      ElevatedButton(onPressed: () {}, child: Text("asdasd"))
+                    ]),
                   ),
                   Dividerf(size: size),
                   ListOfProfileOptions(
@@ -78,26 +85,32 @@ class ProfileHomePage extends StatelessWidget {
                                   ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           foregroundColor: MainAssets.blue),
-                                      onPressed: () {Navigator.pop(context);},
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
                                       child: const Text("Cancel")),
                                   ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: MainAssets.blue,
                                           foregroundColor: Colors.white),
-                                      onPressed: () { Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
-                                    },
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pushReplacementNamed(
+                                                LoginScreen.routeName);
+                                      },
                                       child: const Text("Logout")),
                                 ],
                                 title: const Text("Log out"),
-                                content:const Text("Are you Sure you want to exit? "),
+                                content: const Text(
+                                    "Are you Sure you want to exit? "),
                               ));
                     },
                   ),
                 ],
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

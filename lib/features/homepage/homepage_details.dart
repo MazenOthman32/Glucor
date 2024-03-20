@@ -24,10 +24,10 @@ class HomePageDetails extends StatelessWidget {
                 const CircleAvatar(
                   radius: 22,
                   backgroundColor: Colors.black,
-                  backgroundImage: AssetImage("assets/images/ff.png"),
+                  backgroundImage: AssetImage("assets/images/profile.jpg"),
                 ),
                 const Text(
-                  "Hello, Ahmed ",
+                  "Hello, John",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                 ),
                 Container(
