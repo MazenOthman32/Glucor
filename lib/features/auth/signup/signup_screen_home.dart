@@ -21,26 +21,30 @@ class SignUpScreenHome extends StatefulWidget {
 class _SignUpScreenHomeState extends State<SignUpScreenHome> {
   final signUpKey =GlobalKey<FormState>();
 
+  final TextEditingController name= TextEditingController();
   final TextEditingController email= TextEditingController();
-
   final TextEditingController phone= TextEditingController();
-
   final TextEditingController pass= TextEditingController();
+  final TextEditingController phoneNumber= TextEditingController();
 
-  final TextEditingController confirmpass= TextEditingController();
+  final TextEditingController passwordConfirm= TextEditingController();
     Future<void> _submit() async {
+      final String namee = name.text.trim();
     final String phonee = phone.text.trim();
     final String emaill =email.text.trim();
     final String passwordd =pass.text.trim();
+    final String passwordConfirmm =passwordConfirm.text.trim();
 
     try {
       final response = await http.post(
         Uri.parse('http://192.168.1.5:8000/signup'), // Adjust this URL as needed
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
-          'name': phonee,
+          'name': namee,
           'email': emaill,
           'password': passwordd,
+          'phoneNumber':phonee,
+          'passwordConfirm': passwordConfirmm
         }),
       );
 
@@ -98,7 +102,7 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
               fontsize: 30,
             ),
             const SizedBox(height: 20),
-            SiggnUpForm(signUpKey: signUpKey, email: email, phone:phone, pass: pass , confirmpass: confirmpass,),
+            SiggnUpForm(signUpKey: signUpKey, email: email, phone:phone, pass: pass , passwordConfirm: passwordConfirm,),
             const SizedBox(height: 55),
             Center(
                 child: BlueButton(
@@ -107,7 +111,7 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
                       _submit();
                       if(signUpKey.currentState!.validate()){
 
-                        Navigator.pushNamed(context, SetProfile.routeName);
+                        Navigator.pushReplacementNamed(context, SetProfile.routeName);
                         
                       }
                       
@@ -132,10 +136,11 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
   }
   @override
   void dispose() {
+    name.dispose();
     email.dispose();
     phone.dispose();
     pass.dispose();
-    confirmpass.dispose();
+    passwordConfirm.dispose();
     super.dispose();
   }
 }

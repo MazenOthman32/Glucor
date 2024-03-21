@@ -97,10 +97,10 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
                     buttonName: "Log In",
                     fn: () {
                       
-                      // if(loginkey.currentState!.validate()){
-                      //   Navigator.pushNamed(context, HomePageScreen.routeName);
+                      if(loginkey.currentState!.validate()){
+                        Navigator.pushNamed(context, HomePageScreen.routeName);
 
-                      // }
+                      }
                       _submit();
                       
                       

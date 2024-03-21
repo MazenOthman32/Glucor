@@ -7,7 +7,7 @@ import 'package:gradution_project/core/widgets/textfield.dart';
 class SiggnUpForm extends StatelessWidget {
   const SiggnUpForm({
     super.key,
-    required this.signUpKey, required this.email, required this.phone, required this.pass, required this.confirmpass,
+    required this.signUpKey, required this.email, required this.phone, required this.pass, required this.passwordConfirm, 
   });
   final Key signUpKey;
   final TextEditingController email ;
@@ -16,7 +16,7 @@ class SiggnUpForm extends StatelessWidget {
 
   final TextEditingController pass ;
 
-  final TextEditingController confirmpass ;
+  final TextEditingController passwordConfirm ;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class SiggnUpForm extends StatelessWidget {
             hint: '',
             label: 'Confirm Password',
             keyboard: TextInputType.emailAddress,
-            controller:confirmpass,
+            controller:passwordConfirm,
             vaidator: (val) {
               if (val!.isEmpty) return "This Field is empty";
               else if ( val != pass.text)return "confirm password is wrong ";
