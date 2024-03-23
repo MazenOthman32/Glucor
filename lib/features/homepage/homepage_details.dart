@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradution_project/features/tabs/dailytab.dart';
 import '../../core/util/constant.dart';
+import '../buttom_nav_bar/profile/profile_info/profile_info.dart';
 import '../tabs/monthly.dart';
 import '../tabs/weekly.dart';
 
@@ -21,10 +22,15 @@ class HomePageDetails extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CircleAvatar(
-                  radius: 22,
-                  backgroundColor: Colors.black,
-                  backgroundImage: AssetImage("assets/images/profile.jpg"),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, ProfileInfo.routeName);
+                  },
+                  child: const CircleAvatar(
+                    radius: 22,
+                    backgroundColor: Colors.black,
+                    backgroundImage: AssetImage("assets/images/profile.jpg"),
+                  ),
                 ),
                 const Text(
                   "Hello, John",
@@ -44,41 +50,6 @@ class HomePageDetails extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: size.width / 1.3,
-                  height: 40,
-                  child: Form(
-                    child: TextFormField(
-                      style: const TextStyle(color: Colors.black),
-                      textAlignVertical: TextAlignVertical.bottom,
-                      decoration: const InputDecoration(
-                          hintText: "Search",
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)),
-                          prefixIcon: Icon(Icons.search),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black))),
-                      enabled: true,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: MainAssets.babyBlue,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Icon(Icons.filter_list_rounded),
-                  ),
-                )
               ],
             ),
             const SizedBox(height: 30),
@@ -125,6 +96,3 @@ class HomePageDetails extends StatelessWidget {
     );
   }
 }
-
-
-// ignore: camel_case_types

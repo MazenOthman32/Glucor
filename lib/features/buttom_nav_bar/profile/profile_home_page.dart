@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/features/auth/login/loginpage.dart';
+import 'package:gradution_project/features/buttom_nav_bar/profile/faq/faq.dart';
+import 'package:gradution_project/features/buttom_nav_bar/profile/profile_info/profile_info.dart';
+import 'package:gradution_project/features/buttom_nav_bar/profile/report/report.dart';
 import 'package:gradution_project/features/buttom_nav_bar/profile/widgets/heart_cal_weight.dart';
 import 'package:gradution_project/features/buttom_nav_bar/profile/widgets/list_of_profile_options.dart';
 
 class ProfileHomePage extends StatelessWidget {
   const ProfileHomePage({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -50,13 +53,17 @@ class ProfileHomePage extends StatelessWidget {
                   ListOfProfileOptions(
                     iconData: FontAwesomeIcons.solidUser,
                     name: 'Profile Info',
-                    fn: () {},
+                    fn: () {
+                      Navigator.pushNamed(context, ProfileInfo.routeName);
+                    },
                   ),
                   Dividerf(size: size),
                   ListOfProfileOptions(
                     iconData: FontAwesomeIcons.notesMedical,
                     name: 'Report',
-                    fn: () {},
+                    fn: () {
+                      Navigator.pushNamed(context, Report.routeName);
+                    },
                   ),
                   Dividerf(size: size),
                   ListOfProfileOptions(
@@ -68,7 +75,10 @@ class ProfileHomePage extends StatelessWidget {
                   ListOfProfileOptions(
                     iconData: FontAwesomeIcons.commentMedical,
                     name: 'FAQ',
-                    fn: () {},
+                    fn: () {
+                      Navigator.pushNamed(context, Faq.routeName);
+                      
+                    },
                   ),
                   Dividerf(size: size),
                   ListOfProfileOptions(
