@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/widgets/rowas.dart';
 import 'package:gradution_project/features/auth/widgets/forms.dart';
@@ -11,7 +13,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class LoginScreenHome extends StatefulWidget {
-  LoginScreenHome({super.key});
+  const LoginScreenHome({super.key});
 
   @override
   State<LoginScreenHome> createState() => _LoginScreenHomeState();

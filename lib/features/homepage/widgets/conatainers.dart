@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +38,7 @@ class _NextMedicanState extends State<NextMedican> {
           borderRadius: BorderRadius.circular(10)),
       child: Text(
         "Last Check : $sensorReading ",
-        style: TextStyle(fontWeight: FontWeight.w700),
+        style: const TextStyle(fontWeight: FontWeight.w700),
       ),
     );
   }
