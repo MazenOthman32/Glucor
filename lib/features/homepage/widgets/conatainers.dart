@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class NextMedican extends StatefulWidget {
@@ -12,7 +13,18 @@ class NextMedican extends StatefulWidget {
   State<NextMedican> createState() => _NextMedicanState();
 }
 
+int? sensorReading;
+
 class _NextMedicanState extends State<NextMedican> {
+  final dataBase = FirebaseDatabase.instance.reference();
+
+  _NextMedicanState() {
+    dataBase.child('test').onChildChanged.listen((event) {
+      DataSnapshot snap = event.snapshot;
+      sensorReading = snap.value as int;
+      setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,8 +34,8 @@ class _NextMedicanState extends State<NextMedican> {
       decoration: BoxDecoration(
           color: Colors.orangeAccent.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10)),
-      child: const Text(
-        "Last Check :  95",
+      child: Text(
+        "Last Check : $sensorReading ",
         style: TextStyle(fontWeight: FontWeight.w700),
       ),
     );
