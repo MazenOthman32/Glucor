@@ -22,6 +22,7 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
       const NotificationItem(),
       const NotificationItem(),
       const NotificationItem(),
+      const NotificationItem(),
     ];
     super.initState();
   }
