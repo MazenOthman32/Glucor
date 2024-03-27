@@ -13,21 +13,24 @@ import 'package:gradution_project/features/homepage/homepage.dart';
 import 'package:gradution_project/features/onboarding/page_view.dart';
 import 'package:gradution_project/features/auth/profileupdate.dart/qf2.dart';
 import 'package:gradution_project/features/start_screen/start_screen.dart';
+import 'package:gradution_project/fortest.dart';
 import '../../features/buttom_nav_bar/notes/notes.dart';
+import '../../features/homepage/notificatins/notification_page.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> allRoutes = {
-    '/': (context) => const BottomNavBarScreen(), //StartScreen(),
+    '/': (context) => const StartScreen(), //BottomNavBarScreen(), 
     PageViewDemo.routeName: (context) => const PageViewDemo(),
     LoginScreen.routeName: (context) => const LoginScreen(),
     SignUpScreen.routeName: (context) => const SignUpScreen(),
     SetProfile.routeName: (context) => SetProfile(),
     ProfileInfo.routeName: (context) => const ProfileInfo(),
     Notes.routeName: (context) => const Notes(),
-    Faq.routeName:(context) => const Faq(),
-    Report.routeName:(context) => const Report(),
+    Faq.routeName: (context) => const Faq(),
+    Report.routeName: (context) => const Report(),
     VerifyPhoneNumber.routeName: (context) => VerifyPhoneNumber(),
     HomePageScreen.routeName: (context) => const HomePageScreen(),
     Qf2.routeName: (context) => const Qf2(),
+    NotificationPage.routeName: (context) =>  const NotificationPage()
   };
 }

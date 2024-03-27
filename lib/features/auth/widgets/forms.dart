@@ -1,6 +1,4 @@
 // ignore_for_file: curly_braces_in_flow_control_structures, body_might_complete_normally_nullable, avoid_print, use_build_context_synchronously
-
-
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/widgets/textfield.dart';
 

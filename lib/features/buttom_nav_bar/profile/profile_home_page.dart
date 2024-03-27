@@ -10,7 +10,7 @@ import 'package:gradution_project/features/buttom_nav_bar/profile/widgets/list_o
 
 class ProfileHomePage extends StatelessWidget {
   const ProfileHomePage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -77,7 +77,6 @@ class ProfileHomePage extends StatelessWidget {
                     name: 'FAQ',
                     fn: () {
                       Navigator.pushNamed(context, Faq.routeName);
-                      
                     },
                   ),
                   Dividerf(size: size),

@@ -1,44 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/features/homepage/widgets/all_details.dart';
-import '../../core/util/constant.dart';
 
-class MonthlyTab extends StatelessWidget {
-  const MonthlyTab({super.key});
+class MonthlyTab extends StatefulWidget {
+  const MonthlyTab({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
 
   @override
+  State<MonthlyTab> createState() => _MonthlyTabState();
+}
+
+class _MonthlyTabState extends State<MonthlyTab> {
+  int day = 0;
+  @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return DefaultTabController(
-      length: 6,
+    return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 20),
           SizedBox(
-            height: 50,
             width: double.infinity,
-            child: TabBar(
-                unselectedLabelColor: MainAssets.babyBlue,
-                indicatorColor: MainAssets.blue,
-                indicatorSize: TabBarIndicatorSize.label,
-                labelColor: MainAssets.blue,
-                tabs: const [
-                  Text("jan"),
-                  Text("feb"),
-                  Text("mar"),
-                  Text("apr"),
-                  Text("may"),
-                  Text("jun"),
-                ]),
+            height: 40,
+            child: ListView.separated(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            day = index;
+                            setState(() {
+                              // ignore: avoid_print
+                              print(day);
+                            });
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: day == index
+                                  ? MainAssets.blue
+                                  : MainAssets.babyBlue,
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            child: Text(
+                              "${index + 1}",
+                              style: TextStyle(
+                                color: day == index
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                separatorBuilder: (context, index) => const SizedBox(
+                      width: 5,
+                    ),
+                itemCount: 24),
           ),
-          Expanded(
-              child: TabBarView(children: [
-            All_Details(size: size),
-            All_Details(size: size),
-            All_Details(size: size),
-            All_Details(size: size),
-            All_Details(size: size),
-            All_Details(size: size),
-            
-          ])),
+          const SizedBox(height: 10),
+          All_Details(size: widget.size)
         ],
       ),
     );

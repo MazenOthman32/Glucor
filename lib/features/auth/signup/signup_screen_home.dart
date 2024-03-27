@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print, prefer_const_constructors_in_immutables, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:gradution_project/features/auth/widgets/forms.dart';
 import 'package:gradution_project/features/auth/widgets/google_facebook.dart';

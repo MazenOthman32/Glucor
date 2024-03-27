@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/widgets/rowas.dart';
 import 'package:gradution_project/features/auth/widgets/forms.dart';
@@ -55,8 +54,8 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Connection Error'),
-          content:
-              const Text('Failed to connect to the server. Please try again later.'),
+          content: const Text(
+              'Failed to connect to the server. Please try again later.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -69,7 +68,6 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,20 +90,20 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
               fontsize: 30,
             ),
             const SizedBox(height: 20),
-            LoginForm(loginkey: loginkey, email: email, password: password,),
-            const SizedBox(height: 55),
+            LoginForm(
+              loginkey: loginkey,
+              email: email,
+              password: password,
+            ),
+            const SizedBox(height: 100),
             Center(
                 child: BlueButton(
                     buttonName: "Log In",
                     fn: () {
-                      
-                      if(loginkey.currentState!.validate()){
+                      if (loginkey.currentState!.validate()) {
                         Navigator.pushNamed(context, HomePageScreen.routeName);
-
                       }
                       _submit();
-                      
-                      
                     })),
             const SizedBox(height: 35),
             const LineORRow(),
@@ -116,7 +114,6 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
                 text: "Don't have account? ",
                 buttontext: "SignUp",
                 fn: () {
-                  
                   Navigator.pushReplacementNamed(
                       context, SignUpScreen.routeName);
                 })
@@ -125,6 +122,7 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
       ),
     );
   }
+
   @override
   void dispose() {
     email.dispose();

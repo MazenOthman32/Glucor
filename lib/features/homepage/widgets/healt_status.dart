@@ -19,7 +19,7 @@ class Health_Status extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Health_StatusState extends State<Health_Status> {
-  int?  sensorReading  ;
+  int? sensorReading;
   // ignore: deprecated_member_use
   final dataBase = FirebaseDatabase.instance.reference();
 
@@ -27,11 +27,11 @@ class _Health_StatusState extends State<Health_Status> {
   _MainScreenState() {
     dataBase.child('test').onChildChanged.listen((event) {
       DataSnapshot snap = event.snapshot;
-        
-        setState(() {sensorReading = snap.value as int ;});
 
+      setState(() {
+        sensorReading = snap.value as int;
+      });
     });
-
   }
 
   @override
@@ -41,23 +41,22 @@ class _Health_StatusState extends State<Health_Status> {
       height: 140,
       width: widget.size.width / 1.2,
       decoration: BoxDecoration(
-          color: MainAssets.babyBlue,
-          borderRadius: BorderRadius.circular(15)),
-      child:  Column(
+          color: MainAssets.babyBlue, borderRadius: BorderRadius.circular(15)),
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Text(
+          Text(
             "Blood Glucose Trends : Stable",
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
           ),
-          const Text(
+          Text(
             "Weight : 150 lbs",
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
           ),
           Text(
-            "A1C : $sensorReading",
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+            "NextMedican : 12:2",
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
           ),
         ],
       ),

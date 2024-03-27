@@ -17,7 +17,6 @@ class All_Details extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         const SizedBox(height: 10),
         const Center(child: SugarLevel()),
         const SizedBox(height: 10),

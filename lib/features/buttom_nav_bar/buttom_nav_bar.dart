@@ -53,19 +53,28 @@ class _bottomNavBarScreenState extends State<BottomNavBarScreen> {
         currentIndex: selectedItem,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.houseMedical),
+            icon: Icon(
+              Icons.home_outlined,
+              size: 30,
+            ),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.solidMessage),
+            icon: Icon(
+              FontAwesomeIcons.message,
+              size: 20,
+            ),
             label: "chat",
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.solidNoteSticky),
+            icon: Icon(FontAwesomeIcons.noteSticky, size: 20),
             label: "Notes",
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.solidUser),
+            icon: Icon(
+              FontAwesomeIcons.user,
+              size: 20,
+            ),
             label: "Profile",
           ),
         ],

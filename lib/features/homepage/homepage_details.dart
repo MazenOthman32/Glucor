@@ -1,8 +1,8 @@
+// ignore_for_file: unnecessary_const
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gradution_project/features/homepage/widgets/rows.dart';
 import 'package:gradution_project/features/tabs/dailytab.dart';
 import '../../core/util/constant.dart';
-import '../buttom_nav_bar/profile/profile_info/profile_info.dart';
 import '../tabs/monthly.dart';
 import '../tabs/weekly.dart';
 
@@ -14,52 +14,31 @@ class HomePageDetails extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 3,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, top: 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, ProfileInfo.routeName);
-                  },
-                  child: const CircleAvatar(
-                    radius: 22,
-                    backgroundColor: Colors.black,
-                    backgroundImage: AssetImage("assets/images/profile.jpg"),
+      child: CustomScrollView(slivers: [
+        const SliverToBoxAdapter(
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(left: 15, right: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FirstRowOfHomePage(),
+                  SizedBox(height: 30),
+                  Text(
+                    "Daily Overview",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.start,
                   ),
-                ),
-                const Text(
-                  "Hello, John",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: MainAssets.babyBlue,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      FontAwesomeIcons.bell,
-                      size: 22,
-                    ),
-                  ),
-                ),
-              ],
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
-            const SizedBox(height: 30),
-            const Text(
-              "Daily Overview",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              textAlign: TextAlign.start,
-            ),
-            const SizedBox(height: 20),
-            Center(
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Center(
               child: Container(
                 decoration: BoxDecoration(
                     color: MainAssets.babyBlue.withOpacity(0.5),
@@ -84,15 +63,25 @@ class HomePageDetails extends StatelessWidget {
                     ]),
               ),
             ),
-            Expanded(
-                child: TabBarView(children: [
-              DailyTab(size: size),
-              const WeeklyTab(),
-              const MonthlyTab(),
-            ])),
-          ],
+          ),
         ),
-      ),
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Container(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            height: 100,
+            child: TabBarView(physics: const ScrollPhysics(), children: [
+              DailyTab(size: size),
+              WeeklyTab(
+                size: size,
+              ),
+              MonthlyTab(
+                size: size,
+              ),
+            ]),
+          ),
+        ),
+      ]),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../util/constant.dart';
 
 class LabeledOnboarding extends StatelessWidget {
@@ -61,6 +60,21 @@ class BlueText extends StatelessWidget {
           color: MainAssets.blue,
           fontSize: size ?? 35,
           fontWeight: FontWeight.w600),
+    );
+  }
+}
+
+class FontW25 extends StatelessWidget {
+  const FontW25({
+    super.key, required this.text,
+  });
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return  Text(
+      text,
+      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 25),
     );
   }
 }

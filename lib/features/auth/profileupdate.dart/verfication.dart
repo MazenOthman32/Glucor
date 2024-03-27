@@ -1,8 +1,6 @@
-// ignore_for_file: body_might_complete_normally_nullable, curly_braces_in_flow_control_structures, overridden_fields, annotate_overrides
-
+// ignore_for_file: overridden_fields
 import 'package:flutter/material.dart';
 import 'package:gradution_project/features/auth/profileupdate.dart/qf2.dart';
-
 import '../../../core/widgets/buttons.dart';
 import '../../../core/widgets/rowas.dart';
 import '../../../core/widgets/textfield.dart';
@@ -11,6 +9,7 @@ import '../../../core/widgets/textfield.dart';
 class VerifyPhoneNumber extends StatelessWidget {
   VerifyPhoneNumber({super.key});
   static const String routeName = "verifyPhoneNumber";
+  // ignore: annotate_overrides
   final key =GlobalKey<FormState>();
   final TextEditingController phone = TextEditingController();
 
@@ -43,8 +42,10 @@ class VerifyPhoneNumber extends StatelessWidget {
                     MainTextField(
                       hint: '56234',
                       keyboard: TextInputType.text,
+                      // ignore: body_might_complete_normally_nullable
                       label: 'Enter verification code (5-digit)', controller: phone, vaidator:  (val ) {
               if(val!.isEmpty)
+              // ignore: curly_braces_in_flow_control_structures
               return "Code is empty"; },
                     ),
                   ],
