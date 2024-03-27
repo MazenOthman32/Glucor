@@ -1,4 +1,5 @@
 const {db,admin} = require('../models/db')
+const firestore = admin.firestore();
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
@@ -16,6 +17,7 @@ function printBloodGlucoseValueForLoggedInUser() {
         console.log(`No reading found for user ${userId}`);
         return;
       }
+      
       querySnapshot.forEach((doc) => {
         const readingData = doc.data();
         console.log(`Blood Glucose Value for user ${userId}: ${readingData.blood_glucose_value}`);
@@ -24,23 +26,33 @@ function printBloodGlucoseValueForLoggedInUser() {
     .catch((error) => {
       console.error('Error getting reading:', error);
     });
+
 }
+/////////////////////////////
 
-admin.database().ref().once('value')
-  .then(snapshot => {
-    var data = snapshot.val();
-    db.collection('readings').doc('UoUupvzcLUzcsCycQqoW').set(data)
-      .then(() => {
-        console.log('Data saved to Firestore successfully.');
-      })
-      .catch(error => {
-        console.error('Error saving data to Firestore:', error);
-      });
-  })
-  .catch(error => {
-    console.error('Error fetching data from Realtime Database:', error);
-  });
+// Listen for changes in the Realtime Database
 
+
+
+
+
+// admin.database().ref().once('value')
+//   .then(snapshot => {
+//     var data = snapshot.val();
+//     db.collection('readings').doc('UoUupvzcLUzcsCycQqoW').set(data)
+//       .then(() => {
+//         console.log('Data saved to Firestore successfully.');
+//       })
+//       .catch(error => {
+//         console.error('Error saving data to Firestore:', error);
+//       });
+//   })
+//   .catch(error => {
+//     console.error('Error fetching data from Realtime Database:', error);
+//   });
+
+
+////////////////////////////
 const signToken = id =>{
     return jwt.sign({id}, process.env.JWT_SECRET,{
         expiresIn: process.env.JWT_EXPIRES_IN
@@ -136,6 +148,7 @@ exports.login = catchAsync(async (req, res, next) => {
       console.log("Login successfully")
       createSendToken(userData, 200, req, res);
       printBloodGlucoseValueForLoggedInUser();
+      updateReading()
   } catch (err) {
       return next(new AppError('Authentication failed', 500));
   }
@@ -208,3 +221,23 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // 4) Log the user in, send JWT
   createSendToken(user, 200, req, res);
 });
+
+const updateReading = (req,res)=>{
+  const userId = userData.email;
+  admin.database().ref('/test/int').on('value', (snapshot) => {
+  
+    const bloodGlucoseValue = snapshot.val();
+  
+    // Update the corresponding document in Firestore "readings" collection
+    const readingDocRef = firestore.collection('readings').doc(userId); // Replace 'document_id' with the ID of the document
+    readingDocRef.update({
+      blood_glucose_value: bloodGlucoseValue
+    })
+    .then(() => {
+      console.log('Blood glucose value updated successfully in Firestore');
+    })
+    .catch((error) => {
+      console.error('Error updating blood glucose value in Firestore:', error);
+    });
+  });
+}
