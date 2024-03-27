@@ -26,6 +26,7 @@ class Routes {
     SetProfile.routeName: (context) => SetProfile(),
     ProfileInfo.routeName: (context) => const ProfileInfo(),
     Notes.routeName: (context) => const Notes(),
+    BottomNavBarScreen.routeName : (context) => const BottomNavBarScreen(),
     Faq.routeName: (context) => const Faq(),
     Report.routeName: (context) => const Report(),
     VerifyPhoneNumber.routeName: (context) => VerifyPhoneNumber(),

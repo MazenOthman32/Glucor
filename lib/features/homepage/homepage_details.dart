@@ -7,6 +7,7 @@ import '../tabs/monthly.dart';
 import '../tabs/weekly.dart';
 
 class HomePageDetails extends StatelessWidget {
+  
   const HomePageDetails({super.key});
 
   @override

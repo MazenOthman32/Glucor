@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gradution_project/features/homepage/homepage.dart';
 import '../../../../core/widgets/buttons.dart';
 import '../../../../core/widgets/rowas.dart';
 import '../../../../core/widgets/textfield.dart';
+import '../../buttom_nav_bar/buttom_nav_bar.dart';
 
 class Qf2 extends StatefulWidget {
   const Qf2({super.key});
@@ -83,7 +83,7 @@ class _Qf2State extends State<Qf2> {
                   buttonName: "Next",
                   fn: () {
                     if(qukey.currentState!.validate()){
-                    Navigator.pushNamed(context, HomePageScreen.routeName);}
+                    Navigator.pushNamed(context, BottomNavBarScreen.routeName);}
                   },
                 ),
               )

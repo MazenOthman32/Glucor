@@ -6,7 +6,7 @@ import 'package:gradution_project/features/auth/widgets/google_facebook.dart';
 import 'package:gradution_project/features/auth/widgets/line_or.dart';
 import '../../../core/widgets/buttons.dart';
 import '../../../core/widgets/texts.dart';
-import '../../homepage/homepage.dart';
+import '../../buttom_nav_bar/buttom_nav_bar.dart';
 import '../signup/signuppage.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -101,7 +101,7 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
                     buttonName: "Log In",
                     fn: () {
                       if (loginkey.currentState!.validate()) {
-                        Navigator.pushNamed(context, HomePageScreen.routeName);
+                        Navigator.pushNamed(context, BottomNavBarScreen.routeName);
                       }
                       _submit();
                     })),
