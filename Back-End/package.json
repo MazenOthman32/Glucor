@@ -1,0 +1,28 @@
+{
+  "name": "diabetic-coma",
+  "version": "1.0.0",
+  "description": "graduate project",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Amr Ismail",
+  "license": "ISC",
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.24.0",
+    "@firebase/firestore": "^4.4.3",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "firebase": "^10.8.1",
+    "firebase-admin": "^12.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.12"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
