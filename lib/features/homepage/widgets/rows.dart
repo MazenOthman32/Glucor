@@ -44,14 +44,18 @@ class SugarLevel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    //var size = MediaQuery.of(context).size;
     return Container(
-      padding: const EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 15,
         right: 15,
       ),
+      padding: const EdgeInsets.only(
+        left: 10,
+        right: 10,
+      ),
       height: 50,
-      width: size.width / 1.2,
+      width: double.infinity,
       decoration: BoxDecoration(
         color: MainAssets.babyBlue,
         borderRadius: BorderRadius.circular(10),

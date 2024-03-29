@@ -7,7 +7,6 @@ import '../tabs/monthly.dart';
 import '../tabs/weekly.dart';
 
 class HomePageDetails extends StatelessWidget {
-  
   const HomePageDetails({super.key});
 
   @override
@@ -19,7 +18,7 @@ class HomePageDetails extends StatelessWidget {
         const SliverToBoxAdapter(
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.only(left: 15, right: 15),
+              padding: EdgeInsets.only(left: 15, right: 15, top: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

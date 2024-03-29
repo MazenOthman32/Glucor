@@ -15,7 +15,7 @@ class ChatScreenDetails extends StatelessWidget {
         body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -19,7 +19,7 @@ import '../../features/homepage/notificatins/notification_page.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> allRoutes = {
-    '/': (context) => const StartScreen(), //BottomNavBarScreen(), 
+    '/': (context) => const  BottomNavBarScreen(),// StartScreen(),
     PageViewDemo.routeName: (context) => const PageViewDemo(),
     LoginScreen.routeName: (context) => const LoginScreen(),
     SignUpScreen.routeName: (context) => const SignUpScreen(),

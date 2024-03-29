@@ -7,17 +7,17 @@ import '../widgets/profile_info.dart';
 
 class ProfileInfoDetails extends StatelessWidget {
   ProfileInfoDetails({super.key});
-  
+
   bool isEditable = false;
   FocusNode focusNode = FocusNode();
-  String t="Mac";
+  String t = "Mac";
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
           child: Column(
             children: [
               const MaianAppBar(

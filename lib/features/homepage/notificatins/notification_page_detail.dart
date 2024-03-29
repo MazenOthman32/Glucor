@@ -14,6 +14,8 @@ class NotificationPageDetail extends StatefulWidget {
 
 class _NotificationPageDetailState extends State<NotificationPageDetail> {
   List<Widget> notificatin = [];
+  bool isLoading = true;
+
   @override
   void initState() {
     notificatin = [
@@ -24,6 +26,11 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
       const NotificationItem(),
       const NotificationItem(),
     ];
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
     super.initState();
   }
 
@@ -33,58 +40,72 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
 
     return RefreshIndicator(
       onRefresh: () async {
-        await Future.delayed(const Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3), () {});
+        setState(() {});
       },
       color: Colors.white,
       backgroundColor: MainAssets.blue,
       child: SingleChildScrollView(
         child: SafeArea(
-          child: SizedBox(
+          child: Container(
+            padding: const EdgeInsets.only(top: 20, right: 15, left: 15),
             height: size.height,
             child: Column(
-              
               children: [
                 const MaianAppBar(
                   text: 'Notifications',
                 ),
                 const SizedBox(height: 40),
-                notificatin.isEmpty
-                    ? Container(
-                        alignment: Alignment.center,
-                        child: const Center(
-                          child: DescriptionOnBoarding(
-                            text: 'Notifications is empty',
-                          ),
-                        ),
-                      )
-                    : ListView.separated(
+                isLoading
+                    ? ListView.separated(
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) => Slidable(
-                            key: ValueKey(index),
-                            endActionPane: ActionPane(
-                              motion: const StretchMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) {
-                                    setState(() {
-                                      notificatin.removeAt(index);
-                                      // ignore: avoid_print
-                                      print(notificatin.length);
-                                    });
-                                  },
-                                  backgroundColor: Colors.red,
-                                  label: "Delete",
-                                  icon: Icons.delete,
-                                  foregroundColor: Colors.white,
-                                )
-                              ],
+                        itemBuilder: (context, index) => const ShimmerLoading(),
+                        itemCount: 5,
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 20,
+                        ),
+                      )
+                    : notificatin.isEmpty
+                        ? Container(
+                            alignment: Alignment.center,
+                            height: size.height - 200,
+                            child: const Center(
+                              child: DescriptionOnBoarding(
+                                text: 'Notifications is empty',
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            child: notificatin[index]),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 20),
-                        itemCount: notificatin.length),
+                          )
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (context, index) => Slidable(
+                                key: ValueKey(index),
+                                endActionPane: ActionPane(
+                                  motion: const StretchMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        setState(() {
+                                          notificatin.removeAt(index);
+                                          // ignore: avoid_print
+                                          print(notificatin.length);
+                                        });
+                                      },
+                                      backgroundColor: Colors.red,
+                                      label: "Delete",
+                                      icon: Icons.delete,
+                                      foregroundColor: Colors.white,
+                                    )
+                                  ],
+                                ),
+                                child: notificatin[index]),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 20),
+                            itemCount: notificatin.length),
               ],
             ),
           ),
@@ -93,5 +114,3 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
     );
   }
 }
-
-//NotificationItem
