@@ -58,6 +58,7 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
                 const SizedBox(height: 40),
                 isLoading
                     ? ListView.separated(
+                      
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,

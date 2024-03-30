@@ -25,6 +25,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  camera:
+    dependency: transitive
+    description:
+      name: camera
+      sha256: "9499cbc2e51d8eb0beadc158b288380037618ce4e30c9acbc4fae1ac3ecb5797"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.5+9"
+  camera_android:
+    dependency: transitive
+    description:
+      name: camera_android
+      sha256: "1100e527b44a96906987a91ef78c8dacb539e34612a8058de89023380acf67f1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.8+18"
+  camera_avfoundation:
+    dependency: transitive
+    description:
+      name: camera_avfoundation
+      sha256: "8b113e43ee4434c9244c03c905432a0d5956cedaded3cd7381abaab89ce50297"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.14+1"
+  camera_platform_interface:
+    dependency: transitive
+    description:
+      name: camera_platform_interface
+      sha256: a250314a48ea337b35909a4c9d5416a208d736dcb01d0b02c6af122be66660b0
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.4"
+  camera_web:
+    dependency: transitive
+    description:
+      name: camera_web
+      sha256: f18ccfb33b2a7c49a52ad5aa3f07330b7422faaecbdfd9b9fe8e51182f6ad67d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2+4"
   characters:
     dependency: transitive
     description:
@@ -73,6 +113,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  community_charts_common:
+    dependency: transitive
+    description:
+      name: community_charts_common
+      sha256: "20697244c826df0545237ebe01d61caa96a2a2e4d23c6f88890441636a4d5220"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  community_charts_flutter:
+    dependency: transitive
+    description:
+      name: community_charts_flutter
+      sha256: ca5bd07337e162daee13c19679f602cd8b3f704520d242beeebbc2e312f84f89
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      sha256: "55d7b444feb71301ef6b8838dbc1ae02e63dd48c8773f3810ff53bb1e2945b32"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.4+1"
   crypto:
     dependency: transitive
     description:
@@ -243,6 +307,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: b068ffc46f82a55844acfa4fdbb61fad72fa2aef0905548419d97f0f95c456da
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.17"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -293,6 +365,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.1"
+  heart_bpm:
+    dependency: "direct main"
+    description:
+      name: heart_bpm
+      sha256: "3651cf368b9b2732fb5b63f244375cc7b932665b1fd13280c70e37621d892936"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0+0"
   http:
     dependency: "direct main"
     description:
@@ -586,6 +666,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  stream_transform:
+    dependency: transitive
+    description:
+      name: stream_transform
+      sha256: "14a00e794c7c11aa145a170587321aedce29769c08d7f58b1d141da75e3b1c6f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   string_scanner:
     dependency: transitive
     description:

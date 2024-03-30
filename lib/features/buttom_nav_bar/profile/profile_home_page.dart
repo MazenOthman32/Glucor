@@ -70,7 +70,7 @@ class ProfileHomePage extends StatelessWidget {
                       },
                     ),
                     Dividerf(size: size),
-                    ListOfProfileOptions(
+                    ListOfProfileOptions( 
                       iconData: FontAwesomeIcons.wallet,
                       name: 'Payment Method',
                       fn: () {},
@@ -83,6 +83,14 @@ class ProfileHomePage extends StatelessWidget {
                         Navigator.pushNamed(context, Faq.routeName);
                       },
                     ),
+                    // Dividerf(size: size),
+                    // // ListOfProfileOptions(
+                    // //   iconData: FontAwesomeIcons.commentMedical,
+                    // //   name: 'Heart bmp',
+                    // //   fn: () {
+                    // //     Navigator.pushNamed(context, Fortest.routeName);
+                    // //   },
+                    // // ),
                     Dividerf(size: size),
                     ListOfProfileOptions(
                       iconData: FontAwesomeIcons.arrowRightFromBracket,

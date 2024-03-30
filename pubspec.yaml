@@ -37,6 +37,7 @@ dependencies:
   sqflite: ^2.3.2
   shimmer: ^3.0.0
   device_preview: ^1.1.0
+  heart_bpm: ^2.0.0+0
 
 
   firebase_core: ^2.25.4

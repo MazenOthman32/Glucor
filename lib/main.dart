@@ -4,14 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gradution_project/core/route/routes.dart';
 import 'firebase_options.dart';
-import 'package:device_preview/device_preview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(DevicePreview(builder: (context) => const MainScreen()));
+  runApp(const MainScreen());
 }
 
 class MainScreen extends StatefulWidget {
@@ -39,9 +38,6 @@ class _MainScreenState extends State<MainScreen> {
     return MaterialApp(
       theme: ThemeData(textTheme: GoogleFonts.lemonTextTheme()),
       // ignore: deprecated_member_use
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       routes: Routes.allRoutes,
     );

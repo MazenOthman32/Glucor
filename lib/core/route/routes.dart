@@ -32,6 +32,7 @@ class Routes {
     VerifyPhoneNumber.routeName: (context) => VerifyPhoneNumber(),
     HomePageScreen.routeName: (context) => const HomePageScreen(),
     Qf2.routeName: (context) => const Qf2(),
+    Fortest.routeName: (context) =>const Fortest(),
     NotificationPage.routeName: (context) =>  const NotificationPage()
   };
 }

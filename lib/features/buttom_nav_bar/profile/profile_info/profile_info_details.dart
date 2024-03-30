@@ -66,8 +66,10 @@ class ProfileInfoDetails extends StatelessWidget {
                   focusNode: focusNode, label: "Height ", text: '180'),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode, label: "Weight", text: '75'),
-              const SizedBox(height: 50),
+                  focusNode: focusNode,
+                  label: "Type of Gloucose Level",
+                  text: 'Type 1'),
+              const SizedBox(height: 100),
               SmallBlueButton(buttonName: "Save changes", fn: () {}),
               const SizedBox(height: 20),
             ],

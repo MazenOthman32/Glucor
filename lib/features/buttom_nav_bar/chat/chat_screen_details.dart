@@ -12,6 +12,17 @@ class ChatScreenDetails extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: MainAssets.blue,
+          
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(200)),
+          onPressed: () {},
+          child: const Icon(
+            Icons.chat,
+            color: Colors.white,
+          ),
+        ),
         body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
