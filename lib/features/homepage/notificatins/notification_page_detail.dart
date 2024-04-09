@@ -58,7 +58,6 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
                 const SizedBox(height: 40),
                 isLoading
                     ? ListView.separated(
-                      
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
@@ -84,7 +83,7 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) => Slidable(
-                                key: ValueKey(index),
+                                key: ValueKey(notificatin[index]),
                                 endActionPane: ActionPane(
                                   motion: const StretchMotion(),
                                   children: [
@@ -93,8 +92,18 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
                                         setState(() {
                                           notificatin.removeAt(index);
                                           // ignore: avoid_print
-                                          print(notificatin.length);
+                                          print(index);
                                         });
+                                        final sBar = SnackBar(
+                                          content: const Text(
+                                              "Notification Deleted"),
+                                          duration: const Duration(seconds: 2),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(sBar);
                                       },
                                       backgroundColor: Colors.red,
                                       label: "Delete",
