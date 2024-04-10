@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(textTheme: GoogleFonts.lemonTextTheme()),
+      theme: ThemeData(textTheme: GoogleFonts.ptSerifTextTheme()),
       // ignore: deprecated_member_use
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
