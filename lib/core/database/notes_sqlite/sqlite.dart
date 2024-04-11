@@ -27,16 +27,8 @@ class SqlData {
   }
 
   _onCreate(Database db, int version) async {
-    Batch batch = db.batch();
-    batch.execute('''
+    await db.execute('''
     CREATE TABLE "notes"(
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "title" Text,
-    "content" Text
-    )
-    ''');
-    batch.execute('''
-    CREATE TABLE "notifications"(
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "title" Text,
     "content" Text
