@@ -120,7 +120,7 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
                     })),
             const SizedBox(height: 35),
             const LineORRow(),
-            const GoogleAndFaceBook(),
+             GoogleAndFaceBook(google: () {  }, face: () {  },),
             const SizedBox(height: 40),
             RowOfLogin(
               buttontext: 'Login',

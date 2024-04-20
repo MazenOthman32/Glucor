@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/features/auth/login/loginpage.dart';
-import 'package:gradution_project/features/buttom_nav_bar/chat/chat.dart';
+import 'package:gradution_project/features/buttom_nav_bar/chat/allchats.dart';
 import 'package:gradution_project/features/buttom_nav_bar/profile/profile.dart';
 import 'package:gradution_project/features/homepage/homepage.dart';
 import 'notes/notes.dart';
@@ -24,7 +24,7 @@ class BottomNavBarScreen extends StatefulWidget {
 class _bottomNavBarScreenState extends State<BottomNavBarScreen> {
   final List pages = <Widget>[
     const HomePageScreen(),
-    const ChatScreen(),
+    const AllChatScreen(),
      const Notes(),
     const Profile()
   ];

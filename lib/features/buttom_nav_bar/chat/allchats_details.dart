@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import '../../../core/widgets/texts.dart';
-import 'widgets/chat_widgets.dart';
+import 'select_chat/chat.dart';
+import 'widgets/allchats.dart';
 
-class ChatScreenDetails extends StatelessWidget {
-  const ChatScreenDetails({super.key});
+class AllChatScreenDetails extends StatelessWidget {
+  const AllChatScreenDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,6 @@ class ChatScreenDetails extends StatelessWidget {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: MainAssets.blue,
-          
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(200)),
           onPressed: () {},
@@ -61,7 +61,10 @@ class ChatScreenDetails extends StatelessWidget {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) => ChatItem(size: size),
+                      itemBuilder: (context, index) => InkWell(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(ChatSelected.routeName),
+                          child: AllChatItem(size: size)),
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 20),
                       itemCount: 10)

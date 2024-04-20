@@ -25,63 +25,81 @@ class _AddNoteState extends State<AddNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.only(top: 20.0, right: 15, left: 15),
-        child: ListView(
-          children: [
-            const MaianAppBar(
-              text: 'Add New Note',
-            ),
-            const SizedBox(height: 50),
-            Form(
-              key: addnotekey,
-              child: Column(
-                children: [
-                  NotestextFormField(
-                    controller: title,
-                    content: 'Enter your title',
-                    label: 'title',
-                    lines: 1,
-                  ),
-                  const SizedBox(height: 40),
-                  NotestextFormField(
-                    controller: content,
-                    content: 'Enter your content',
-                    label: 'content',
-                    lines: 20,
-                  )
-                ],
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Padding(
+          padding: const EdgeInsets.only(top: 20.0, right: 15, left: 15),
+          child: Column(
+            children: [
+              const MaianAppBar(
+                text: 'Add New Note',
               ),
-            ),
-            const SizedBox(height: 50),
-            BlueButton(
-              buttonName: 'Add note',
-              fn: () async {
-                int response = await sqldata.insertData('''
-            INSERT INTO notes (`title`,`content`) VALUES ("${title.text}","${content.text}")
-            
-            ''');
-                // ignore: avoid_print
-                print("${response}");
-                setState(() {});
-                // ignore: use_build_context_synchronously
-                Navigator.pushNamedAndRemoveUntil(
-                    // ignore: use_build_context_synchronously
-                    context, BottomNavBarScreen.routeName, (route) => false);
-              },
-            ),
-            BlueButton(
-              buttonName: 'Delete all notes',
-              fn: () async {
-                int response = await sqldata.deleteData("Delete FROM notes");
-                // ignore: avoid_print
-                print(response);
-              },
-            )
-          ],
-        ),
-      )),
+              const SizedBox(height: 50),
+              Form(
+                key: addnotekey,
+                child: Column(
+                  children: [
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Title",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    NotestextFormField(
+                      controller: title,
+                      content: 'Enter your title',
+                      lines: 1,
+                    ),
+                    const SizedBox(height: 40),
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Content",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    NotestextFormField(
+                      controller: content,
+                      content: 'Enter your content',
+                      lines: 10,
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 100),
+              BlueButton(
+                buttonName: 'Add note',
+                opacity: 0.2,
+                fn: () async {
+                  int response = await sqldata.insertData('''
+              INSERT INTO notes (`title`,`content`) VALUES ("${title.text}","${content.text}")
+              
+              ''');
+                  // ignore: avoid_print
+                  print("${response}");
+                  setState(() {});
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamedAndRemoveUntil(
+                      // ignore: use_build_context_synchronously
+                      context,
+                      BottomNavBarScreen.routeName,
+                      (route) => false);
+                },
+              ),
+              const SizedBox(
+                height: 50,
+              )
+            ],
+          ),
+        )),
+      ),
     );
   }
 }
@@ -90,12 +108,11 @@ class NotestextFormField extends StatelessWidget {
   const NotestextFormField({
     super.key,
     required this.controller,
-    required this.label,
     required this.content,
     required this.lines,
   });
   final TextEditingController controller;
-  final String label;
+
   final String content;
   final int lines;
   @override
@@ -105,17 +122,10 @@ class NotestextFormField extends StatelessWidget {
         maxLines: null,
         controller: controller,
         decoration: InputDecoration(
+          border: InputBorder.none,
           filled: true,
-          labelStyle: const TextStyle(color: Colors.grey, fontSize: 20),
-          fillColor: MainAssets.babyBlue,
-          labelText: label,
+          fillColor: MainAssets.babyBlue.withOpacity(0.2),
           hintText: content,
-          enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: MainAssets.blue),
-              borderRadius: BorderRadius.circular(30)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: MainAssets.blue),
-              borderRadius: BorderRadius.circular(30)),
         ));
   }
 }

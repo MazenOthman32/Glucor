@@ -8,6 +8,8 @@ import 'package:gradution_project/features/buttom_nav_bar/profile/report/report.
 import 'package:gradution_project/features/buttom_nav_bar/profile/widgets/heart_cal_weight.dart';
 import 'package:gradution_project/features/buttom_nav_bar/profile/widgets/list_of_profile_options.dart';
 
+import 'subscription/subscription.dart';
+
 class ProfileHomePage extends StatelessWidget {
   const ProfileHomePage({super.key});
 
@@ -70,10 +72,12 @@ class ProfileHomePage extends StatelessWidget {
                       },
                     ),
                     Dividerf(size: size),
-                    ListOfProfileOptions( 
+                    ListOfProfileOptions(
                       iconData: FontAwesomeIcons.wallet,
-                      name: 'Payment Method',
-                      fn: () {},
+                      name: 'Subscription',
+                      fn: () {
+                        Navigator.pushNamed(context, Subscription.routeName);
+                      },
                     ),
                     Dividerf(size: size),
                     ListOfProfileOptions(

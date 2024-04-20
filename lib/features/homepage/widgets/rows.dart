@@ -1,39 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradution_project/core/util/constant.dart';
-import 'package:gradution_project/features/auth/widgets/icon_buttons.dart';
 import 'package:gradution_project/features/buttom_nav_bar/profile/profile_info/profile_info.dart';
 import '../notificatins/notification_page.dart';
-
-class RowOfIcons extends StatelessWidget {
-  const RowOfIcons({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 40),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Col_icons(
-            icon: Icons.alarm,
-            text: "Reminder",
-          ),
-          Col_icons(
-            icon: Icons.tips_and_updates_outlined,
-            text: "Activty",
-          ),
-          Col_icons(
-            icon: Icons.people_outlined,
-            text: "Community",
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 //***********   Sugar Level Row ***************/
 
@@ -44,7 +13,7 @@ class SugarLevel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //var size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(
         left: 15,
@@ -55,7 +24,7 @@ class SugarLevel extends StatelessWidget {
         right: 10,
       ),
       height: 50,
-      width: double.infinity,
+      width: size.width / 1.2,
       decoration: BoxDecoration(
         color: MainAssets.babyBlue,
         borderRadius: BorderRadius.circular(10),
@@ -66,7 +35,7 @@ class SugarLevel extends StatelessWidget {
           Text(
             "Sugar Level",
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -81,7 +50,7 @@ class SugarLevel extends StatelessWidget {
               Text(
                 "6",
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -89,7 +58,7 @@ class SugarLevel extends StatelessWidget {
               Text(
                 "Normal",
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Colors.green),
               ),
@@ -106,7 +75,7 @@ class SugarLevel extends StatelessWidget {
               Text(
                 "136",
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -114,7 +83,7 @@ class SugarLevel extends StatelessWidget {
               Text(
                 "Danger",
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Colors.red),
               ),
@@ -153,6 +122,7 @@ class FirstRowOfHomePage extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, NotificationPage.routeName);
+            
           },
           child: Container(
             height: 40,
@@ -161,11 +131,29 @@ class FirstRowOfHomePage extends StatelessWidget {
               color: MainAssets.babyBlue,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Center(
-              child: Icon(
-                FontAwesomeIcons.bell,
-                size: 22,
-              ),
+            child: Stack(
+              children: [
+                const Center(
+                  child: Icon(
+                    FontAwesomeIcons.bell,
+                    size: 22,
+                  ),
+                ),
+                MainAssets.notificationIsOpend == false
+                    ? Positioned(
+                        right: 8,
+                        bottom: 8,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.orange,
+                          ),
+                          height: 8,
+                          width: 8,
+                        ),
+                      )
+                    : const SizedBox()
+              ],
             ),
           ),
         ),

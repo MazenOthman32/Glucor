@@ -17,11 +17,12 @@ class SqlData {
     String databasePath = await getDatabasesPath();
     String path = join(databasePath, "notes.db");
     Database mydb = await openDatabase(path,
-        onCreate: _onCreate, version: 1, onUpgrade: _onUpgrade);
+        onCreate: _onCreate, version: 7, onUpgrade: _onUpgrade);
     return mydb;
   }
 
   _onUpgrade(Database db, int oldversion, int newversion) async {
+    
     // ignore: avoid_print
     print("Data updated *************************");
   }
@@ -34,6 +35,14 @@ class SqlData {
     "content" Text
     )
     ''');
+    await db.execute('''
+    CREATE TABLE "notification"(
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "title" Text,
+    "content" TEXT, 
+    hour TEXT,
+    minutes TEXT
+    ) ''');
     // ignore: avoid_print
     print("Data created*************************");
   }

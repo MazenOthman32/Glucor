@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
+import '../../../core/database/notes_sqlite/sqlite.dart';
 import '../../../core/widgets/rowas.dart';
 import '../../../core/widgets/texts.dart';
 import '../widgets/notification_card.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+import 'widgets/shimmer.dart';
 
 class NotificationPageDetail extends StatefulWidget {
   const NotificationPageDetail({super.key});
@@ -13,25 +16,38 @@ class NotificationPageDetail extends StatefulWidget {
 }
 
 class _NotificationPageDetailState extends State<NotificationPageDetail> {
-  List<Widget> notificatin = [];
   bool isLoading = true;
+  SqlData sqldata = SqlData();
+  List notificatin = [];
+  List notifications = [];
+
+  bool isEmpty = true;
+  Future readData() async {
+    List<Map> response = await sqldata.selectData("SELECT * FROM notification");
+
+    notificatin.addAll(response);
+    notifications = notificatin.reversed.toList();
+
+    isEmpty = false;
+    // ignore: unnecessary_this
+    if (this.mounted) {
+      setState(() {});
+    }
+  }
 
   @override
+  // ignore: must_call_super
   void initState() {
-    notificatin = [
-      const NotificationItem(),
-      const NotificationItem(),
-      const NotificationItem(),
-      const NotificationItem(),
-      const NotificationItem(),
-      const NotificationItem(),
-    ];
+    readData();
+    MainAssets.notificationIsOpend = true;
+    // ignore: avoid_print
+    print(MainAssets.notificationIsOpend);
+
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         isLoading = false;
       });
     });
-    super.initState();
   }
 
   @override
@@ -42,6 +58,7 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
       onRefresh: () async {
         await Future.delayed(const Duration(seconds: 3), () {});
         setState(() {});
+        initState();
       },
       color: Colors.white,
       backgroundColor: MainAssets.blue,
@@ -49,7 +66,6 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
         child: SafeArea(
           child: Container(
             padding: const EdgeInsets.only(top: 20, right: 15, left: 15),
-            height: size.height,
             child: Column(
               children: [
                 const MaianAppBar(
@@ -67,7 +83,7 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
                           height: 20,
                         ),
                       )
-                    : notificatin.isEmpty
+                    : notifications.isEmpty
                         ? Container(
                             alignment: Alignment.center,
                             height: size.height - 200,
@@ -83,17 +99,22 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) => Slidable(
-                                key: ValueKey(notificatin[index]),
+                                key: ValueKey(notifications[index]['id']),
                                 endActionPane: ActionPane(
                                   motion: const StretchMotion(),
                                   children: [
                                     SlidableAction(
-                                      onPressed: (context) {
+                                      onPressed: (context) async {
+                                        int response = await sqldata.deleteData(
+                                            "Delete FROM notification WHERE `id` = '${notifications[index]['id']}'");
                                         setState(() {
-                                          notificatin.removeAt(index);
-                                          // ignore: avoid_print
-                                          print(index);
+                                          if (response > 0) {
+                                            notifications.removeWhere((e) =>
+                                                e['id'] ==
+                                                notifications[index]['id']);
+                                          }
                                         });
+
                                         final sBar = SnackBar(
                                           content: const Text(
                                               "Notification Deleted"),
@@ -102,6 +123,7 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
                                               borderRadius:
                                                   BorderRadius.circular(20)),
                                         );
+                                        // ignore: use_build_context_synchronously
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(sBar);
                                       },
@@ -112,10 +134,15 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
                                     )
                                   ],
                                 ),
-                                child: notificatin[index]),
+                                child: NotificationItem(
+                                  title: notifications[index]['title'],
+                                  content: notifications[index]['content'],
+                                  hour: notifications[index]['hour'],
+                                  minutes: notifications[index]['minutes'],
+                                )),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 20),
-                            itemCount: notificatin.length),
+                            itemCount: notifications.length),
               ],
             ),
           ),

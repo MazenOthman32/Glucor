@@ -83,7 +83,6 @@ class _ProfileEditTextFieldState extends State<ProfileEditTextField> {
       focusNode: widget.focusNode,
       autofocus: true,
       onFieldSubmitted: widget.onFieldSubmitted,
-      
       cursorColor: MainAssets.blue,
       keyboardType: widget.keyboard,
       decoration: InputDecoration(
@@ -92,6 +91,46 @@ class _ProfileEditTextFieldState extends State<ProfileEditTextField> {
           labelStyle: const TextStyle(
             color: Colors.grey,
           ),
+          hintStyle: const TextStyle(color: Colors.grey),
+          suffixIconColor: Colors.grey),
+    );
+  }
+}
+
+class SendMessageTextField extends StatefulWidget {
+  const SendMessageTextField({
+    super.key,
+    required this.hint,
+    required this.controller,
+    required this.vaidator,
+  });
+  final String hint;
+  final TextEditingController controller;
+  final String? Function(String?) vaidator;
+
+  @override
+  State<SendMessageTextField> createState() => _SendMessageTextFieldState();
+}
+
+class _SendMessageTextFieldState extends State<SendMessageTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      validator: widget.vaidator,
+      cursorColor: MainAssets.blue,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: const BorderSide(color: MainAssets.blue)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: const BorderSide(color: MainAssets.blue)),
+          labelStyle: const TextStyle(
+            color: Colors.grey,
+          ),
+          hintText: widget.hint,
           hintStyle: const TextStyle(color: Colors.grey),
           suffixIconColor: Colors.grey),
     );

@@ -16,6 +16,7 @@ class NotesDetails extends StatefulWidget {
 class _NotesDetailsState extends State<NotesDetails> {
   SqlData sqldata = SqlData();
   List notes = [];
+  
   bool isEmpty = true;
   Future readData() async {
     List<Map> response = await sqldata.selectData("SELECT * FROM notes");

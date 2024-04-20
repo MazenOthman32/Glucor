@@ -4,7 +4,8 @@ import '../util/constant.dart';
 class LabeledOnboarding extends StatelessWidget {
   const LabeledOnboarding({
     super.key,
-    required this.text, this.fontsize,
+    required this.text,
+    this.fontsize,
   });
   final String text;
   final double? fontsize;
@@ -12,7 +13,7 @@ class LabeledOnboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style:  TextStyle(fontSize:fontsize?? 35, fontWeight: FontWeight.w600),
+      style: TextStyle(fontSize: fontsize ?? 35, fontWeight: FontWeight.w600),
     );
   }
 }
@@ -22,7 +23,8 @@ class DescriptionOnBoarding extends StatelessWidget {
     super.key,
     required this.text,
     this.size,
-    this.textAlign, this.fontWeight,
+    this.textAlign,
+    this.fontWeight,
   });
   final String text;
   final double? size;
@@ -37,11 +39,10 @@ class DescriptionOnBoarding extends StatelessWidget {
       style: TextStyle(
           color: Colors.grey,
           fontSize: size ?? 13,
-          fontWeight:fontWeight?? FontWeight.w600),
+          fontWeight: fontWeight ?? FontWeight.w600),
     );
   }
 }
-
 
 class BlueText extends StatelessWidget {
   const BlueText({
@@ -66,15 +67,33 @@ class BlueText extends StatelessWidget {
 
 class FontW25 extends StatelessWidget {
   const FontW25({
-    super.key, required this.text,
+    super.key,
+    required this.text,
   });
   final String text;
 
   @override
   Widget build(BuildContext context) {
-    return  Text(
+    return Text(
       text,
       style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 25),
+    );
+  }
+}
+
+
+class FontW20 extends StatelessWidget {
+  const FontW20({
+    super.key,
+    required this.text,
+  });
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
     );
   }
 }

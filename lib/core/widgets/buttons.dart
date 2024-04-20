@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import '../util/constant.dart';
 
 class BlueButton extends StatelessWidget {
-  const BlueButton({
-    super.key,
-    required this.buttonName,
-    required this.fn,
-    this.opacity,
-  });
+  const BlueButton(
+      {super.key,
+      required this.buttonName,
+      required this.fn,
+      this.opacity,
+      this.fontSize});
   final String buttonName;
   final VoidCallback fn;
   final double? opacity;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +33,10 @@ class BlueButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(18), color: MainAssets.blue),
           child: Text(
             buttonName,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: fontSize ?? 17,
+                fontWeight: FontWeight.w500),
           ),
         ),
       ),
