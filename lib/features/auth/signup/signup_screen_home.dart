@@ -11,40 +11,40 @@ import '../profileupdate.dart/set_profile.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 class SignUpScreenHome extends StatefulWidget {
-   SignUpScreenHome({super.key});
+  SignUpScreenHome({super.key});
 
   @override
   State<SignUpScreenHome> createState() => _SignUpScreenHomeState();
 }
 
 class _SignUpScreenHomeState extends State<SignUpScreenHome> {
-  final signUpKey =GlobalKey<FormState>();
+  final signUpKey = GlobalKey<FormState>();
 
-  final TextEditingController name= TextEditingController();
-  final TextEditingController email= TextEditingController();
-  final TextEditingController phone= TextEditingController();
-  final TextEditingController pass= TextEditingController();
-  final TextEditingController phoneNumber= TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController pass = TextEditingController();
+  final TextEditingController phoneNumber = TextEditingController();
 
-  final TextEditingController passwordConfirm= TextEditingController();
-    Future<void> _submit() async {
-      final String namee = name.text.trim();
+  final TextEditingController passwordConfirm = TextEditingController();
+  Future<void> _submit() async {
+    final String namee = name.text.trim();
     final String phonee = phone.text.trim();
-    final String emaill =email.text.trim();
-    final String passwordd =pass.text.trim();
-    final String passwordConfirmm =passwordConfirm.text.trim();
+    final String emaill = email.text.trim();
+    final String passwordd = pass.text.trim();
+    final String passwordConfirmm = passwordConfirm.text.trim();
 
     try {
       final response = await http.post(
-        Uri.parse('https://red-thankful-cygnet.cyclic.app/signup'), // Adjust this URL as needed
+        Uri.parse(
+            'https://red-thankful-cygnet.cyclic.app/signup'), // Adjust this URL as needed
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'name': namee,
           'email': emaill,
           'password': passwordd,
-          'phoneNumber':phonee,
+          'phoneNumber': phonee,
           'passwordConfirm': passwordConfirmm
         }),
       );
@@ -66,8 +66,8 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Connection Error'),
-          content:
-              const Text('Failed to connect to the server. Please try again later.'),
+          content: const Text(
+              'Failed to connect to the server. Please try again later.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -80,7 +80,6 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,24 +102,26 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
               fontsize: 30,
             ),
             const SizedBox(height: 20),
-            SiggnUpForm(signUpKey: signUpKey, email: email, phone:phone, pass: pass , passwordConfirm: passwordConfirm,),
+            SiggnUpForm(
+              signUpKey: signUpKey,
+              email: email,
+              phone: phone,
+              pass: pass,
+              passwordConfirm: passwordConfirm,
+            ),
             const SizedBox(height: 55),
             Center(
                 child: BlueButton(
                     buttonName: "Sign Up",
                     fn: () {
                       _submit();
-                      if(signUpKey.currentState!.validate()){
-
-                        Navigator.pushReplacementNamed(context, SetProfile.routeName);
-                        
+                      if (signUpKey.currentState!.validate()) {
+                        Navigator.pushReplacementNamed(
+                            context, SetProfile.routeName);
                       }
-                      
-                      
                     })),
-            const SizedBox(height: 35),
-            const LineORRow(),
-             GoogleAndFaceBook(google: () {  }, face: () {  },),
+            const SizedBox(height: 40),
+            const GoogleButton(),
             const SizedBox(height: 40),
             RowOfLogin(
               buttontext: 'Login',
@@ -135,6 +136,7 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
       ),
     );
   }
+
   @override
   void dispose() {
     name.dispose();

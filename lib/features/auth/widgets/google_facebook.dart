@@ -1,39 +1,37 @@
 import 'package:flutter/material.dart';
 
-class GoogleAndFaceBook extends StatelessWidget {
-  const GoogleAndFaceBook({
-    super.key, required this.google, required this.face,
+class GoogleButton extends StatelessWidget {
+  const GoogleButton({
+    super.key,
   });
-  final VoidCallback google;
-  final VoidCallback face;
-  
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        GestureDetector(
-          onTap:google ,
-          child: const CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 25,
-            foregroundImage: AssetImage(
-              "assets/images/icons/google.png",
-            ),
-          ),
+    return Center(
+      child: SizedBox(
+        width: 250,
+        child: Card(
+          child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+              ),
+              onPressed: () {},
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 15,
+                    foregroundImage: AssetImage(
+                      "assets/images/icons/google.png",
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  Text("Continue with Google")
+                ],
+              )),
         ),
-        GestureDetector(
-          onTap: face,
-          child: const CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 25,
-            foregroundImage: AssetImage(
-              "assets/images/icons/Facebook.png",
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

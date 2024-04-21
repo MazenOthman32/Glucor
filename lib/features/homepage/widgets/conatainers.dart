@@ -28,9 +28,10 @@ class _NextMedicanState extends State<NextMedican> {
   _NextMedicanState() {
     dataBase.child('test').onChildChanged.listen((event) {
       DataSnapshot snap = event.snapshot;
-      sensorReading = snap.value as int;
-
-      snti = sensorReading!;
+      if (snap.key == 'int') {
+        sensorReading = snap.value as int;
+        snti = sensorReading!;
+      }
 
       setState(() {
         _listenToFirebaseData();
@@ -70,10 +71,9 @@ Future<void> _listenToFirebaseData() async {
     // ignore: unnecessary_brace_in_string_interps
     print("${response}");
 
-
-    if (snti>300) {
+    if (snti > 300) {
       const number = '01270498060'; //set the number here
-    await FlutterPhoneDirectCaller.callNumber(number);
+      await FlutterPhoneDirectCaller.callNumber(number);
     }
   } else {
     MainAssets.notificationIsOpend = true;

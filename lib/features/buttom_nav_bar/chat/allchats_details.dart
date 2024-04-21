@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
+import '../../../core/widgets/textfield.dart';
 import '../../../core/widgets/texts.dart';
 import 'select_chat/chat.dart';
 import 'widgets/allchats.dart';
 
-class AllChatScreenDetails extends StatelessWidget {
+class AllChatScreenDetails extends StatefulWidget {
   const AllChatScreenDetails({super.key});
+
+  @override
+  State<AllChatScreenDetails> createState() => _AllChatScreenDetailsState();
+}
+
+class _AllChatScreenDetailsState extends State<AllChatScreenDetails> {
+  final TextEditingController phone = TextEditingController();
+  final chatkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +26,54 @@ class AllChatScreenDetails extends StatelessWidget {
           backgroundColor: MainAssets.blue,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(200)),
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+              // ignore: use_build_context_synchronously
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text(
+                  'New Chat',
+                  style: TextStyle(fontSize: 24),
+                ),
+                content: Form(
+                  key: chatkey,
+                  child: MainTextField(
+                    hint: '+20 01234567890',
+                    keyboard: TextInputType.phone,
+                    label: 'Phone Number',
+                    controller: phone,
+                    // ignore: body_might_complete_normally_nullable
+                    vaidator: (val) {
+                      if (val!.isEmpty) {
+                        return "This Field is empty";
+                      } else if (val.length > 11 || val.length < 11)
+                        // ignore: curly_braces_in_flow_control_structures
+                        return "phone number should be 11 ";
+                    },
+                  ),
+                ),
+                actions: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          foregroundColor: MainAssets.blue),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Cancel")),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: MainAssets.blue,
+                          foregroundColor: Colors.white),
+                      onPressed: () {
+                        if (chatkey.currentState!.validate()) {
+                          setState(() {});
+                        }
+                      },
+                      child: const Text("add")),
+                ],
+              ),
+            );
+          },
           child: const Icon(
             Icons.chat,
             color: Colors.white,

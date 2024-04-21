@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gradution_project/core/widgets/rowas.dart';
 import 'package:gradution_project/features/auth/widgets/forms.dart';
 import 'package:gradution_project/features/auth/widgets/google_facebook.dart';
-import 'package:gradution_project/features/auth/widgets/line_or.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -160,13 +159,8 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
                     },
                   ),
                 ),
-                const SizedBox(height: 35),
-                const LineORRow(),
-                const SizedBox(height: 20),
-                GoogleAndFaceBook(
-                  google: () {},
-                  face: () {},
-                ),
+                const SizedBox(height: 55),
+                const GoogleButton(),
                 const SizedBox(height: 40),
                 RowOfLogin(
                   text: "Don't have an account? ",
@@ -176,6 +170,7 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
                         context, SignUpScreen.routeName);
                   },
                 ),
+                const SizedBox(height: 50),
               ],
             ),
             isLoading == true ? const CircleIndicator() : const SizedBox()
