@@ -43,6 +43,9 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   flutter_credit_card: ^4.0.1
   awesome_dialog: ^3.2.0
+  screenshot: ^2.3.0
+  image_gallery_saver: '^2.0.3'
+  
 
 
   firebase_core: ^2.25.4
