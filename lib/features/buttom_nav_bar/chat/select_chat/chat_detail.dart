@@ -65,7 +65,7 @@ class SendMessageRow extends StatelessWidget {
               hint: 'message',
               controller: widget.message,
               // ignore: body_might_complete_normally_nullable
-              vaidator: (mesage) {
+              validator: (mesage) {
                 if (mesage!.isEmpty) {
                   return "This Field is empty";
                 }

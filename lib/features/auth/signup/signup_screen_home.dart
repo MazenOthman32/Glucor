@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradution_project/features/auth/widgets/forms.dart';
 import 'package:gradution_project/features/auth/widgets/google_facebook.dart';
-import 'package:gradution_project/features/auth/widgets/line_or.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/widgets/buttons.dart';
 import '../../../core/widgets/rowas.dart';
 import '../../../core/widgets/texts.dart';
@@ -29,57 +29,49 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
 
   final TextEditingController passwordConfirm = TextEditingController();
   Future<void> _submit() async {
-    final String namee = name.text.trim();
-    final String phonee = phone.text.trim();
-    final String emaill = email.text.trim();
-    final String passwordd = pass.text.trim();
-    final String passwordConfirmm = passwordConfirm.text.trim();
+  final String namee = name.text.trim();
+  final String phonee = phone.text.trim();
+  final String emaill = email.text.trim();
+  final String passwordd = pass.text.trim();
+  final String passwordConfirmm = passwordConfirm.text.trim();
 
-    try {
-      final response = await http.post(
-        Uri.parse(
-            'https://red-thankful-cygnet.cyclic.app/signup'), // Adjust this URL as needed
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          'name': namee,
-          'email': emaill,
-          'password': passwordd,
-          'phoneNumber': phonee,
-          'passwordConfirm': passwordConfirmm
-        }),
-      );
+  try {
+    final response = await http.post(
+      Uri.parse('https://red-thankful-cygnet.cyclic.app/signup'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        'name': namee,
+        'email': emaill,
+        'password': passwordd,
+        'phoneNumber': phonee,
+        'passwordConfirm': passwordConfirmm
+      }),
+    );
 
-      if (response.statusCode == 200) {
-        // Signup successful
-        print('Signup successful');
-        // Navigate to the next screen or perform further actions
-      } else {
-        // Signup failed
-        print('Signup failed. Status code: ${response.statusCode}');
-        // Show error message or handle the failure accordingly
-      }
-    } catch (e) {
-      // Handle connection error
-      print('Failed to connect to the server: $e');
-      // Show error message to the user
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Connection Error'),
-          content: const Text(
-              'Failed to connect to the server. Please try again later.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
+    if (response.statusCode == 200) {
+      // Signup successful
+      print('Signup successful');
+
+      // Get token from response
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      final String token = responseData['token'];
+
+      // Save token in SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('token', token);
+      print(token);
+      // Navigate to the next screen or perform further actions
+    } else {
+      // Signup failed
+      print('Signup failed. Status code: ${response.statusCode}');
+      // Show error message or handle the failure accordingly
     }
+  } catch (e) {
+    // Handle connection error
+    print('Failed to connect to the server: $e');
+    // Show error message to the user
   }
+}
 
   @override
   Widget build(BuildContext context) {

@@ -43,7 +43,7 @@ class _AllChatScreenDetailsState extends State<AllChatScreenDetails> {
                     label: 'Phone Number',
                     controller: phone,
                     // ignore: body_might_complete_normally_nullable
-                    vaidator: (val) {
+                    validator: (val) {
                       if (val!.isEmpty) {
                         return "This Field is empty";
                       } else if (val.length > 11 || val.length < 11)

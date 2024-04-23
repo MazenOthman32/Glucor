@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gradution_project/features/auth/profileupdate.dart/verfication.dart';
 import 'package:gradution_project/features/auth/widgets/forms.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/util/constant.dart';
-import '../../../core/widgets/buttons.dart';
 import '../../../core/widgets/rowas.dart';
 
 class SetProfile extends StatefulWidget {
@@ -17,7 +15,6 @@ class SetProfile extends StatefulWidget {
 }
 
 class _SetProfileState extends State<SetProfile> {
-  final profilekey= GlobalKey<FormState>();
     final ImagePicker picker = ImagePicker();
   File? pickedImage;
   fetchImage() async {
@@ -71,20 +68,8 @@ class _SetProfileState extends State<SetProfile> {
                                           ),
                           ),
               const SizedBox(height: 75),
-              ProfileForm(profilekey: profilekey,),
+              const ProfileForm(),
               const SizedBox(height: 60),
-              SizedBox(
-                width: 133,
-                child: BlueButton(
-                  buttonName: "Set",
-                  fn: () {
-                    if(profilekey.currentState!.validate()){
-                      
-                    Navigator.pushNamed(context, VerifyPhoneNumber.routeName);
-                    }
-                  },
-                ),
-              ),
               const SizedBox(height: 20),
             ],
           ),

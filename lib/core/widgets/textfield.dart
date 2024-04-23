@@ -10,7 +10,7 @@ class MainTextField extends StatefulWidget {
     this.visibleFalse,
     required this.keyboard,
     required this.controller,
-    required this.vaidator,
+    required this.validator,
   });
   final String label;
   final String hint;
@@ -18,7 +18,7 @@ class MainTextField extends StatefulWidget {
   final IconData? visibleFalse;
   final TextInputType keyboard;
   final TextEditingController controller;
-  final String? Function(String?) vaidator;
+  final String? Function(String?) validator;
 
   @override
   State<MainTextField> createState() => _MainTextFieldState();
@@ -30,7 +30,7 @@ class _MainTextFieldState extends State<MainTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      validator: widget.vaidator,
+      validator: widget.validator,
       cursorColor: MainAssets.blue,
       obscureText: isVisble,
       keyboardType: widget.keyboard,
@@ -102,11 +102,11 @@ class SendMessageTextField extends StatefulWidget {
     super.key,
     required this.hint,
     required this.controller,
-    required this.vaidator,
+    required this.validator,
   });
   final String hint;
   final TextEditingController controller;
-  final String? Function(String?) vaidator;
+  final String? Function(String?) validator;
 
   @override
   State<SendMessageTextField> createState() => _SendMessageTextFieldState();
@@ -117,7 +117,7 @@ class _SendMessageTextFieldState extends State<SendMessageTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      validator: widget.vaidator,
+      validator: widget.validator,
       cursorColor: MainAssets.blue,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(

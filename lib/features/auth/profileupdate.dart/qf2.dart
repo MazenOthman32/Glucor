@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/widgets/buttons.dart';
 import '../../../../core/widgets/rowas.dart';
 import '../../../../core/widgets/textfield.dart';
-import '../../buttom_nav_bar/buttom_nav_bar.dart';
+import '../login/loginpage.dart';
 
 class Qf2 extends StatefulWidget {
   const Qf2({super.key});
@@ -17,7 +17,7 @@ class _Qf2State extends State<Qf2> {
 
   final TextEditingController years = TextEditingController();
 
-  final qukey= GlobalKey<FormState>();
+  final qukey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +50,14 @@ class _Qf2State extends State<Qf2> {
                       hint: 'ex : Type1',
                       keyboard: TextInputType.text,
                       // ignore: body_might_complete_normally_nullable
-                      label: '', controller:type, vaidator: (val ) {
-              if(val!.isEmpty) {
-                return "this Question is Required";
-              } } ,
+                      label: '',
+                      controller: type,
+                      // ignore: body_might_complete_normally_nullable
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return "this Question is Required";
+                        }
+                      },
                     ),
                     const SizedBox(height: 70),
                     const SizedBox(
@@ -69,10 +73,14 @@ class _Qf2State extends State<Qf2> {
                       hint: 'ex: 2 Years',
                       keyboard: TextInputType.text,
                       // ignore: body_might_complete_normally_nullable
-                      label: '', controller: years, vaidator: (val ) {
-              if(val!.isEmpty) {
-                return "This Question is Required";
-              } },
+                      label: '',
+                      controller: years,
+                      // ignore: body_might_complete_normally_nullable
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return "This Question is Required";
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -82,8 +90,9 @@ class _Qf2State extends State<Qf2> {
                 child: BlueButton(
                   buttonName: "Next",
                   fn: () {
-                    if(qukey.currentState!.validate()){
-                    Navigator.pushNamed(context, BottomNavBarScreen.routeName);}
+                    if (qukey.currentState!.validate()) {
+                      Navigator.pushNamed(context, LoginScreen.routeName);
+                    }
                   },
                 ),
               )
@@ -93,6 +102,7 @@ class _Qf2State extends State<Qf2> {
       ),
     );
   }
+
   @override
   void dispose() {
     type.dispose();

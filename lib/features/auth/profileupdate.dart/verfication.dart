@@ -43,7 +43,7 @@ class VerifyPhoneNumber extends StatelessWidget {
                       hint: '56234',
                       keyboard: TextInputType.text,
                       // ignore: body_might_complete_normally_nullable
-                      label: 'Enter verification code (5-digit)', controller: phone, vaidator:  (val ) {
+                      label: 'Enter verification code (5-digit)', controller: phone, validator:  (val ) {
               if(val!.isEmpty)
               // ignore: curly_braces_in_flow_control_structures
               return "Code is empty"; },

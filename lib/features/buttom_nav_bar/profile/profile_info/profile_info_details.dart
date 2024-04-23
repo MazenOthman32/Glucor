@@ -1,9 +1,12 @@
-// ignore_for_file:
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/buttons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/widgets/rowas.dart';
 import '../widgets/profile_info.dart';
 
@@ -30,6 +33,13 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
   bool isEditable = false;
   FocusNode focusNode = FocusNode();
   String t = "Mac";
+  Map<String, dynamic>? tokenData;
+
+  @override
+  void initState() {
+    super.initState();
+    _getToken();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +65,12 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(70),
-                                  image: DecorationImage(
-                                      image: FileImage(pickedImage!),
-                                      fit: BoxFit.cover)),
+                                borderRadius: BorderRadius.circular(70),
+                                image: DecorationImage(
+                                  image: FileImage(pickedImage!),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             )
                           : const CircleAvatar(
                               radius: 50,
@@ -67,17 +79,18 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                                   AssetImage("assets/images/profile.jpg"),
                             ),
                       const Positioned(
-                          bottom: 0,
-                          right: 7,
-                          child: CircleAvatar(
-                            radius: 13,
-                            backgroundColor: MainAssets.blue,
-                            child: Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                              size: 18,
-                            ),
-                          ))
+                        bottom: 0,
+                        right: 7,
+                        child: CircleAvatar(
+                          radius: 13,
+                          backgroundColor: MainAssets.blue,
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -93,27 +106,52 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
               ),
               const SizedBox(height: 20),
               RowOfEditProfile(
-                  focusNode: focusNode, label: "First Name ", text: 'John'),
+                focusNode: focusNode,
+                label: "First Name ",
+                text: '${tokenData?['data'][1]}',
+              ),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode, label: "Last Name ", text: t),
+                focusNode: focusNode,
+                label: "Last Name ",
+                text: '${tokenData?['data'][2]}',
+              ),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode, label: "Email", text: 'John@gmail.com'),
+                focusNode: focusNode,
+                label: "Gender ",
+                text: '${tokenData?['data'][3]}',
+              ),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode, label: "Phone ", text: '01234567890'),
+                focusNode: focusNode,
+                label: "Email",
+                text: '${tokenData?['data'][0]}',
+              ),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode, label: "Height ", text: '180'),
+                focusNode: focusNode,
+                label: "Phone ",
+                text: '${tokenData?['data'][4]}',
+              ),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode, label: "Weight ", text: '80'),
+                focusNode: focusNode,
+                label: "Height ",
+                text: '${tokenData?['data'][6]}',
+              ),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode,
-                  label: "Type of Gloucose Level",
-                  text: 'Type 1'),
+                focusNode: focusNode,
+                label: "Weight ",
+                text: '${tokenData?['data'][5]}',
+              ),
+              const Dividerr(),
+              RowOfEditProfile(
+                focusNode: focusNode,
+                label: "Type of Glucose Level",
+                text: 'Type 1',
+              ),
               const SizedBox(height: 50),
               const Align(
                 alignment: Alignment.topLeft,
@@ -125,37 +163,89 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
               ),
               const SizedBox(height: 20),
               RowOfEditProfile(
-                  focusNode: focusNode,
-                  label: "First contact ",
-                  text: '01270498060'),
+                focusNode: focusNode,
+                label: "First contact ",
+                text: '01270498060',
+              ),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode,
-                  label: "Second contact ",
-                  text: '01270498060'),
+                focusNode: focusNode,
+                label: "Second contact ",
+                text: '01270498060',
+              ),
               const Dividerr(),
               RowOfEditProfile(
-                  focusNode: focusNode,
-                  label: "Ambulance",
-                  text: '01270498060'),
+                focusNode: focusNode,
+                label: "Ambulance",
+                text: '01270498060',
+              ),
               const SizedBox(height: 100),
               BlueButton(
-                  buttonName: "Save changes",
-                  fontSize: 15,
-                  fn: () {
-                    setState(() {
-                      const sBar = SnackBar(
-                        content: Text("Data Changed Succefully"),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(sBar);
-                    });
-                    Navigator.pop(context);
-                  }),
-              const SizedBox(height: 20),
+                buttonName: "Save changes",
+                fontSize: 15,
+                fn: () {
+                  setState(() {
+                    const sBar = SnackBar(
+                      content: Text("Data Changed Successfully"),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(sBar);
+                  });
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _getToken() async {
+    var _prefs = await SharedPreferences.getInstance();
+    var _token = _prefs.getString('token');
+
+    if (_token != null) {
+      Map<String, dynamic> decodedToken = parseJwt(_token);
+      // ignore: avoid_print
+      print('Token profile info: $_token');
+
+      setState(() {
+        tokenData = decodedToken;
+      });
+    }
+  }
+
+  Map<String, dynamic> parseJwt(String token) {
+    final parts = token.split('.');
+    if (parts.length != 3) {
+      throw Exception('invalid token');
+    }
+
+    final payload = _decodeBase64(parts[1]);
+    final payloadMap = json.decode(payload);
+    if (payloadMap is! Map<String, dynamic>) {
+      throw Exception('invalid payload');
+    }
+
+    return payloadMap;
+  }
+
+  String _decodeBase64(String str) {
+    String output = str.replaceAll('-', '+').replaceAll('_', '/');
+
+    switch (output.length % 4) {
+      case 0:
+        break;
+      case 2:
+        output += '==';
+        break;
+      case 3:
+        output += '=';
+        break;
+      default:
+        throw Exception('Illegal base64url string!"');
+    }
+
+    return utf8.decode(base64Url.decode(output));
   }
 }

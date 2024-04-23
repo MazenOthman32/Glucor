@@ -28,110 +28,65 @@ function printBloodGlucoseValueForLoggedInUser() {
     });
 
 }
-/////////////////////////////
-
-// Listen for changes in the Realtime Database
-
-
-
-
-
-// admin.database().ref().once('value')
-//   .then(snapshot => {
-//     var data = snapshot.val();
-//     db.collection('readings').doc('UoUupvzcLUzcsCycQqoW').set(data)
-//       .then(() => {
-//         console.log('Data saved to Firestore successfully.');
-//       })
-//       .catch(error => {
-//         console.error('Error saving data to Firestore:', error);
-//       });
-//   })
-//   .catch(error => {
-//     console.error('Error fetching data from Realtime Database:', error);
-//   });
-
-
-////////////////////////////
-const signToken = id =>{
-    return jwt.sign({id}, process.env.JWT_SECRET,{
-        expiresIn: process.env.JWT_EXPIRES_IN
-    })
+function signToken (...data){
+  return jwt.sign({data}, process.env.JWT_SECRET,{
+    expiresIn: process.env.JWT_EXPIRES_IN
+})
 }
 const createSendToken = (user, statusCode, req, res) => {
-    const token = signToken(user._id);
-  
-    res.cookie('jwt', token, {
-      expires: new Date(
-        Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-      ),
-      httpOnly: true,
-      secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
-    });
-    // Remove password from output
+    const token = signToken(user.email, user.firstName,user.lastName,user.phoneNumber,user.weight,user.height,user.age);
+
     user.password = undefined;
-  
+    console.log(user)
     res.status(statusCode).json({
       status: 'success',
       token,
-      data: {
-        user
-      }
     });
     return token;
   };
 
-exports.signup = catchAsync(async(req,res,next)=>{
-  try{
-      const { name, email, password, passwordConfirm, phoneNumber, gender, date_of_birth, diabete, height, weight, profile_pic } = req.body;
-      const hashedPassword = await bcrypt.hash(password, 12);
+  exports.signup = catchAsync(async (req, res, next) => {
+    try {
+        const data= { email, password, passwordConfirm, phoneNumber} = req.body;
+        const hashedPassword = await bcrypt.hash(password, 12);
 
-      if (!(email && password && phoneNumber && passwordConfirm)) {
-          return res.status(400).json({
-              error: 'All fields must be filled'
-          })
-      }
-      if (password !== passwordConfirm) {
-          return res.status(400).json({
-              error: 'Passwords do not match'
-          });
-      }
-      // Check if email already exists in the database
-      const userDoc = await db.collection('users').doc(email).get();
-      if (userDoc.exists) {
-          return res.status(400).json({
-              error: 'Email already exists'
-          });
-      }
-      // Create user document
-      await db.collection('users').doc(email).set({
-          email,
-          password: hashedPassword,
-          phoneNumber,
-      });
-
-      // Create reading document for the new user
-      await db.collection('readings').doc(email).set({
-          user_id: email,
-          blood_glucose_value: 0 // Assuming initial value is 0
-      });
-
-      return res.status(200).json({
-          message: 'User registered successfully'
-      });
-  } catch(error) { 
-      console.error('Error during signup:', error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+        if (!(email && password && phoneNumber && passwordConfirm)) {
+            return res.status(400).json({
+                error: 'All fields must be filled'
+            })
+        }
+        if (password !== passwordConfirm) {
+            return res.status(400).json({
+                error: 'Passwords do not match'
+            });
+        }
+        const userDoc = await db.collection('users').doc(email).get();
+        if (userDoc.exists) {
+            return res.status(400).json({
+                error: 'Email already exists'
+            });
+        }
+        await db.collection('users').doc(email).set({
+            email,
+            password: hashedPassword,
+            phoneNumber,
+        }); 
+        await db.collection('readings').doc(email).set({
+            user_id: email,
+            blood_glucose_value: 0 
+        });
+        createSendToken(data, 200, req, res);
+    } catch (error) {
+        console.error('Error during signup:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  // 1) Check if email and password exist
   if (!email || !password) {
       return next(new AppError('Please provide email and password!', 400));
   }
-  // 2) Check if user exists && password is correct
   try {
       const user = await db.collection('users').where('email', '==', email).get();
       if (user.empty) {
@@ -195,7 +150,6 @@ const createPasswordResetToken = function () {
     return resetToken;
 };
 exports.resetPassword = catchAsync(async (req, res, next) => {
-  // 1) Get user based on the token
   const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)
@@ -205,20 +159,17 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     .where('passwordResetExpires', '>', Date.now())
     .get();
   const user = usersSnapshot.docs[0];
-  // 2) If token has not expired, and there is a user, set the new password
   if (!user) {
     return next(new AppError('Token is invalid or has expired', 400));
   }
   const newPassword = req.body.password;
   const newPasswordConfirm = req.body.passwordConfirm;
-  // Update user data
   await user.ref.update({
     password: newPassword,
     passwordConfirm: newPasswordConfirm,
     passwordResetToken: null,
     passwordResetExpires: null
   });
-  // 4) Log the user in, send JWT
   createSendToken(user, 200, req, res);
 });
 
@@ -227,9 +178,7 @@ const updateReading = (req,res)=>{
   admin.database().ref('/test/int').on('value', (snapshot) => {
   
     const bloodGlucoseValue = snapshot.val();
-  
-    // Update the corresponding document in Firestore "readings" collection
-    const readingDocRef = firestore.collection('readings').doc(userId); // Replace 'document_id' with the ID of the document
+    const readingDocRef = firestore.collection('readings').doc(userId);
     readingDocRef.update({
       blood_glucose_value: bloodGlucoseValue
     })
@@ -241,3 +190,37 @@ const updateReading = (req,res)=>{
     });
   });
 }
+
+exports.userInfo = catchAsync(async (req, res, next) => {
+    const { firstName, lastName, age, gender, weight, height,age } = req.body;
+    const token = req.headers.authorization.split(' ')[1];
+
+    if (!(firstName && lastName && age && gender && height && weight && age)) {
+        return res.status(400).json({
+            error: 'All fields must be filled'
+        });
+    }
+    try {
+        const decodedToken = jwt.verify(token,  process.env.JWT_SECRET);
+        const userEmail = decodedToken.data[0]
+        const allData = decodedToken.data
+        await db.collection('users').doc(userEmail).update({
+            firstName,
+            lastName,
+            age,
+            gender,
+            weight,
+            height,
+            age
+        });
+        res.send('User info updated successfully')
+        createSendToken(allData, 200, req, res);   
+    } catch (error) {
+        console.error('Error updating user info:', error);
+        return res.status(500).json({
+            error: 'Internal Server Error'
+        });
+    }
+});
+
+
