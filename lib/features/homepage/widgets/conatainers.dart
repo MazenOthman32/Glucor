@@ -22,13 +22,17 @@ int snti = 0;
 class _NextMedicanState extends State<NextMedican> {
   final dataBase = FirebaseDatabase.instance.reference();
 
-  _NextMedicanState() {
+    _NextMedicanState() {
     dataBase.child('test').onChildChanged.listen((event) {
       DataSnapshot snap = event.snapshot;
       if (snap.key == 'int') {
         sensorReading = snap.value as int;
         snti = sensorReading!;
       }
+
+      setState(() {
+        
+      });
     });
   }
 

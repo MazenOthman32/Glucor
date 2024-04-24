@@ -66,7 +66,9 @@ class _AllChatScreenDetailsState extends State<AllChatScreenDetails> {
                           foregroundColor: Colors.white),
                       onPressed: () {
                         if (chatkey.currentState!.validate()) {
+                          phone.clear();
                           setState(() {});
+                          Navigator.pop(context);
                         }
                       },
                       child: const Text("add")),

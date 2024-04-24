@@ -21,11 +21,13 @@ import '../../features/buttom_nav_bar/notes/notes.dart';
 import '../../features/buttom_nav_bar/notes/update_note.dart';
 import '../../features/buttom_nav_bar/profile/subscription/payment/payment.dart';
 import '../../features/homepage/notificatins/notification_page.dart';
+import '../../features/start_screen/splash_screen.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> allRoutes = {
-    '/': (context) => const BottomNavBarScreen(), // StartScreen(),
+    '/': (context) => const  SplashScreen(),//BottomNavBarScreen(), 
     PageViewDemo.routeName: (context) => const PageViewDemo(),
+    StartScreen.routeName:(context) => const StartScreen(),
     LoginScreen.routeName: (context) => const LoginScreen(),
     SignUpScreen.routeName: (context) => const SignUpScreen(),
     SetProfile.routeName: (context) => const SetProfile(),

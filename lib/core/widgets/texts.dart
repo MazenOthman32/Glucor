@@ -81,7 +81,6 @@ class FontW25 extends StatelessWidget {
   }
 }
 
-
 class FontW20 extends StatelessWidget {
   const FontW20({
     super.key,

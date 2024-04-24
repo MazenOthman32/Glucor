@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gradution_project/core/widgets/texts.dart';
 import '../util/constant.dart';
 import 'buttons.dart';
 
@@ -51,45 +50,5 @@ class MaianAppBar extends StatelessWidget {
         )
       ],
     );
-  }
-}
-
-class SeeAllRow extends StatelessWidget {
-  const SeeAllRow({
-    super.key,
-    required this.label,
-    required this.fn,
-  });
-  final String label;
-  final VoidCallback fn;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      DescriptionOnBoarding(
-        text: label,
-        size: 18,
-        fontWeight: FontWeight.w500,
-      ),
-      Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: Row(
-          children: [
-            const Text(
-              "See All",
-              style: TextStyle(color: MainAssets.blue),
-            ),
-            InkWell(
-              onTap: fn,
-              child: const Icon(
-                Icons.keyboard_arrow_right_sharp,
-                size: 18,
-                color: MainAssets.blue,
-              ),
-            ),
-          ],
-        ),
-      )
-    ]);
   }
 }

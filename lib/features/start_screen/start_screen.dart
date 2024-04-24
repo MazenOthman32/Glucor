@@ -6,6 +6,7 @@ import '../../core/widgets/texts.dart';
 import '../onboarding/page_view.dart';
 
 class StartScreen extends StatelessWidget {
+  static const String routeName = " start Screen";
   const StartScreen({super.key});
 
   @override

@@ -9,6 +9,8 @@ import 'package:gradution_project/features/buttom_nav_bar/profile/subscription/s
 import 'package:gradution_project/features/buttom_nav_bar/profile/widgets/list_of_profile_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'widgets/heart_cal_weight.dart';
+
 class ProfileHomePage extends StatelessWidget {
   const ProfileHomePage({super.key});
 
@@ -42,7 +44,7 @@ class ProfileHomePage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 30),
-                    // DetailsRow()
+                    DetailsRow()
                   ],
                 ),
               ),
@@ -89,19 +91,53 @@ class ProfileHomePage extends StatelessWidget {
                         Navigator.pushNamed(context, Faq.routeName);
                       },
                     ),
+                    // Dividerf(size: size),
+                    // // ListOfProfileOptions(
+                    // //   iconData: FontAwesomeIcons.commentMedical,
+                    // //   name: 'Heart bmp',
+                    // //   fn: () {
+                    // //     Navigator.pushNamed(context, Fortest.routeName);
+                    // //   },
+                    // // ),
                     const Divider(),
                     ListOfProfileOptions(
                       iconData: FontAwesomeIcons.arrowRightFromBracket,
                       name: 'Logout',
-                      fn: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        await prefs.remove('token');
-                        // ignore: avoid_print
-                        print('logout Successfully!');
-                        // ignore: use_build_context_synchronously
-                        Navigator.of(context)
-                            .pushReplacementNamed(LoginScreen.routeName);
+                      fn: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  alignment: Alignment.center,
+                                  actions: [
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            foregroundColor: MainAssets.blue),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Cancel")),
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: MainAssets.blue,
+                                            foregroundColor: Colors.white),
+                                        onPressed: () async {
+                                          SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          await prefs.remove('token');
+                                          // ignore: avoid_print
+                                          print('logout Successfully!');
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                                  LoginScreen.routeName);
+                                        },
+                                        child: const Text("Logout")),
+                                  ],
+                                  title: const Text("Log out"),
+                                  content: const Text(
+                                      "Are you Sure you want to exit? "),
+                                ));
                       },
                     ),
                   ],

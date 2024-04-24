@@ -46,7 +46,7 @@ class _SetProfileState extends State<SetProfile> {
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
               const SizedBox(height: 40),
-                     pickedImage != null
+                    pickedImage != null
                           ? Container(
                               height: 100,
                               width: 100,
