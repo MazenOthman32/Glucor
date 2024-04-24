@@ -63,13 +63,13 @@ class ProfileEditTextField extends StatefulWidget {
     required this.label,
     required this.initialValue,
     required this.keyboard,
-    this.onFieldSubmitted,
+    //this.onFieldSubmitted,
     required this.focusNode,
   });
   final String label;
-  final String initialValue;
+  final TextEditingController initialValue;
   final TextInputType keyboard;
-  final Function(String)? onFieldSubmitted;
+  //final Function(String)? onFieldSubmitted;
   final FocusNode focusNode;
   @override
   State<ProfileEditTextField> createState() => _ProfileEditTextFieldState();
@@ -79,10 +79,10 @@ class _ProfileEditTextFieldState extends State<ProfileEditTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: widget.initialValue,
+      controller: widget.initialValue,
       focusNode: widget.focusNode,
       autofocus: true,
-      onFieldSubmitted: widget.onFieldSubmitted,
+      //onFieldSubmitted: widget.onFieldSubmitted,
       cursorColor: MainAssets.blue,
       keyboardType: widget.keyboard,
       decoration: InputDecoration(

@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/widgets/rowas.dart';
 import '../widgets/profile_info.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileInfoDetails extends StatefulWidget {
   const ProfileInfoDetails({super.key});
@@ -19,6 +20,57 @@ class ProfileInfoDetails extends StatefulWidget {
 
 class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
   final ImagePicker picker = ImagePicker();
+
+  final TextEditingController fname = TextEditingController();
+  final TextEditingController lname = TextEditingController();
+  final TextEditingController genderrr = TextEditingController();
+  final TextEditingController weight = TextEditingController();
+  final TextEditingController height = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final personalKey = GlobalKey<FormState>();
+
+  Future<void> _submitt() async {
+    final String fnamee = fname.text.trim();
+    final String lnamee = lname.text.trim();
+    final String gender = genderrr.text.trim();
+    final String weightt = weight.text.trim();
+    final String heightt = height.text.trim();
+    final String phonee = phone.text.trim();
+    // Retrieve token from SharedPreferences
+    var _prefs = await SharedPreferences.getInstance();
+    var _token = _prefs.getString('token');
+
+    try {
+      final response = await http.patch(
+        Uri.parse('https://red-thankful-cygnet.cyclic.app/updateinfo'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          'firstName': fnamee,
+          'lastName': lnamee,
+          'gender': gender,
+          'phoneNumber': phonee,
+          'weight': weightt,
+          'height': heightt,
+          'token': _token
+        }),
+      );
+      if (response.statusCode == 200) {
+        // Update successful
+
+        print('Update successful');
+        // Navigate to the next screen or perform further actions
+      } else {
+        // Update failed
+        print('Update failed. Status code: ${response.statusCode}');
+        // Show error message or handle the failure accordingly
+      }
+    } catch (e) {
+      // Handle connection error
+      print('Failed to connect to the server: $e');
+      // Show error message to the user
+    }
+  }
+
   File? pickedImage;
   fetchImage() async {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -37,8 +89,8 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
 
   @override
   void initState() {
-    super.initState();
     _getToken();
+    super.initState();
   }
 
   @override
@@ -105,91 +157,94 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                 ),
               ),
               const SizedBox(height: 20),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "First Name ",
-                text: '${tokenData?['data'][1]}',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Last Name ",
-                text: '${tokenData?['data'][2]}',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Gender ",
-                text: '${tokenData?['data'][3]}',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Email",
-                text: '${tokenData?['data'][0]}',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Phone ",
-                text: '${tokenData?['data'][4]}',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Height ",
-                text: '${tokenData?['data'][6]}',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Weight ",
-                text: '${tokenData?['data'][5]}',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Type of Glucose Level",
-                text: 'Type 1',
-              ),
-              const SizedBox(height: 50),
-              const Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Important Contacts",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              const SizedBox(height: 20),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "First contact ",
-                text: '01270498060',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Second contact ",
-                text: '01270498060',
-              ),
-              const Dividerr(),
-              RowOfEditProfile(
-                focusNode: focusNode,
-                label: "Ambulance",
-                text: '01270498060',
-              ),
+              Form(
+                  key: personalKey,
+                  child: Column(
+                    children: [
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "First Name ",
+                        text: fname,
+                      ),
+                      const Dividerr(),
+                      RowOfEditProfile(
+                          focusNode: focusNode,
+                          label: "Last Name ",
+                          text: lname // '${tokenData?['data'][2]}',
+                          ),
+                      const Dividerr(),
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "Gender ",
+                        text: genderrr,
+                      ),
+                      const Dividerr(),
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "Phone ",
+                        text: phone,
+                      ),
+                      const Dividerr(),
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "Height ",
+                        text: height,
+                      ),
+                      const Dividerr(),
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "Weight ",
+                        text: weight,
+                      ),
+                      const Dividerr(),
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "Type of Glucose Level",
+                        text: weight,
+                      ),
+                      const SizedBox(height: 50),
+                      const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Important Contacts",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "First contact ",
+                        text: weight,
+                      ),
+                      const Dividerr(),
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "Second contact ",
+                        text: weight,
+                      ),
+                      const Dividerr(),
+                      RowOfEditProfile(
+                        focusNode: focusNode,
+                        label: "Ambulance",
+                        text: weight,
+                      ),
+                    ],
+                  )),
               const SizedBox(height: 100),
               BlueButton(
                 buttonName: "Save changes",
                 fontSize: 15,
-                fn: () {
+                fn: () async {
+                  await _submitt();
                   setState(() {
                     const sBar = SnackBar(
                       content: Text("Data Changed Successfully"),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(sBar);
                   });
+
                   Navigator.pop(context);
                 },
               ),
@@ -207,10 +262,15 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
     if (_token != null) {
       Map<String, dynamic> decodedToken = parseJwt(_token);
       // ignore: avoid_print
-      print('Token profile info: $_token');
 
       setState(() {
         tokenData = decodedToken;
+        fname.text = '${tokenData?['data'][1]}';
+        lname.text = '${tokenData?['data'][2]}';
+        genderrr.text = '${tokenData?['data'][3]}';
+        phone.text = '${tokenData?['data'][4]}';
+        height.text = '${tokenData?['data'][6]}';
+        weight.text = '${tokenData?['data'][5]}';
       });
     }
   }

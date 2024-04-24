@@ -32,6 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    getValidation();
+    super.dispose();
+  }
+
   Future getValidation() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
