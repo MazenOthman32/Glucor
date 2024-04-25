@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/buttons.dart';
 import 'package:gradution_project/core/widgets/texts.dart';
 import 'package:gradution_project/features/auth/signup/signuppage.dart';
@@ -161,7 +160,6 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
                       if (loginkey.currentState!.validate()) {
                         isLoading = true;
                         setState(() {
-                         
                         });
                         _submit();
                       }

@@ -8,6 +8,7 @@ import 'package:gradution_project/core/widgets/buttons.dart';
 import 'package:gradution_project/features/buttom_nav_bar/buttom_nav_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../core/widgets/circle_indecator.dart';
 import '../../../../core/widgets/rowas.dart';
 import '../widgets/profile_info.dart';
 import 'package:http/http.dart' as http;
@@ -35,6 +36,7 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
   late SharedPreferences _prefs;
   String? _token;
   Backend backend=Backend();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -123,22 +125,34 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
         }),
       );
       if (response.statusCode == 200) {
+        isLoading = false;
+        setState(() {
+          
+        });
         final responseData = jsonDecode(response.body);
         final token = responseData['token'];
         
         // Save token to shared preferences
         await _prefs.setString('token', token);
+        // ignore: avoid_print
         print('Token: $_token');
+        // ignore: avoid_print
         print('update successful');
 
         // Show success message or perform further actions
       } else {
+        isLoading = false;
+        setState(() {
+          
+        });
         // Update failed
+        // ignore: avoid_print
         print('Update failed. Status code: ${response.statusCode}');
         // Show error message or handle the failure accordingly
       }
     } catch (e) {
       // Handle connection error
+      // ignore: avoid_print
       print('Failed to connect to the server: $e');
       // Show error message to the user
     }
@@ -161,159 +175,199 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
-          child: Column(
+          child: Stack(
             children: [
-              const MaianAppBar(
-                text: 'Profile Info',
-              ),
-              const SizedBox(height: 40),
-              InkWell(
-                onTap: fetchImage,
-                child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: Stack(
-                    children: [
-                      pickedImage != null
-                          ? Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(70),
-                                image: DecorationImage(
-                                  image: FileImage(pickedImage!),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                          : const CircleAvatar(
-                              radius: 50,
-                              backgroundColor: MainAssets.blue,
-                              backgroundImage:
-                                  AssetImage("assets/images/profile.jpg"),
-                            ),
-                      const Positioned(
-                        bottom: 0,
-                        right: 7,
-                        child: CircleAvatar(
-                          radius: 13,
-                          backgroundColor: MainAssets.blue,
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                    ],
+              Column(
+                children: [
+                  const MaianAppBar(
+                    text: 'Profile Info',
                   ),
-                ),
-              ),
-              const SizedBox(height: 50),
-              const Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Personal Data",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Form(
-                  key: personalKey,
-                  child: Column(
-                    children: [
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "First Name ",
-                        text: fname,
-                      ),
-                      const Dividerr(),
-                      RowOfEditProfile(
-                          focusNode: focusNode,
-                          label: "Last Name ",
-                          text: lname // '${tokenData?['data'][2]}',
+                  const SizedBox(height: 40),
+                  InkWell(
+                    onTap: fetchImage,
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Stack(
+                        children: [
+                          pickedImage != null
+                              ? Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(70),
+                                    image: DecorationImage(
+                                      image: FileImage(pickedImage!),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                              : const CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: MainAssets.blue,
+                                  backgroundImage:
+                                      AssetImage("assets/images/profile.jpg"),
+                                ),
+                          const Positioned(
+                            bottom: 0,
+                            right: 7,
+                            child: CircleAvatar(
+                              radius: 13,
+                              backgroundColor: MainAssets.blue,
+                              child: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
                           ),
-                      const Dividerr(),
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "Gender ",
-                        text: genderrr,
+                        ],
                       ),
-                      const Dividerr(),
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "Phone ",
-                        text: phone,
-                      ),
-                      const Dividerr(),
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "Height ",
-                        text: height,
-                      ),
-                      const Dividerr(),
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "Weight ",
-                        text: weight,
-                      ),
-                      const Dividerr(),
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "Type of Glucose Level",
-                        text: weight,
-                      ),
-                      const SizedBox(height: 50),
-                      const Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Important Contacts",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600),
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "First contact ",
-                        text: weight,
-                      ),
-                      const Dividerr(),
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "Second contact ",
-                        text: weight,
-                      ),
-                      const Dividerr(),
-                      RowOfEditProfile(
-                        focusNode: focusNode,
-                        label: "Ambulance",
-                        text: weight,
-                      ),
-                    ],
-                  )),
-              const SizedBox(height: 100),
-              BlueButton(
-                buttonName: "Save changes",
-                fontSize: 15,
-                fn: () async {
-                  await _submit();
-                  setState(() {
-                    backend.getToken();
-                    const sBar = SnackBar(
-                      content: Text("Data Changed Successfully"),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(sBar);
-                  });
-                  Navigator.of(context).pushReplacementNamed(BottomNavBarScreen.routeName);
-                },
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Personal Data",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ProfileEditForm(personalKey: personalKey, focusNode: focusNode, fname: fname, lname: lname, genderrr: genderrr, phone: phone, height: height, weight: weight),
+                  const SizedBox(height: 100),
+                  BlueButton(
+                    buttonName: "Save changes",
+                    fontSize: 15,
+                    fn: () async {
+                      isLoading = true;
+                        setState(() {
+                        });
+                      await _submit();
+                      setState(() {
+                        backend.getToken();
+                        const sBar = SnackBar(
+                          content: Text("Data Changed Successfully"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(sBar);
+                      });
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushReplacementNamed(BottomNavBarScreen.routeName);
+                    },
+                  ),
+                ],
               ),
+              isLoading == true ? const CircleIndicator() : const SizedBox()
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+
+
+
+class ProfileEditForm extends StatelessWidget {
+  const ProfileEditForm({
+    super.key,
+    required this.personalKey,
+    required this.focusNode,
+    required this.fname,
+    required this.lname,
+    required this.genderrr,
+    required this.phone,
+    required this.height,
+    required this.weight,
+  });
+
+  final GlobalKey<FormState> personalKey;
+  final FocusNode focusNode;
+  final TextEditingController fname;
+  final TextEditingController lname;
+  final TextEditingController genderrr;
+  final TextEditingController phone;
+  final TextEditingController height;
+  final TextEditingController weight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: personalKey,
+        child: Column(
+          children: [
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "First Name ",
+              text: fname,
+            ),
+            const Dividerr(),
+            RowOfEditProfile(
+                focusNode: focusNode,
+                label: "Last Name ",
+                text: lname // '${tokenData?['data'][2]}',
+                ),
+            const Dividerr(),
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "Gender ",
+              text: genderrr,
+            ),
+            const Dividerr(),
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "Phone ",
+              text: phone,
+            ),
+            const Dividerr(),
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "Height ",
+              text: height,
+            ),
+            const Dividerr(),
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "Weight ",
+              text: weight,
+            ),
+            const Dividerr(),
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "Type of Glucose Level",
+              text: weight,
+            ),
+            const SizedBox(height: 50),
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Important Contacts",
+                style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.w600),
+                textAlign: TextAlign.start,
+              ),
+            ),
+            const SizedBox(height: 20),
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "First contact ",
+              text: weight,
+            ),
+            const Dividerr(),
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "Second contact ",
+              text: weight,
+            ),
+            const Dividerr(),
+            RowOfEditProfile(
+              focusNode: focusNode,
+              label: "Ambulance",
+              text: weight,
+            ),
+          ],
+        ));
   }
 }

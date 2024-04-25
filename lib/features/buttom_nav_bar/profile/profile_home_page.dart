@@ -30,21 +30,21 @@ class ProfileHomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 50,
                       backgroundImage: AssetImage("assets/images/profile.jpg"),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       "${Backend.fname.text} ${Backend.lname.text}  ",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontSize: 20,
                       ),
                     ),
-                    SizedBox(height: 30),
-                    DetailsRow()
+                    const SizedBox(height: 30),
+                    const DetailsRow()
                   ],
                 ),
               ),

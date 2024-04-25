@@ -10,7 +10,7 @@ class VerifyPhoneNumber extends StatelessWidget {
   VerifyPhoneNumber({super.key});
   static const String routeName = "verifyPhoneNumber";
   // ignore: annotate_overrides
-  final key =GlobalKey<FormState>();
+  final verification =GlobalKey<FormState>();
   final TextEditingController phone = TextEditingController();
 
   @override
@@ -36,7 +36,7 @@ class VerifyPhoneNumber extends StatelessWidget {
               ),
               const SizedBox(height: 85),
                Form(
-                key: key,
+                key: verification,
                 child: Column(
                   children: [
                     MainTextField(

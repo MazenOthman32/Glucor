@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../../../../core/widgets/textfield.dart';
 
 class Dividerr extends StatelessWidget {

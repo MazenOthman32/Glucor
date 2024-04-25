@@ -105,13 +105,13 @@ class FirstRowOfHomePage extends StatefulWidget {
 }
 
 class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
-
-  Backend backend =Backend();
+  Backend backend = Backend();
   @override
   void initState() {
-      backend.getToken();
+    backend.getToken();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -128,8 +128,8 @@ class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
           ),
         ),
         Text(
-          "Hello,${Backend.fname.text}",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          "Hello ${Backend.fname.text}",
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
         ),
         GestureDetector(
           onTap: () {
