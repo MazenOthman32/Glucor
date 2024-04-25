@@ -26,7 +26,7 @@ class ProfileHomePage extends StatelessWidget {
             children: [
               SizedBox(
                 height: size.height / 2,
-                child: const Column(
+                child:  Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -36,7 +36,7 @@ class ProfileHomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      "John Mac",
+                      "${Backend.fname.text} ${Backend.lname.text}  ",
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,

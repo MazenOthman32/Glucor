@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/buttons.dart';
+import 'package:gradution_project/features/buttom_nav_bar/buttom_nav_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/widgets/rowas.dart';
@@ -28,17 +29,84 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
   final TextEditingController height = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final personalKey = GlobalKey<FormState>();
+  bool isEditable = false;
+  FocusNode focusNode = FocusNode();
+  Map<String, dynamic>? tokenData;
+  late SharedPreferences _prefs;
+  String? _token;
+  Backend backend=Backend();
 
-  Future<void> _submitt() async {
+  @override
+  void initState() {
+    _getToken();
+
+    super.initState();
+  }
+
+  Future<void> _getToken() async {
+    _prefs = await SharedPreferences.getInstance();
+    _token = _prefs.getString('token');
+
+    if (_token != null) {
+      Map<String, dynamic> decodedToken = parseJwt(_token!);
+      // ignore: avoid_print
+
+      setState(() {
+        tokenData = decodedToken;
+        fname.text = '${tokenData?['data'][1]}';
+        lname.text = '${tokenData?['data'][2]}';
+        genderrr.text = '${tokenData?['data'][3]}';
+        phone.text = '${tokenData?['data'][4]}';
+        height.text = '${tokenData?['data'][6]}';
+        weight.text = '${tokenData?['data'][5]}';
+        Backend.fname.text =fname.text;
+      });
+    }
+  }
+
+  Map<String, dynamic> parseJwt(String token) {
+    final parts = token.split('.');
+    if (parts.length != 3) {
+      throw Exception('invalid token');
+    }
+
+    final payload = _decodeBase64(parts[1]);
+    final payloadMap = json.decode(payload);
+    if (payloadMap is! Map<String, dynamic>) {
+      throw Exception('invalid payload');
+    }
+
+    return payloadMap;
+  }
+
+  String _decodeBase64(String str) {
+    String output = str.replaceAll('-', '+').replaceAll('_', '/');
+
+    switch (output.length % 4) {
+      case 0:
+        break;
+      case 2:
+        output += '==';
+        break;
+      case 3:
+        output += '=';
+        break;
+      default:
+        throw Exception('Illegal base64url string!"');
+    }
+
+    return utf8.decode(base64Url.decode(output));
+  }
+
+  Future<void> _submit() async {
     final String fnamee = fname.text.trim();
     final String lnamee = lname.text.trim();
     final String gender = genderrr.text.trim();
     final String weightt = weight.text.trim();
     final String heightt = height.text.trim();
     final String phonee = phone.text.trim();
-    // Retrieve token from SharedPreferences
-    var _prefs = await SharedPreferences.getInstance();
-    var _token = _prefs.getString('token');
+
+    // refresh token
 
     try {
       final response = await http.patch(
@@ -55,10 +123,15 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
         }),
       );
       if (response.statusCode == 200) {
-        // Update successful
+        final responseData = jsonDecode(response.body);
+        final token = responseData['token'];
+        
+        // Save token to shared preferences
+        await _prefs.setString('token', token);
+        print('Token: $_token');
+        print('update successful');
 
-        print('Update successful');
-        // Navigate to the next screen or perform further actions
+        // Show success message or perform further actions
       } else {
         // Update failed
         print('Update failed. Status code: ${response.statusCode}');
@@ -80,17 +153,6 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
     setState(() {
       pickedImage = File(image.path);
     });
-  }
-
-  bool isEditable = false;
-  FocusNode focusNode = FocusNode();
-  String t = "Mac";
-  Map<String, dynamic>? tokenData;
-
-  @override
-  void initState() {
-    _getToken();
-    super.initState();
   }
 
   @override
@@ -237,15 +299,15 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                 buttonName: "Save changes",
                 fontSize: 15,
                 fn: () async {
-                  await _submitt();
+                  await _submit();
                   setState(() {
+                    backend.getToken();
                     const sBar = SnackBar(
                       content: Text("Data Changed Successfully"),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(sBar);
                   });
-
-                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacementNamed(BottomNavBarScreen.routeName);
                 },
               ),
             ],
@@ -253,59 +315,5 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
         ),
       ),
     );
-  }
-
-  Future<void> _getToken() async {
-    var _prefs = await SharedPreferences.getInstance();
-    var _token = _prefs.getString('token');
-
-    if (_token != null) {
-      Map<String, dynamic> decodedToken = parseJwt(_token);
-      // ignore: avoid_print
-
-      setState(() {
-        tokenData = decodedToken;
-        fname.text = '${tokenData?['data'][1]}';
-        lname.text = '${tokenData?['data'][2]}';
-        genderrr.text = '${tokenData?['data'][3]}';
-        phone.text = '${tokenData?['data'][4]}';
-        height.text = '${tokenData?['data'][6]}';
-        weight.text = '${tokenData?['data'][5]}';
-      });
-    }
-  }
-
-  Map<String, dynamic> parseJwt(String token) {
-    final parts = token.split('.');
-    if (parts.length != 3) {
-      throw Exception('invalid token');
-    }
-
-    final payload = _decodeBase64(parts[1]);
-    final payloadMap = json.decode(payload);
-    if (payloadMap is! Map<String, dynamic>) {
-      throw Exception('invalid payload');
-    }
-
-    return payloadMap;
-  }
-
-  String _decodeBase64(String str) {
-    String output = str.replaceAll('-', '+').replaceAll('_', '/');
-
-    switch (output.length % 4) {
-      case 0:
-        break;
-      case 2:
-        output += '==';
-        break;
-      case 3:
-        output += '=';
-        break;
-      default:
-        throw Exception('Illegal base64url string!"');
-    }
-
-    return utf8.decode(base64Url.decode(output));
   }
 }

@@ -95,11 +95,23 @@ class SugarLevel extends StatelessWidget {
   }
 }
 
-class FirstRowOfHomePage extends StatelessWidget {
+class FirstRowOfHomePage extends StatefulWidget {
   const FirstRowOfHomePage({
     super.key,
   });
 
+  @override
+  State<FirstRowOfHomePage> createState() => _FirstRowOfHomePageState();
+}
+
+class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
+
+  Backend backend =Backend();
+  @override
+  void initState() {
+      backend.getToken();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -115,14 +127,13 @@ class FirstRowOfHomePage extends StatelessWidget {
             backgroundImage: const AssetImage("assets/images/profile.jpg"),
           ),
         ),
-        const Text(
-          "Hello, John",
+        Text(
+          "Hello,${Backend.fname.text}",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
         ),
         GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, NotificationPage.routeName);
-            
           },
           child: Container(
             height: 40,

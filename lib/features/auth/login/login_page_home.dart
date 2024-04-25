@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/buttons.dart';
 import 'package:gradution_project/core/widgets/texts.dart';
 import 'package:gradution_project/features/auth/signup/signuppage.dart';
@@ -20,17 +21,20 @@ class LoginScreenHome extends StatefulWidget {
 }
 
 class _LoginScreenHomeState extends State<LoginScreenHome> {
+  
   final loginkey = GlobalKey<FormState>();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   bool isLoading = false;
 
-  late SharedPreferences _prefs;
+ late SharedPreferences _prefs;
   String? _token;
 
   @override
   void initState() {
+    
     super.initState();
+    
     _initSharedPreferences();
   }
 
@@ -40,13 +44,14 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
     if (_token != null) {
       // Token exists, print it
       // ignore: avoid_print
-      print('Token from Shared Preferences: $_token');
+      print('Token from login: $_token');
     }
   }
 
   Future<void> _submit() async {
     final String emaill = email.text.trim();
     final String passwordd = password.text.trim();
+    
 
     try {
       final response = await http.post(
@@ -62,8 +67,10 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
         setState(() {});
         // ignore: avoid_print
         print('Login successful');
+
         final responseData = jsonDecode(response.body);
         final token = responseData['token'];
+        
         // Save token to shared preferences
         await _prefs.setString('token', token);
         Navigator.pushReplacement(
@@ -153,7 +160,9 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
                     fn: () {
                       if (loginkey.currentState!.validate()) {
                         isLoading = true;
-                        setState(() {});
+                        setState(() {
+                         
+                        });
                         _submit();
                       }
                     },
@@ -173,7 +182,7 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
                 const SizedBox(height: 50),
               ],
             ),
-            isLoading == false ? const CircleIndicator() : const SizedBox()
+            isLoading == true ? const CircleIndicator() : const SizedBox()
           ],
         ),
       ),
