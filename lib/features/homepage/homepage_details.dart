@@ -6,9 +6,20 @@ import '../../core/util/constant.dart';
 import '../tabs/monthly.dart';
 import '../tabs/weekly.dart';
 
-class HomePageDetails extends StatelessWidget {
+class HomePageDetails extends StatefulWidget {
   const HomePageDetails({super.key});
 
+  @override
+  State<HomePageDetails> createState() => _HomePageDetailsState();
+}
+
+class _HomePageDetailsState extends State<HomePageDetails> {
+  ReportModel reportModel=ReportModel();
+  @override
+  void initState() {
+    reportModel.fetchDataAndPrint();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -76,7 +87,7 @@ class HomePageDetails extends StatelessWidget {
                 size: size,
               ),
               MonthlyTab(
-                size: size,
+                size: size, 
               ),
             ]),
           ),

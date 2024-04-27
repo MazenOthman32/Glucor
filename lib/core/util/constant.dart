@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,7 @@ class Backend{
 
 static  TextEditingController fname = TextEditingController();
 static   TextEditingController lname = TextEditingController();
+static  TextEditingController email = TextEditingController();
 static  TextEditingController genderrr = TextEditingController();
  static TextEditingController weight = TextEditingController();
 static   TextEditingController height = TextEditingController();
@@ -36,6 +38,7 @@ static String? token;
     if (token != null) {
       Map<String, dynamic> decodedToken = parseJwt(token!);
       tokenData = decodedToken;
+        email.text = '${tokenData?['data'][0]}';
         fname.text = '${tokenData?['data'][1]}';
         lname.text = '${tokenData?['data'][2]}';
         genderrr.text = '${tokenData?['data'][3]}';
@@ -83,4 +86,43 @@ static String? token;
     return utf8.decode(base64Url.decode(output));
   }
 
+}
+
+
+class ReportModel{
+
+  static List lll = [];
+Future<void> fetchDataAndPrint() async {
+  try {
+    // Get a reference to the Firestore instance
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Replace 'collectionPath' with your collection path
+    String collectionPath = 'readingGraph';
+    
+    // Replace 'email' with the document ID
+    String documentId = Backend.email.text;
+
+    // Get reference to the document
+    DocumentSnapshot documentSnapshot = await firestore.collection(collectionPath).doc(documentId).get();
+
+    // Check if document exists
+    if (documentSnapshot.exists) {
+      // Retrieve data from the document
+      Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+      List<dynamic> values = data.values.toList();
+
+      // Convert values to integers
+      List<int> intValues = values.map((value) => value as int).toList();
+
+      // You can assign intValues to list if you want
+    lll = intValues;
+    print(lll);
+    } else {
+      print('Document does not exist');
+    }
+  } catch (e) {
+    print('Error fetching data: $e');
+  }
+}
 }

@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../../core/util/constant.dart';
 import '../../../../core/widgets/buttons.dart';
 import '../../../../core/widgets/rowas.dart';
 import '../../../../model/report_chart/cahrt_model.dart';
@@ -38,7 +40,13 @@ class _ReportDetailsState extends State<ReportDetails> {
     final name = "Screenshot$time";
     await ImageGallerySaver.saveImage(byte, name: name);
   }
-
+  ReportModel reportModel=ReportModel();
+@override
+  void initState() {
+        reportModel.fetchDataAndPrint();
+    super.initState();
+  }
+ 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -114,4 +122,6 @@ class Rowl extends StatelessWidget {
       ],
     );
   }
+
+   
 }

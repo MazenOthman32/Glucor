@@ -12,7 +12,7 @@ class LineChartW extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 2,
       child: LineChart(
-          LineChartData(minX: 0, minY: 20, maxX: 12, maxY: 200, lineBarsData: [
+          LineChartData(minX: 0, minY: 60, maxX: 12, maxY: 200, lineBarsData: [
         LineChartBarData(
           
             spots: glAllData
