@@ -35,6 +35,7 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
     }
   }
 
+
   @override
   // ignore: must_call_super
   void initState() {
@@ -49,6 +50,7 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
       });
     });
   }
+  
 
   @override
   Widget build(BuildContext context) {

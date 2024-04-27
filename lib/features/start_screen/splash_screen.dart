@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../core/util/constant.dart';
 import '../buttom_nav_bar/buttom_nav_bar.dart';
 import 'start_screen.dart';
 
@@ -18,17 +17,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  Backend backend=Backend();
   @override
   void initState() {
+    backend.getToken();
+      
     getValidation().whenComplete(() async {
       Timer(
           const Duration(seconds: 5),
-          () => Navigator.pushNamed(
+          () => Navigator.pushReplacementNamed(
               context,
               finalToken == null
                   ? StartScreen.routeName
                   : BottomNavBarScreen.routeName));
     });
+
+
+    
     super.initState();
   }
 
@@ -42,9 +48,10 @@ class _SplashScreenState extends State<SplashScreen> {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     var obtained = sharedPreferences.getString('token');
+     if (mounted) {
     setState(() {
       finalToken = obtained;
-    });
+    });}
     // ignore: avoid_print
     print(finalToken);
   }

@@ -27,7 +27,10 @@ class GoogleButton extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 15),
-                  Text("Continue with Google")
+                  Text(
+                    "Continue with Google",
+                    style: TextStyle(fontSize: 12),
+                  )
                 ],
               )),
         ),

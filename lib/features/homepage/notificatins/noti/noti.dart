@@ -33,9 +33,9 @@ class LocalNotificationService {
   }
 
   //basic Notification
-  static void showBasicNotification( String title,String content) async {
+  static void showBasicNotification( String title,String content ,String id) async {
     AndroidNotificationDetails android =  AndroidNotificationDetails(
-        'id 1', 'basic notification',
+        id, 'basic notification',
         importance: Importance.max,
         priority: Priority.high,
         sound:

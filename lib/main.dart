@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -48,12 +49,14 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _listenToFirebaseData() async {
+    var random = Random();
+    int id=random.nextInt(100);
     if (snti > 100) {
       String title = "Glocouse is High";
       String content = "Your Glocouse Level is $snti";
       String hour = DateTime.now().hour.toString();
       String minutes = DateTime.now().minute.toString().padLeft(2, '0');
-      LocalNotificationService.showBasicNotification(title, content);
+      LocalNotificationService.showBasicNotification(title, content , id.toString());
       int response = await sqldata.insertData('''
             INSERT INTO notification (`title`,`content` ,`hour`,`minutes`) VALUES ("$title","$content","$hour","$minutes") 
             ''');
@@ -62,8 +65,25 @@ class _MainScreenState extends State<MainScreen> {
       print(MainAssets.notificationIsOpend);
       // ignore: unnecessary_brace_in_string_interps, avoid_print
       print("${response}");
-
       if (snti > 300) {
+        const number = '01270498060'; //set the number here
+        await FlutterPhoneDirectCaller.callNumber(number);
+      }
+    }    else if (snti < 80) {
+      String title = "Glocouse is Low";
+      String content = "Your Glocouse Level is $snti";
+      String hour = DateTime.now().hour.toString();
+      String minutes = DateTime.now().minute.toString().padLeft(2, '0');
+      LocalNotificationService.showBasicNotification(title, content , id.toString());
+      int response = await sqldata.insertData('''
+            INSERT INTO notification (`title`,`content` ,`hour`,`minutes`) VALUES ("$title","$content","$hour","$minutes") 
+            ''');
+      MainAssets.notificationIsOpend = false;
+      // ignore: avoid_print
+      print(MainAssets.notificationIsOpend);
+      // ignore: unnecessary_brace_in_string_interps, avoid_print
+      print("${response}");
+      if (snti < 60) {
         const number = '01270498060'; //set the number here
         await FlutterPhoneDirectCaller.callNumber(number);
       }
