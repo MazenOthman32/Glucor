@@ -51,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> _listenToFirebaseData() async {
     var random = Random();
     int id=random.nextInt(100);
-    if (snti > 100) {
+    if (snti > 150) {
       String title = "Glocouse is High";
       String content = "Your Glocouse Level is $snti";
       String hour = DateTime.now().hour.toString();
@@ -65,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
       print(MainAssets.notificationIsOpend);
       // ignore: unnecessary_brace_in_string_interps, avoid_print
       print("${response}");
-      if (snti > 300) {
+      if (snti > 450) {
         const number = '01270498060'; //set the number here
         await FlutterPhoneDirectCaller.callNumber(number);
       }

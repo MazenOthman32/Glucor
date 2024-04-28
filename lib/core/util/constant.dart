@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,25 +15,22 @@ class MainAssets {
 }
 
 
-
 class Backend{
-
 
 static  TextEditingController fname = TextEditingController();
 static   TextEditingController lname = TextEditingController();
 static  TextEditingController email = TextEditingController();
 static  TextEditingController genderrr = TextEditingController();
- static TextEditingController weight = TextEditingController();
+static TextEditingController weight = TextEditingController();
 static   TextEditingController height = TextEditingController();
 static   TextEditingController phone = TextEditingController();
 static Map<String, dynamic>? tokenData;
 static late SharedPreferences _prefs;
 static String? token;
-  Future<void> getToken() async {
 
+  Future<void> getToken() async {
     _prefs = await SharedPreferences.getInstance();
     token = _prefs.getString('token');
-
     if (token != null) {
       Map<String, dynamic> decodedToken = parseJwt(token!);
       tokenData = decodedToken;
@@ -46,9 +42,7 @@ static String? token;
         height.text = '${tokenData?['data'][6]}';
         weight.text = '${tokenData?['data'][5]}';
         MainAssets.name =fname.text;
-      // ignore: avoid_print
-
-      
+      // ignore: avoid_print 
     }
   }
 
@@ -57,7 +51,7 @@ static String? token;
     if (parts.length != 3) {
       throw Exception('invalid token');
     }
-
+    
     final payload = _decodeBase64(parts[1]);
     final payloadMap = json.decode(payload);
     if (payloadMap is! Map<String, dynamic>) {
@@ -102,26 +96,26 @@ Future<void> fetchDataAndPrint() async {
     
     // Replace 'email' with the document ID
     String documentId = Backend.email.text;
-
     // Get reference to the document
     DocumentSnapshot documentSnapshot = await firestore.collection(collectionPath).doc(documentId).get();
-
     // Check if document exists
     if (documentSnapshot.exists) {
       // Retrieve data from the document
       Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
       List<dynamic> values = data.values.toList();
-
       // Convert values to integers
       List<int> intValues = values.map((value) => value as int).toList();
-
       // You can assign intValues to list if you want
     lll = intValues;
+    // ignore: avoid_print
     print(lll);
     } else {
+      
+      // ignore: avoid_print
       print('Document does not exist');
     }
   } catch (e) {
+    // ignore: avoid_print
     print('Error fetching data: $e');
   }
 }
