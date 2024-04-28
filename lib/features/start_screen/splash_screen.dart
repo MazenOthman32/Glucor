@@ -17,17 +17,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-  Backend backend=Backend();
+  Backend backend = Backend();
 
   @override
   void initState() {
     backend.getToken();
 
-      
     getValidation().whenComplete(() async {
       Timer(
-          const Duration(seconds: 5),
+          const Duration(seconds: 2),
           () => Navigator.pushReplacementNamed(
               context,
               finalToken == null
@@ -35,8 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   : BottomNavBarScreen.routeName));
     });
 
-
-    
     super.initState();
   }
 
@@ -50,10 +46,11 @@ class _SplashScreenState extends State<SplashScreen> {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     var obtained = sharedPreferences.getString('token');
-     if (mounted) {
-    setState(() {
-      finalToken = obtained;
-    });}
+    if (mounted) {
+      setState(() {
+        finalToken = obtained;
+      });
+    }
     // ignore: avoid_print
     print(finalToken);
   }

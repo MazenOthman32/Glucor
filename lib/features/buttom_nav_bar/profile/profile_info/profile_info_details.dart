@@ -29,6 +29,8 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
   final TextEditingController weight = TextEditingController();
   final TextEditingController height = TextEditingController();
   final TextEditingController phone = TextEditingController();
+  final TextEditingController type = TextEditingController();
+  final TextEditingController time= TextEditingController();
   final personalKey = GlobalKey<FormState>();
   bool isEditable = false;
   FocusNode focusNode = FocusNode();
@@ -61,6 +63,8 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
         phone.text = '${tokenData?['data'][4]}';
         height.text = '${tokenData?['data'][6]}';
         weight.text = '${tokenData?['data'][5]}';
+        type.text = '${tokenData?['data'][8]}';
+        time.text = '${tokenData?['data'][9]}';
         Backend.fname.text =fname.text;
       });
     }
@@ -107,12 +111,12 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
     final String weightt = weight.text.trim();
     final String heightt = height.text.trim();
     final String phonee = phone.text.trim();
-
+    final String typee = type.text.trim();
     // refresh token
 
     try {
       final response = await http.patch(
-        Uri.parse('https://red-thankful-cygnet.cyclic.app/updateinfo'),
+        Uri.parse('https://adc-8aar.onrender.com/updateinfo'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'firstName': fnamee,
@@ -121,6 +125,7 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
           'phoneNumber': phonee,
           'weight': weightt,
           'height': heightt,
+          'diabetic_type': typee,
           'token': _token
         }),
       );
@@ -138,7 +143,8 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
         print('Token: $_token');
         // ignore: avoid_print
         print('update successful');
-
+        // ignore: avoid_print
+        print(type);
         // Show success message or perform further actions
       } else {
         isLoading = false;
@@ -235,7 +241,7 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ProfileEditForm(personalKey: personalKey, focusNode: focusNode, fname: fname, lname: lname, genderrr: genderrr, phone: phone, height: height, weight: weight),
+                  ProfileEditForm(personalKey: personalKey, focusNode: focusNode, fname: fname, lname: lname, genderrr: genderrr, phone: phone, height: height, weight: weight, type: type,),
                   const SizedBox(height: 100),
                   BlueButton(
                     buttonName: "Save changes",
@@ -281,6 +287,7 @@ class ProfileEditForm extends StatelessWidget {
     required this.phone,
     required this.height,
     required this.weight,
+    required this.type,
   });
 
   final GlobalKey<FormState> personalKey;
@@ -291,6 +298,7 @@ class ProfileEditForm extends StatelessWidget {
   final TextEditingController phone;
   final TextEditingController height;
   final TextEditingController weight;
+  final TextEditingController type;
 
   @override
   Widget build(BuildContext context) {
@@ -337,7 +345,7 @@ class ProfileEditForm extends StatelessWidget {
             RowOfEditProfile(
               focusNode: focusNode,
               label: "Type of Glucose Level",
-              text: weight,
+              text: type,
             ),
             const SizedBox(height: 50),
             const Align(

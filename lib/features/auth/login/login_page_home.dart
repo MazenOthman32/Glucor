@@ -54,7 +54,7 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://red-thankful-cygnet.cyclic.app/login'),
+        Uri.parse('https://adc-8aar.onrender.com/login'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'email': emaill,

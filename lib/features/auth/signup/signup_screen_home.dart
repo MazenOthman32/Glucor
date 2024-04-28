@@ -39,7 +39,7 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://red-thankful-cygnet.cyclic.app/signup'),
+        Uri.parse('https://adc-8aar.onrender.com/signup'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'name': namee,
