@@ -81,6 +81,23 @@ class FontW25 extends StatelessWidget {
   }
 }
 
+
+class FontW23 extends StatelessWidget {
+  const FontW23({
+    super.key,
+    required this.text,
+  });
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 25),
+    );
+  }
+}
+
 class FontW20 extends StatelessWidget {
   const FontW20({
     super.key,

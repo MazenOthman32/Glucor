@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MainScreen());
+  runApp(DevicePreview(builder: (context) => const MainScreen()));
 }
 
 class MainScreen extends StatefulWidget {
@@ -101,9 +102,9 @@ class _MainScreenState extends State<MainScreen> {
         Theme.of(context).textTheme,
       )),
       // ignore: deprecated_member_use
-      // useInheritedMediaQuery: true,
-      // locale: DevicePreview.locale(context),
-      // builder: DevicePreview.appBuilder,
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       routes: Routes.allRoutes,
     );

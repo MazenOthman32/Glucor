@@ -1,11 +1,13 @@
 // ignore_for_file: curly_braces_in_flow_control_structures, body_might_complete_normally_nullable, avoid_print, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
 import 'package:flutter/material.dart';
+import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/textfield.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/widgets/buttons.dart';
+import '../forget_password/forgot_password.dart';
 import '../profileupdate.dart/verfication.dart';
 
 class SiggnUpForm extends StatelessWidget {
@@ -138,6 +140,18 @@ class LoginForm extends StatelessWidget {
                 return "password should be longer than 6";
             },
           ),
+          const SizedBox(height: 10),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, ForgotPassword.routeName);
+                },
+                child: const Text(
+                  "Forgot Password",
+                  style: TextStyle(color: MainAssets.blue),
+                )),
+          ),
           const SizedBox(height: 30),
         ],
       ),
@@ -146,6 +160,7 @@ class LoginForm extends StatelessWidget {
 }
 
 Map<String, dynamic>? tokenData;
+
 class ProfileForm extends StatefulWidget {
   const ProfileForm({
     super.key,
@@ -163,7 +178,7 @@ class _ProfileFormState extends State<ProfileForm> {
   final TextEditingController weight = TextEditingController();
   final TextEditingController height = TextEditingController();
 
-   Future<void> _submit() async {
+  Future<void> _submit() async {
     final String fnamee = fname.text.trim();
     final String lnamee = lname.text.trim();
     final String gender = genderrr.text.trim();
@@ -190,23 +205,23 @@ class _ProfileFormState extends State<ProfileForm> {
           'token': _token,
         }),
       );
-    if (response.statusCode == 200) {
-      // Update successful
-      print('Update successful');
-      // Navigate to the next screen or perform further actions
-    } else {
-      // Update failed
-      print('Update failed. Status code: ${response.statusCode}');
-      // Show error message or handle the failure accordingly
+      if (response.statusCode == 200) {
+        // Update successful
+        print('Update successful');
+        // Navigate to the next screen or perform further actions
+      } else {
+        // Update failed
+        print('Update failed. Status code: ${response.statusCode}');
+        // Show error message or handle the failure accordingly
+      }
+    } catch (e) {
+      // Handle connection error
+      print('Failed to connect to the server: $e');
+      // Show error message to the user
     }
-  } catch (e) {
-    // Handle connection error
-    print('Failed to connect to the server: $e');
-    // Show error message to the user
   }
-}
 
-  final profilekey= GlobalKey<FormState>();
+  final profilekey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -273,24 +288,23 @@ class _ProfileFormState extends State<ProfileForm> {
             },
           ),
           const SizedBox(height: 20),
-          
           SizedBox(
-                width: 133,
-                child: BlueButton(
-                  buttonName: "Set",
-                  fn: () async {
-                    await _submit();
-                    if(profilekey.currentState!.validate()){
-                    Navigator.pushNamed(context, VerifyPhoneNumber.routeName);
-                    }
-                  },
-                ),
-              ),
+            width: 133,
+            child: BlueButton(
+              buttonName: "Set",
+              fn: () async {
+                await _submit();
+                if (profilekey.currentState!.validate()) {
+                  Navigator.pushNamed(context, VerifyPhoneNumber.routeName);
+                }
+              },
+            ),
+          ),
         ],
       ),
     );
   }
-  
+
   @override
   void dispose() {
     fname.dispose();

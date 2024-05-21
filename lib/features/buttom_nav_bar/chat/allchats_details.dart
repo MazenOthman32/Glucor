@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import '../../../core/widgets/textfield.dart';
 import '../../../core/widgets/texts.dart';
+import 'cahtbot/chatbot.dart';
 import 'select_chat/chat.dart';
 import 'widgets/allchats.dart';
 
@@ -13,15 +14,78 @@ class AllChatScreenDetails extends StatefulWidget {
 }
 
 class _AllChatScreenDetailsState extends State<AllChatScreenDetails> {
-  final TextEditingController phone = TextEditingController();
-  final chatkey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        body: DefaultTabController(
+          length: 2,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const FontW25(text: "Chat"),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: MainAssets.babyBlue.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(50)),
+                      height: 50,
+                      width: size.width / 1.5,
+                      child: TabBar(
+                          indicator: BoxDecoration(
+                              color: MainAssets.blue.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(50)),
+                          unselectedLabelColor: Colors.black,
+                          indicatorColor: Colors.black,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          labelColor: Colors.white,
+                          tabs: const [
+                            Text(
+                              "Private",
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            Text("Chatbot"),
+                          ]),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Expanded(
+                      child: TabBarView(children: [
+                    Allchats(),
+                    ChatScreen(),
+                  ])),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Allchats extends StatefulWidget {
+  const Allchats({super.key});
+
+  @override
+  State<Allchats> createState() => _AllchatsState();
+}
+
+class _AllchatsState extends State<Allchats> {
+  final TextEditingController phone = TextEditingController();
+
+  final chatkey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: MainAssets.blue,
           shape:
@@ -81,57 +145,15 @@ class _AllChatScreenDetailsState extends State<AllChatScreenDetails> {
             color: Colors.white,
           ),
         ),
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const FontW25(text: "Chat"),
-                  const SizedBox(height: 20),
-                  Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: MainAssets.babyBlue.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(50)),
-                      height: 50,
-                      width: size.width / 1.5,
-                      child: TabBar(
-                          indicator: BoxDecoration(
-                              color: MainAssets.blue.withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(50)),
-                          unselectedLabelColor: Colors.black,
-                          indicatorColor: Colors.black,
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          labelColor: Colors.white,
-                          tabs: const [
-                            Text(
-                              "Private",
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                            Text("community"),
-                          ]),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) => InkWell(
-                          onTap: () => Navigator.of(context)
-                              .pushNamed(ChatSelected.routeName),
-                          child: AllChatItem(size: size)),
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 20),
-                      itemCount: 10)
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+        body: ListView.separated(
+            shrinkWrap: false,
+            // physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) => InkWell(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(ChatSelected.routeName),
+                child: AllChatItem(size: size)),
+            separatorBuilder: (context, index) => const SizedBox(height: 20),
+            itemCount: 10));
   }
 }
