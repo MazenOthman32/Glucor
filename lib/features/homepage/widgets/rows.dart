@@ -106,6 +106,7 @@ class FirstRowOfHomePage extends StatefulWidget {
 
 class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
   Backend backend = Backend();
+  
   @override
   void initState() {
     backend.getToken();
@@ -128,7 +129,7 @@ class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
           ),
         ),
         Text(
-          "Hello ${Backend.fname.text}",
+          "Hello ${Backend.fname.text} ",
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
         ),
         GestureDetector(

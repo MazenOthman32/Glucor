@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/features/auth/login/loginpage.dart';
 import 'package:gradution_project/features/buttom_nav_bar/profile/faq/faq.dart';
@@ -121,6 +122,8 @@ class ProfileHomePage extends StatelessWidget {
                                             backgroundColor: MainAssets.blue,
                                             foregroundColor: Colors.white),
                                         onPressed: () async {
+                                          GoogleSignIn googleSignIn = GoogleSignIn();
+                                          googleSignIn.disconnect();
                                           SharedPreferences prefs =
                                               await SharedPreferences
                                                   .getInstance();
