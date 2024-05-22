@@ -48,7 +48,9 @@ class ForgotPasswordBody extends StatelessWidget {
             const SizedBox(height: 50),
             BlueButton(
                 buttonName: "Send",
-                fn: () {
+                fn: ()  {
+                
+
                   Navigator.of(context).pushNamed(LoginScreen.routeName);
                 }),
           ],

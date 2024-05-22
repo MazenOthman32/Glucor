@@ -116,10 +116,13 @@ class _SendMessageTextFieldState extends State<SendMessageTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       controller: widget.controller,
       validator: widget.validator,
       cursorColor: MainAssets.blue,
       keyboardType: TextInputType.text,
+      maxLines: 5,
+      minLines: 1,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
@@ -131,7 +134,7 @@ class _SendMessageTextFieldState extends State<SendMessageTextField> {
             color: Colors.grey,
           ),
           hintText: widget.hint,
-          hintStyle: const TextStyle(color: Colors.grey),
+          hintStyle: const TextStyle(color: Colors.grey, fontSize: 13),
           suffixIconColor: Colors.grey),
     );
   }

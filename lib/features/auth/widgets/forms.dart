@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/widgets/buttons.dart';
 import '../forget_password/forgot_password.dart';
-import '../profileupdate.dart/verfication.dart';
+import '../profileupdate.dart/qf2.dart';
 
 class SiggnUpForm extends StatelessWidget {
   const SiggnUpForm({
@@ -295,7 +295,7 @@ class _ProfileFormState extends State<ProfileForm> {
               fn: () async {
                 await _submit();
                 if (profilekey.currentState!.validate()) {
-                  Navigator.pushNamed(context, VerifyPhoneNumber.routeName);
+                  Navigator.pushNamed(context, Qf2.routeName);
                 }
               },
             ),

@@ -1,6 +1,6 @@
 // ignore_for_file: overridden_fields
 import 'package:flutter/material.dart';
-import 'package:gradution_project/features/auth/profileupdate.dart/qf2.dart';
+import 'package:gradution_project/features/auth/profileupdate.dart/set_profile.dart';
 import '../../../core/widgets/buttons.dart';
 import '../../../core/widgets/rowas.dart';
 import '../../../core/widgets/textfield.dart';
@@ -57,7 +57,7 @@ class VerifyPhoneNumber extends StatelessWidget {
                 child: BlueButton(
                   buttonName: "Verify",
                   fn: () {
-                    Navigator.pushNamed(context, Qf2.routeName);
+                    Navigator.pushNamed(context, SetProfile.routeName);
                   },
                 ),
               )

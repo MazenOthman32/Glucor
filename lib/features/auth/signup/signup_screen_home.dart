@@ -8,9 +8,10 @@ import '../../../core/widgets/circle_indecator.dart';
 import '../../../core/widgets/rowas.dart';
 import '../../../core/widgets/texts.dart';
 import '../login/loginpage.dart';
-import '../profileupdate.dart/set_profile.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
+import '../profileupdate.dart/verfication.dart';
 
 class SignUpScreenHome extends StatefulWidget {
   SignUpScreenHome({super.key});
@@ -63,7 +64,7 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
         // Save token in SharedPreferences
         final prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
-        Navigator.pushNamed(context, SetProfile.routeName);
+        Navigator.pushNamed(context, VerifyPhoneNumber.routeName);
         print(token);
         // Navigate to the next screen or perform further actions
       } else {
