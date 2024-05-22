@@ -1,8 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-
 
 class DetailsRow extends StatelessWidget {
   const DetailsRow({
@@ -30,21 +27,6 @@ class DetailsRow extends StatelessWidget {
           ),
         ),
         ProfileD(
-          number: "765cal",
-          name: 'Calories',
-          icond: FontAwesomeIcons.fire,
-        ),
-        SizedBox(
-          height: 90,
-          child: VerticalDivider(
-            color: Colors.white,
-            thickness: 1,
-            width: 2,
-            indent: 20,
-            endIndent: 20,
-          ),
-        ),
-        ProfileD(
           number: "103lbs",
           name: 'Weight',
           icond: FontAwesomeIcons.dumbbell,
@@ -53,8 +35,6 @@ class DetailsRow extends StatelessWidget {
     );
   }
 }
-
-
 
 class ProfileD extends StatelessWidget {
   const ProfileD({
