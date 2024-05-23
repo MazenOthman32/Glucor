@@ -1,5 +1,4 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -30,14 +29,14 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
   final TextEditingController height = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController type = TextEditingController();
-  final TextEditingController time= TextEditingController();
+  final TextEditingController time = TextEditingController();
   final personalKey = GlobalKey<FormState>();
   bool isEditable = false;
   FocusNode focusNode = FocusNode();
   Map<String, dynamic>? tokenData;
   late SharedPreferences _prefs;
   String? _token;
-  Backend backend=Backend();
+  Backend backend = Backend();
   bool isLoading = false;
 
   @override
@@ -65,7 +64,7 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
         weight.text = '${tokenData?['data'][5]}';
         type.text = '${tokenData?['data'][8]}';
         time.text = '${tokenData?['data'][9]}';
-        Backend.fname.text =fname.text;
+        Backend.fname.text = fname.text;
       });
     }
   }
@@ -131,12 +130,10 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
       );
       if (response.statusCode == 200) {
         isLoading = false;
-        setState(() {
-          
-        });
+        setState(() {});
         final responseData = jsonDecode(response.body);
         final token = responseData['token'];
-        
+
         // Save token to shared preferences
         await _prefs.setString('token', token);
         // ignore: avoid_print
@@ -148,9 +145,7 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
         // Show success message or perform further actions
       } else {
         isLoading = false;
-        setState(() {
-          
-        });
+        setState(() {});
         // Update failed
         // ignore: avoid_print
         print('Update failed. Status code: ${response.statusCode}');
@@ -236,20 +231,30 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Personal Data",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                       textAlign: TextAlign.start,
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ProfileEditForm(personalKey: personalKey, focusNode: focusNode, fname: fname, lname: lname, genderrr: genderrr, phone: phone, height: height, weight: weight, type: type,),
+                  ProfileEditForm(
+                    personalKey: personalKey,
+                    focusNode: focusNode,
+                    fname: fname,
+                    lname: lname,
+                    genderrr: genderrr,
+                    phone: phone,
+                    height: height,
+                    weight: weight,
+                    type: type,
+                  ),
                   const SizedBox(height: 100),
                   BlueButton(
                     buttonName: "Save changes",
                     fontSize: 15,
                     fn: () async {
                       isLoading = true;
-                        setState(() {
-                        });
+                      setState(() {});
                       await _submit();
                       setState(() {
                         backend.getToken();
@@ -259,9 +264,11 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                         ScaffoldMessenger.of(context).showSnackBar(sBar);
                       });
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacementNamed(BottomNavBarScreen.routeName);
+                      Navigator.of(context)
+                          .pushReplacementNamed(BottomNavBarScreen.routeName);
                     },
                   ),
+                  const SizedBox(height: 50),
                 ],
               ),
               isLoading == true ? const CircleIndicator() : const SizedBox()
@@ -272,9 +279,6 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
     );
   }
 }
-
-
-
 
 class ProfileEditForm extends StatelessWidget {
   const ProfileEditForm({
@@ -352,8 +356,7 @@ class ProfileEditForm extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 "Important Contacts",
-                style: TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 textAlign: TextAlign.start,
               ),
             ),

@@ -106,7 +106,7 @@ class FirstRowOfHomePage extends StatefulWidget {
 
 class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
   Backend backend = Backend();
-  
+
   @override
   void initState() {
     backend.getToken();

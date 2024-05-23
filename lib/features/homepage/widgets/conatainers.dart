@@ -6,10 +6,11 @@ import '../../../core/database/notes_sqlite/sqlite.dart';
 class NextMedican extends StatefulWidget {
   const NextMedican({
     super.key,
-    required this.size,
+    required this.size, this.oldreading,
   });
 
   final Size size;
+  final int? oldreading;
 
   @override
   State<NextMedican> createState() => _NextMedicanState();
@@ -22,7 +23,7 @@ int snti = 0;
 class _NextMedicanState extends State<NextMedican> {
   final dataBase = FirebaseDatabase.instance.reference();
 
-    _NextMedicanState() {
+  _NextMedicanState() {
     dataBase.child('test').onChildChanged.listen((event) {
       DataSnapshot snap = event.snapshot;
       if (snap.key == 'int') {
@@ -30,9 +31,7 @@ class _NextMedicanState extends State<NextMedican> {
         snti = sensorReading!;
       }
 
-      setState(() {
-        
-      });
+      setState(() {});
     });
   }
 
@@ -46,7 +45,7 @@ class _NextMedicanState extends State<NextMedican> {
           color: Colors.orangeAccent.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10)),
       child: Text(
-        "Last Check : ${sensorReading ?? 'Connection Problem'} ",
+        "Last Check : ${ widget.oldreading?? sensorReading ?? 'Connection Problem'} ",
         style: const TextStyle(fontWeight: FontWeight.w700),
       ),
     );

@@ -123,14 +123,14 @@ class _PaymentCardState extends State<PaymentCard> {
                         fontWeight: FontWeight.w600,
                         color: Colors.grey)),
               ),
-              const SizedBox(height: 100),
+              const SizedBox(height: 60),
               SmallBlueButton(
                 opacity: 0,
                 buttonName: 'Upgrade',
                 fn: () {
                   Navigator.of(context).pushNamed(Payment.routeName);
                 },
-              )
+              ),
             ],
           ),
         ),

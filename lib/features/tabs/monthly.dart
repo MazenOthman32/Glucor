@@ -1,75 +1,127 @@
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
-import 'package:gradution_project/features/homepage/widgets/all_details.dart';
 
-class MonthlyTab extends StatefulWidget {
-  const MonthlyTab({
-    super.key,
-    required this.size,
-  });
+import '../homepage/widgets/all_details.dart';
 
-  final Size size;
+class MonthlyTabs extends StatefulWidget {
+  const MonthlyTabs({super.key});
 
   @override
-  State<MonthlyTab> createState() => _MonthlyTabState();
+  State<MonthlyTabs> createState() => _MonthlyTabsState();
 }
 
-class _MonthlyTabState extends State<MonthlyTab> {
-  int day = 0;
+class _MonthlyTabsState extends State<MonthlyTabs>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+  int currentHour = DateTime.now().hour.ceil();
+  @override
+  void initState() {
+    _tabController = TabController(length: 12, vsync: this, initialIndex: 0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          SizedBox(
-            width: double.infinity,
-            height: 40,
-            child: ListView.separated(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            day = index;
-                            setState(() {
-                              // ignore: avoid_print
-                              print(day);
-                            });
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: day == index
-                                  ? MainAssets.blue
-                                  : MainAssets.babyBlue,
-                              borderRadius: BorderRadius.circular(40),
-                            ),
-                            child: Text(
-                              "${index + 1}",
-                              style: TextStyle(
-                                color: day == index
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                separatorBuilder: (context, index) => const SizedBox(
-                      width: 5,
-                    ),
-                itemCount: 24),
+    return DefaultTabController(
+      length: 12,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(30),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  color: MainAssets.babyBlue,
+                  borderRadius: BorderRadius.circular(20)),
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                indicator: BoxDecoration(
+                    color: MainAssets.blue.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(50)),
+                unselectedLabelColor: Colors.black,
+                dividerColor: Colors.white,
+                indicatorColor: Colors.black,
+                indicatorSize: TabBarIndicatorSize.tab,
+                labelColor: Colors.white,
+                tabAlignment: TabAlignment.start,
+                tabs: const [
+                  Tab(child: Text("Jan")),
+                  Tab(child: Text("Feb")),
+                  Tab(child: Text("Mar")),
+                  Tab(child: Text("Apr")),
+                  Tab(child: Text("May")),
+                  Tab(child: Text("Jun")),
+                  Tab(child: Text("Jul")),
+                  Tab(child: Text("Aug")),
+                  Tab(child: Text("Sep")),
+                  Tab(child: Text("Oct")),
+                  Tab(child: Text("Nov")),
+                  Tab(child: Text("Dec")),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: 10),
-          All_Details(size: widget.size)
-        ],
+        ),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 1,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 2,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 3,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 4,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 5,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 6,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 7,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 8,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 9,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 10,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 11,
+            ),
+            All_Details(
+              size: MediaQuery.of(context).size,
+              oldreading: 12,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -15,6 +15,7 @@ import 'package:gradution_project/features/onboarding/page_view.dart';
 import 'package:gradution_project/features/auth/profileupdate.dart/qf2.dart';
 import 'package:gradution_project/features/start_screen/start_screen.dart';
 import 'package:gradution_project/fortest.dart';
+import 'package:gradution_project/tt2.dart';
 import '../../features/auth/forget_password/forgot_password.dart';
 import '../../features/buttom_nav_bar/chat/cahtbot/chatbot.dart';
 import '../../features/buttom_nav_bar/chat/select_chat/chat.dart';
@@ -27,9 +28,9 @@ import '../../features/start_screen/splash_screen.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> allRoutes = {
-    '/': (context) => const  SplashScreen(),//BottomNavBarScreen(), 
+    '/': (context) =>const SplashScreen(), //BottomNavBarScreen(),
     PageViewDemo.routeName: (context) => const PageViewDemo(),
-    StartScreen.routeName:(context) => const StartScreen(),
+    StartScreen.routeName: (context) => const StartScreen(),
     LoginScreen.routeName: (context) => const LoginScreen(),
     SignUpScreen.routeName: (context) => const SignUpScreen(),
     SetProfile.routeName: (context) => const SetProfile(),
@@ -45,9 +46,9 @@ class Routes {
     NotificationPage.routeName: (context) => const NotificationPage(),
     AddNote.routeName: (context) => const AddNote(),
     Subscription.routeName: (context) => const Subscription(),
-    Payment.routeName:(context) => const Payment(),
-    ChatSelected.routeName:(context) => const ChatSelected(),
-    ChatScreen.routeName:(context) => const ChatScreen(),
-    ForgotPassword.routeName:(context) =>const ForgotPassword(),
+    Payment.routeName: (context) => const Payment(),
+    ChatSelected.routeName: (context) => const ChatSelected(),
+    ChatScreen.routeName: (context) => const ChatScreen(),
+    ForgotPassword.routeName: (context) => const ForgotPassword(),
   };
 }
