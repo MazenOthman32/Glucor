@@ -35,9 +35,10 @@ class LocalNotificationService {
   //basic Notification
   static void showBasicNotification( String title,String content ,String id) async {
     AndroidNotificationDetails android =  AndroidNotificationDetails(
-        id, 'basic notification',
+        id, 'basic notificatin',
         importance: Importance.max,
         priority: Priority.high,
+        playSound: true,
         sound:
             RawResourceAndroidNotificationSound('danger.m4a'.split('.').first)
         

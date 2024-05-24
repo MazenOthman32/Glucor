@@ -45,6 +45,7 @@ dependencies:
   awesome_dialog: ^3.2.0
   screenshot: ^2.3.0
   image_gallery_saver: '^2.0.3'
+  percent_indicator: ^4.2.3
   
 
 

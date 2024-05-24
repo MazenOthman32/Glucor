@@ -31,6 +31,7 @@ class _WeeklyTabsState extends State<WeeklyTabs>
       length: 7,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(30),
             child: Container(

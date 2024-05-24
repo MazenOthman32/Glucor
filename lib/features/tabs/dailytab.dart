@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
-
 import '../homepage/widgets/all_details.dart';
 
 class DailyTabs extends StatefulWidget {
@@ -13,7 +12,7 @@ class DailyTabs extends StatefulWidget {
 class _DailyTabsState extends State<DailyTabs>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
-  int currentHour = DateTime.now().hour.ceil();
+  int currentHour = DateTime.now().hour;
   @override
   void initState() {
     _tabController =
@@ -33,6 +32,7 @@ class _DailyTabsState extends State<DailyTabs>
       length: 24,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(30),
             child: Container(
@@ -53,30 +53,30 @@ class _DailyTabsState extends State<DailyTabs>
                 labelColor: Colors.white,
                 tabAlignment: TabAlignment.start,
                 tabs: const [
-                  Tab(child: Text("1")),
-                  Tab(child: Text("2")),
-                  Tab(child: Text("3")),
-                  Tab(child: Text("4")),
-                  Tab(child: Text("5")),
-                  Tab(child: Text("6")),
-                  Tab(child: Text("7")),
-                  Tab(child: Text("8")),
-                  Tab(child: Text("9")),
-                  Tab(child: Text("10")),
-                  Tab(child: Text("11")),
-                  Tab(child: Text("12")),
-                  Tab(child: Text("13")),
-                  Tab(child: Text("14")),
-                  Tab(child: Text("15")),
-                  Tab(child: Text("16")),
-                  Tab(child: Text("17")),
-                  Tab(child: Text("18")),
-                  Tab(child: Text("19")),
-                  Tab(child: Text("20")),
-                  Tab(child: Text("21")),
-                  Tab(child: Text("22")),
-                  Tab(child: Text("23")),
-                  Tab(child: Text("24")),
+                  Tab(child: Text("12 am")),
+                  Tab(child: Text("1 am")),
+                  Tab(child: Text("2 am")),
+                  Tab(child: Text("3 am")),
+                  Tab(child: Text("4 am")),
+                  Tab(child: Text("5 am")),
+                  Tab(child: Text("6 am")),
+                  Tab(child: Text("7 am")),
+                  Tab(child: Text("8 am")),
+                  Tab(child: Text("9 am")),
+                  Tab(child: Text("10 am")),
+                  Tab(child: Text("11 am")),
+                  Tab(child: Text("12 pm")),
+                  Tab(child: Text("1 pm")),
+                  Tab(child: Text("2 pm")),
+                  Tab(child: Text("3 pm")),
+                  Tab(child: Text("4 pm")),
+                  Tab(child: Text("5 pm")),
+                  Tab(child: Text("6 pm")),
+                  Tab(child: Text("7 pm")),
+                  Tab(child: Text("8 pm")),
+                  Tab(child: Text("9 pm")),
+                  Tab(child: Text("10 pm")),
+                  Tab(child: Text("11 pm")),
                 ],
               ),
             ),

@@ -38,6 +38,7 @@ class _AllChatScreenDetailsState extends State<AllChatScreenDetails> {
                       height: 50,
                       width: size.width / 1.5,
                       child: TabBar(
+                          dividerColor: Colors.white,
                           indicator: BoxDecoration(
                               color: MainAssets.blue.withOpacity(0.7),
                               borderRadius: BorderRadius.circular(50)),

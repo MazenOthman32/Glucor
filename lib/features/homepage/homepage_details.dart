@@ -28,9 +28,10 @@ class _HomePageDetailsState extends State<HomePageDetails> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const FirstRowOfHomePage(),
           bottom: PreferredSize(
-            preferredSize:const Size.fromHeight(kToolbarHeight + 20.0),
+            preferredSize: const Size.fromHeight(kToolbarHeight + 20.0),
             child: TabBar(
               indicator: BoxDecoration(
                   color: MainAssets.blue.withOpacity(0.7),
@@ -40,7 +41,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
               indicatorSize: TabBarIndicatorSize.tab,
               dividerColor: Colors.white,
               labelColor: Colors.white,
-              tabs:const [
+              tabs: const [
                 Tab(
                   child: Text(
                     "Daily",

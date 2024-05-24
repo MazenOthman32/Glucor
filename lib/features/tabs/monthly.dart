@@ -32,6 +32,7 @@ class _MonthlyTabsState extends State<MonthlyTabs>
       length: 12,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(30),
             child: Container(

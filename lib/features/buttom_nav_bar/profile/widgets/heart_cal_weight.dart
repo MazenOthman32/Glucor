@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../core/util/constant.dart';
+
 class DetailsRow extends StatelessWidget {
   const DetailsRow({
     super.key,
@@ -8,15 +10,15 @@ class DetailsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ProfileD(
-          number: "215bpm",
+          number: "${MainAssets.heartRate} bpm",
           name: 'heart rate',
           icond: FontAwesomeIcons.heartPulse,
         ),
-        SizedBox(
+        const SizedBox(
           height: 90,
           child: VerticalDivider(
             color: Colors.white,
@@ -27,7 +29,7 @@ class DetailsRow extends StatelessWidget {
           ),
         ),
         ProfileD(
-          number: "103lbs",
+          number: "${Backend.weight.text} lbs",
           name: 'Weight',
           icond: FontAwesomeIcons.dumbbell,
         )

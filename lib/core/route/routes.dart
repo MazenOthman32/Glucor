@@ -14,8 +14,6 @@ import 'package:gradution_project/features/homepage/homepage.dart';
 import 'package:gradution_project/features/onboarding/page_view.dart';
 import 'package:gradution_project/features/auth/profileupdate.dart/qf2.dart';
 import 'package:gradution_project/features/start_screen/start_screen.dart';
-import 'package:gradution_project/fortest.dart';
-import 'package:gradution_project/tt2.dart';
 import '../../features/auth/forget_password/forgot_password.dart';
 import '../../features/buttom_nav_bar/chat/cahtbot/chatbot.dart';
 import '../../features/buttom_nav_bar/chat/select_chat/chat.dart';
@@ -23,12 +21,13 @@ import '../../features/buttom_nav_bar/notes/add_note.dart';
 import '../../features/buttom_nav_bar/notes/notes.dart';
 import '../../features/buttom_nav_bar/notes/update_note.dart';
 import '../../features/buttom_nav_bar/profile/subscription/payment/payment.dart';
+import '../../features/homepage/heart_rate/heart_rate.dart';
 import '../../features/homepage/notificatins/notification_page.dart';
 import '../../features/start_screen/splash_screen.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> allRoutes = {
-    '/': (context) =>const SplashScreen(), //BottomNavBarScreen(),
+    '/': (context) => const SplashScreen(), //BottomNavBarScreen(),
     PageViewDemo.routeName: (context) => const PageViewDemo(),
     StartScreen.routeName: (context) => const StartScreen(),
     LoginScreen.routeName: (context) => const LoginScreen(),
@@ -42,7 +41,7 @@ class Routes {
     VerifyPhoneNumber.routeName: (context) => VerifyPhoneNumber(),
     HomePageScreen.routeName: (context) => const HomePageScreen(),
     Qf2.routeName: (context) => const Qf2(),
-    Fortest.routeName: (context) => const Fortest(),
+    HeartRatePage.routeName: (context) => const HeartRatePage(),
     NotificationPage.routeName: (context) => const NotificationPage(),
     AddNote.routeName: (context) => const AddNote(),
     Subscription.routeName: (context) => const Subscription(),

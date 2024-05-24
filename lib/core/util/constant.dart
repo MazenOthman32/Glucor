@@ -3,16 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-const String spOpenApiKey =
-    'sk-proj-FoUUL9G7ySBwjQHSwJuOT3BlbkFJJBsQCejNZWzuA09TRc68';
-
 class MainAssets {
   static Color babyBlue = const Color(0xffA4DCDD).withOpacity(0.8);
   static const Color blue = Color(0xff54B6C3);
   static bool notificationIsOpend = true;
   static String name = " ";
+  static int heartRate=0 ;
   // old Color 0xff4c8ca4
   // ************ Green Colors ****************
   // Green : 0xff46C4B9
