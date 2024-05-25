@@ -4,8 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gradution_project/core/util/constant.dart';
+import 'package:gradution_project/features/auth/signup/signuppage.dart';
 
-import '../profileupdate.dart/set_profile.dart';
+
 
 class GoogleButton extends StatefulWidget {
   const GoogleButton({
@@ -31,7 +32,7 @@ class _GoogleButtonState extends State<GoogleButton> {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-
+  
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
     Backend.fname.text = googleUser.displayName!.split(' ').first.toString();
@@ -42,7 +43,7 @@ class _GoogleButtonState extends State<GoogleButton> {
     Navigator.pushReplacement(
       // ignore: use_build_context_synchronously
       context,
-      MaterialPageRoute(builder: (context) => const SetProfile()),
+      MaterialPageRoute(builder: (context) => const SignUpScreen()),
     );
   }
 

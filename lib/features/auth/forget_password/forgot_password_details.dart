@@ -1,4 +1,5 @@
 // ignore_for_file: must_be_immutable, body_might_complete_normally_nullable, curly_braces_in_flow_control_structures, avoid_print
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/widgets/buttons.dart';
 import 'package:gradution_project/core/widgets/texts.dart';
@@ -48,9 +49,12 @@ class ForgotPasswordBody extends StatelessWidget {
             const SizedBox(height: 50),
             BlueButton(
                 buttonName: "Send",
-                fn: ()  {
-                
-
+                fn: () async  {
+                  if (email.text.isEmpty) {
+                    return;
+                  }
+                  
+                  await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text);
                   Navigator.of(context).pushNamed(LoginScreen.routeName);
                 }),
           ],

@@ -11,7 +11,7 @@ import '../forget_password/forgot_password.dart';
 import '../profileupdate.dart/qf2.dart';
 
 class SiggnUpForm extends StatelessWidget {
-  const SiggnUpForm({
+   SiggnUpForm({
     super.key,
     required this.signUpKey,
     required this.email,
@@ -24,9 +24,10 @@ class SiggnUpForm extends StatelessWidget {
   final TextEditingController phone;
   final TextEditingController pass;
   final TextEditingController passwordConfirm;
-
+  
   @override
   Widget build(BuildContext context) {
+    email.text = Backend.email.text;
     return Form(
       key: signUpKey,
       child: Column(

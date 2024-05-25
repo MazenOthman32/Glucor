@@ -47,7 +47,6 @@ class Backend {
       time.text = '${tokenData?['data'][9]}';
 
       MainAssets.name = fname.text;
-      // ignore: avoid_print
     }
   }
 
@@ -62,13 +61,11 @@ class Backend {
     if (payloadMap is! Map<String, dynamic>) {
       throw Exception('invalid payload');
     }
-
     return payloadMap;
   }
 
   String _decodeBase64(String str) {
     String output = str.replaceAll('-', '+').replaceAll('_', '/');
-
     switch (output.length % 4) {
       case 0:
         break;
@@ -81,7 +78,6 @@ class Backend {
       default:
         throw Exception('Illegal base64url string!"');
     }
-
     return utf8.decode(base64Url.decode(output));
   }
 }

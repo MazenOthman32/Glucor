@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, prefer_const_constructors_in_immutables, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/features/auth/widgets/forms.dart';
 import 'package:gradution_project/features/auth/widgets/google_facebook.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +22,7 @@ class SignUpScreenHome extends StatefulWidget {
 }
 
 class _SignUpScreenHomeState extends State<SignUpScreenHome> {
+  Backend backend = Backend();
   final signUpKey = GlobalKey<FormState>();
 
   final TextEditingController name = TextEditingController();
