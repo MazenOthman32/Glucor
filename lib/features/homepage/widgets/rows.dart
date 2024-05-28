@@ -108,24 +108,17 @@ class FirstRowOfHomePage extends StatefulWidget {
 
 class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
   Backend backend = Backend();
-  static String? image;
-  bool _isImageLoaded = false;
 
   Future<void> fetchProfilePicUrl() async {
     final userDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(Backend.email.text)
         .get(); // Use Backend.email.text for document ID
-    print("the email is : ");
-    print(Backend.email.text);
     if (userDoc.exists) {
       setState(() {
         Backend.image = userDoc.data()?['profilePicUrl'];
-        _isImageLoaded = true;
       });
-      print('Profile picture URL: ${Backend.image}');
     } else {
-      print('No image found');
     }
   }
 
