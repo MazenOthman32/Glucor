@@ -39,6 +39,9 @@ class RowOfEditProfile extends StatefulWidget {
 }
 
 class _RowOfEditProfileState extends State<RowOfEditProfile> {
+  
+
+
   bool isEditable = false;
 
   @override
@@ -54,12 +57,6 @@ class _RowOfEditProfileState extends State<RowOfEditProfile> {
                   )
                 : ProfileEditTextField(
                     label: widget.label,
-                    // onFieldSubmitted: (value) {
-                    //   setState(() {
-                    //     isEditable = false;
-                    //     widget.text = value as TextEditingController;
-                    //   });
-                    // },
                     initialValue: widget.text,
                     keyboard: TextInputType.text,
                     focusNode: widget.focusNode,
