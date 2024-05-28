@@ -8,7 +8,7 @@ class MainAssets {
   static const Color blue = Color(0xff54B6C3);
   static bool notificationIsOpend = true;
   static String name = " ";
-  static int heartRate=0 ;
+  static int heartRate = 0;
   // old Color 0xff4c8ca4
   // ************ Green Colors ****************
   // Green : 0xff46C4B9
@@ -25,10 +25,12 @@ class Backend {
   static TextEditingController phone = TextEditingController();
   static TextEditingController type = TextEditingController();
   static TextEditingController time = TextEditingController();
-
+  static String? image;
   static Map<String, dynamic>? tokenData;
   static late SharedPreferences _prefs;
   static String? token;
+
+
 
   Future<void> getToken() async {
     _prefs = await SharedPreferences.getInstance();

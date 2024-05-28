@@ -28,18 +28,19 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
   final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController phone = TextEditingController();
-  final TextEditingController pass = TextEditingController();
   final TextEditingController phoneNumber = TextEditingController();
+  final TextEditingController pass = TextEditingController();
+  final TextEditingController passwordConfirm = TextEditingController();
+
   bool isLoading = false;
 
-  final TextEditingController passwordConfirm = TextEditingController();
   Future<void> _submit() async {
     final String namee = name.text.trim();
     final String phonee = phone.text.trim();
     final String emaill = email.text.trim();
     final String passwordd = pass.text.trim();
     final String passwordConfirmm = passwordConfirm.text.trim();
-
+    Backend.email.text = emaill;
     try {
       final response = await http.post(
         Uri.parse('https://adc-8aar.onrender.com/signup'),
@@ -66,7 +67,8 @@ class _SignUpScreenHomeState extends State<SignUpScreenHome> {
         // Save token in SharedPreferences
         final prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
-        Navigator.pushNamed(context, VerifyPhoneNumber.routeName);
+        Navigator.pushNamed(context, VerifyPhoneNumber.routeName,
+            arguments: Backend.email.text);
         print(token);
         // Navigate to the next screen or perform further actions
       } else {

@@ -15,6 +15,7 @@ import 'package:gradution_project/features/onboarding/page_view.dart';
 import 'package:gradution_project/features/auth/profileupdate.dart/qf2.dart';
 import 'package:gradution_project/features/start_screen/start_screen.dart';
 import '../../features/auth/forget_password/forgot_password.dart';
+import '../../features/auth/reset_password/reset_password.dart';
 import '../../features/buttom_nav_bar/chat/cahtbot/chatbot.dart';
 import '../../features/buttom_nav_bar/chat/select_chat/chat.dart';
 import '../../features/buttom_nav_bar/notes/add_note.dart';
@@ -38,7 +39,7 @@ class Routes {
     BottomNavBarScreen.routeName: (context) => const BottomNavBarScreen(),
     Faq.routeName: (context) => const Faq(),
     Report.routeName: (context) => const Report(),
-    VerifyPhoneNumber.routeName: (context) => VerifyPhoneNumber(),
+    VerifyPhoneNumber.routeName: (context) => const VerifyPhoneNumber(),
     HomePageScreen.routeName: (context) => const HomePageScreen(),
     Qf2.routeName: (context) => const Qf2(),
     HeartRatePage.routeName: (context) => const HeartRatePage(),
@@ -49,5 +50,6 @@ class Routes {
     ChatSelected.routeName: (context) => const ChatSelected(),
     ChatScreen.routeName: (context) => const ChatScreen(),
     ForgotPassword.routeName: (context) => const ForgotPassword(),
+    ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
   };
 }

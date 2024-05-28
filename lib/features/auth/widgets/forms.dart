@@ -10,8 +10,59 @@ import '../../../core/widgets/buttons.dart';
 import '../forget_password/forgot_password.dart';
 import '../profileupdate.dart/qf2.dart';
 
+class ResetPasswordForm extends StatelessWidget {
+  const ResetPasswordForm({
+    super.key,
+    required this.resetPasswordKey,
+    required this.pass,
+    required this.passwordConfirm,
+  });
+  final Key resetPasswordKey;
+  final TextEditingController pass;
+  final TextEditingController passwordConfirm;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: resetPasswordKey,
+      child: Column(
+        children: [
+          MainTextField(
+            visibleFalse: Icons.visibility,
+            visibleTrue: Icons.visibility_off_sharp,
+            hint: '',
+            label: 'Password',
+            keyboard: TextInputType.emailAddress,
+            controller: pass,
+            validator: (val) {
+              if (val!.isEmpty)
+                return "This Field is empty";
+              else if (val.length < 6)
+                return "password should be longer than 6";
+            },
+          ),
+          const SizedBox(height: 30),
+          MainTextField(
+            visibleFalse: Icons.visibility,
+            visibleTrue: Icons.visibility_off_sharp,
+            hint: '',
+            label: 'Confirm Password',
+            keyboard: TextInputType.emailAddress,
+            controller: passwordConfirm,
+            validator: (val) {
+              if (val!.isEmpty)
+                return "This Field is empty";
+              else if (val != pass.text) return "confirm password is wrong ";
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class SiggnUpForm extends StatelessWidget {
-   SiggnUpForm({
+  const SiggnUpForm({
     super.key,
     required this.signUpKey,
     required this.email,
@@ -24,7 +75,7 @@ class SiggnUpForm extends StatelessWidget {
   final TextEditingController phone;
   final TextEditingController pass;
   final TextEditingController passwordConfirm;
-  
+
   @override
   Widget build(BuildContext context) {
     email.text = Backend.email.text;

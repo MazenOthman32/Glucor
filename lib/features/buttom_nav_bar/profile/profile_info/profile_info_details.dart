@@ -1,11 +1,14 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 import 'dart:convert';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/buttons.dart';
 import 'package:gradution_project/features/buttom_nav_bar/buttom_nav_bar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/widgets/circle_indecator.dart';
 import '../../../../core/widgets/rowas.dart';
@@ -44,6 +47,43 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
     _getToken();
 
     super.initState();
+  }
+  File? file;
+  String? url;
+  fetchImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
+    }
+    file = File(image.path);
+    var imageName = basename(image.path);
+    var refStorage = FirebaseStorage.instance.ref('profile_pics/$imageName');
+    await refStorage.putFile(file!);
+    url = await refStorage.getDownloadURL();
+    await saveImageUrlToFirestore(url!); // Save the URL to Firestore
+    setState(() {});
+  }
+
+  Future<void> saveImageUrlToFirestore(String url) async {
+    final userDoc = FirebaseFirestore.instance
+        .collection('users')
+        .doc(Backend.email.text); // Replace 'uniqueUserId' with the actual user ID
+    await userDoc.set({
+      'profilePicUrl': url,
+    }, SetOptions(merge: true));
+  }
+
+  Future<void> fetchProfilePicUrl() async {
+    final userDoc = FirebaseFirestore.instance
+        .collection('users')
+        .doc(Backend.email.text); // Replace 'uniqueUserId' with the actual user ID
+    final snapshot = await userDoc.get();
+    if (snapshot.exists) {
+      setState(() {
+        url = snapshot.data()?['profilePicUrl'];
+      });
+    }
   }
 
   Future<void> _getToken() async {
@@ -159,16 +199,7 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
     }
   }
 
-  File? pickedImage;
-  fetchImage() async {
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image == null) {
-      return;
-    }
-    setState(() {
-      pickedImage = File(image.path);
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -191,23 +222,24 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                       width: 100,
                       child: Stack(
                         children: [
-                          pickedImage != null
+                          url != null
                               ? Container(
                                   height: 100,
                                   width: 100,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(70),
                                     image: DecorationImage(
-                                      image: FileImage(pickedImage!),
+                                      image: NetworkImage(url!),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 )
-                              : const CircleAvatar(
+                              : CircleAvatar(
                                   radius: 50,
                                   backgroundColor: MainAssets.blue,
                                   backgroundImage:
-                                      AssetImage("assets/images/profile.jpg"),
+                                      NetworkImage(Backend.image ??
+                'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
                                 ),
                           const Positioned(
                             bottom: 0,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/util/constant.dart';
@@ -19,10 +20,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Backend backend = Backend();
 
+  
+
   @override
   void initState() {
     backend.getToken();
-
     getValidation().whenComplete(() async {
       Timer(
           const Duration(seconds: 2),

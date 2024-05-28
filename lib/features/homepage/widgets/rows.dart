@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradution_project/core/util/constant.dart';
@@ -107,11 +108,32 @@ class FirstRowOfHomePage extends StatefulWidget {
 
 class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
   Backend backend = Backend();
+  static String? image;
+  bool _isImageLoaded = false;
+
+  Future<void> fetchProfilePicUrl() async {
+    final userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(Backend.email.text)
+        .get(); // Use Backend.email.text for document ID
+    print("the email is : ");
+    print(Backend.email.text);
+    if (userDoc.exists) {
+      setState(() {
+        Backend.image = userDoc.data()?['profilePicUrl'];
+        _isImageLoaded = true;
+      });
+      print('Profile picture URL: ${Backend.image}');
+    } else {
+      print('No image found');
+    }
+  }
 
   @override
   void initState() {
     backend.getToken();
     super.initState();
+    fetchProfilePicUrl();
   }
 
   @override
@@ -126,7 +148,8 @@ class _FirstRowOfHomePageState extends State<FirstRowOfHomePage> {
           child: CircleAvatar(
             radius: 22,
             backgroundColor: MainAssets.babyBlue,
-            backgroundImage: const AssetImage("assets/images/profile.jpg"),
+            backgroundImage: NetworkImage(Backend.image ??
+                'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
           ),
         ),
         Text(
