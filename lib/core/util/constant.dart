@@ -30,8 +30,6 @@ class Backend {
   static late SharedPreferences _prefs;
   static String? token;
 
-
-
   Future<void> getToken() async {
     _prefs = await SharedPreferences.getInstance();
     token = _prefs.getString('token');
@@ -121,3 +119,9 @@ class ReportModel {
     }
   }
 }
+
+const kMessageCollectiion = "messages";
+
+const kMessage = 'message';
+
+const kCreatedAt = 'createdAt';

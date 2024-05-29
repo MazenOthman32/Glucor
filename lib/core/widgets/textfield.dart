@@ -102,11 +102,12 @@ class SendMessageTextField extends StatefulWidget {
     super.key,
     required this.hint,
     required this.controller,
-    required this.validator,
+    required this.validator, required this.onSubmitted,
   });
   final String hint;
   final TextEditingController controller;
   final String? Function(String?) validator;
+  final String? Function(String?) onSubmitted;
 
   @override
   State<SendMessageTextField> createState() => _SendMessageTextFieldState();
@@ -116,7 +117,7 @@ class _SendMessageTextFieldState extends State<SendMessageTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
+      onFieldSubmitted: widget.onSubmitted,
       controller: widget.controller,
       validator: widget.validator,
       cursorColor: MainAssets.blue,

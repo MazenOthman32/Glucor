@@ -60,6 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: SizedBox(
                       height: 50,
                       child: SendMessageTextField(
+                        onSubmitted: (data){},
                         hint: 'Ask Chatbot',
                         controller: _userInput,
                         validator: (val) {

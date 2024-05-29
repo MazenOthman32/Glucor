@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/textfield.dart';
-
+import 'package:gradution_project/features/buttom_nav_bar/chat/cahtbot/chatbot.dart';
+import '../../../../model/messages_model.dart';
 import '../widgets/app_bar_row.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: must_be_immutable
 class ChatSelectedDetails extends StatefulWidget {
@@ -15,32 +17,73 @@ class ChatSelectedDetails extends StatefulWidget {
 }
 
 class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
+  CollectionReference messages =
+      FirebaseFirestore.instance.collection(kMessageCollectiion);
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const ChatAppBarRow(),
-            const SizedBox(height: 30),
-            Expanded(
-                child: ListView.separated(
-                    itemBuilder: (context, index) => const MessageItem(),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 10),
-                    itemCount: 15)),
-            SendMessageRow(
-              widget: widget,
-              fn: () {
-                widget.message.clear();
-              },
-            )
-          ],
-        ),
-      ),
-    );
+    return StreamBuilder<QuerySnapshot>(
+        stream: messages.orderBy(kCreatedAt).snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print(snapshot.data!.docs[0]['message']);
+            List<MessageModel> messagesList = [];
+            for (int i = 0; i < snapshot.data!.docs.length; i++) {
+              messagesList.add(MessageModel.fromJson(snapshot.data!.docs[i]));
+            }
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+                child: Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ChatAppBarRow(),
+                      const SizedBox(height: 30),
+                      Expanded(
+                          child: ListView.separated(
+                              controller: _scrollController,
+                              itemBuilder: (context, index) {
+                                return messagesList[index].id ==
+                                        Backend.email.text
+                                    ? Friendmessage(
+                                        messageModel: messagesList[index],
+                                      )
+                                    : MessageItem(
+                                        messageModel: messagesList[index],
+                                      );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 10),
+                              itemCount: messagesList.length)),
+                      SendMessageRow(
+                        onSubmitted: (data) {
+                          messages.add({
+                            kMessage: data,
+                            kCreatedAt: DateTime.now(),
+                            'id': Backend.email.text
+                          });
+
+                          widget.message.clear();
+                          _scrollController.jumpTo(
+                              _scrollController.position.maxScrollExtent);
+                        },
+                        widget: widget,
+                        fn: () {
+                          widget.message.clear();
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return const Text("Loading");
+          }
+        });
   }
 }
 
@@ -49,7 +92,9 @@ class SendMessageRow extends StatelessWidget {
     super.key,
     required this.widget,
     required this.fn,
+    required this.onSubmitted,
   });
+  final String? Function(String?) onSubmitted;
 
   final ChatSelectedDetails widget;
   final VoidCallback fn;
@@ -62,6 +107,7 @@ class SendMessageRow extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
             child: SendMessageTextField(
+              onSubmitted: onSubmitted,
               hint: 'message',
               controller: widget.message,
               // ignore: body_might_complete_normally_nullable
@@ -92,28 +138,71 @@ class SendMessageRow extends StatelessWidget {
 }
 
 class MessageItem extends StatelessWidget {
-  const MessageItem({
-    super.key,
-  });
+  MessageItem({super.key, required this.messageModel});
+  final MessageModel messageModel;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomLeft,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        decoration: BoxDecoration(
-          color: MainAssets.babyBlue,
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-              bottomRight: Radius.circular(30)),
-        ),
-        child: const Text(
-          "Hello Doctor ,I'm John Hello Doctor  ",
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          decoration: BoxDecoration(
+            color: MainAssets.babyBlue,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+                bottomRight: Radius.circular(30)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                messageModel.message,
+                style: const TextStyle(color: Colors.black),
+              ),
+              Text(
+                "${messageModel.time.toDate().hour}:${messageModel.time.toDate().minute}",
+                textAlign: TextAlign.end,
+                style: const TextStyle(color: Colors.black, fontSize: 10),
+              ),
+            ],
+          )),
+    );
+  }
+}
+
+class Friendmessage extends StatelessWidget {
+  Friendmessage({super.key, required this.messageModel});
+  final MessageModel messageModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          decoration: const BoxDecoration(
+            color: MainAssets.blue,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+                bottomLeft: Radius.circular(30)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                messageModel.message,
+                style: const TextStyle(color: Colors.black),
+              ),
+              Text(
+                "${messageModel.time.toDate().hour}:${messageModel.time.toDate().minute}",
+                textAlign: TextAlign.end,
+                style: const TextStyle(color: Colors.black, fontSize: 10),
+              ),
+            ],
+          )),
     );
   }
 }
