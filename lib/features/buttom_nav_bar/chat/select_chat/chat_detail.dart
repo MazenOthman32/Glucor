@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/textfield.dart';
-import 'package:gradution_project/features/buttom_nav_bar/chat/cahtbot/chatbot.dart';
 import '../../../../model/messages_model.dart';
+import '../../../testying/chat_model.dart';
 import '../widgets/app_bar_row.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: must_be_immutable
 class ChatSelectedDetails extends StatefulWidget {
-  ChatSelectedDetails({super.key});
+  ChatSelectedDetails({super.key, required this.user});
+  final ChatUser user;
 
   @override
   State<ChatSelectedDetails> createState() => _ChatSelectedDetailsState();
@@ -27,6 +28,7 @@ class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
         stream: messages.orderBy(kCreatedAt).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            // ignore: avoid_print
             print(snapshot.data!.docs[0]['message']);
             List<MessageModel> messagesList = [];
             for (int i = 0; i < snapshot.data!.docs.length; i++) {
@@ -35,12 +37,12 @@ class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
             return SafeArea(
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const ChatAppBarRow(),
+                       ChatAppBarRow(user: widget.user,),
                       const SizedBox(height: 30),
                       Expanded(
                           child: ListView.separated(
@@ -59,6 +61,7 @@ class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
                                   const SizedBox(height: 10),
                               itemCount: messagesList.length)),
                       SendMessageRow(
+                        // ignore: body_might_complete_normally_nullable
                         onSubmitted: (data) {
                           messages.add({
                             kMessage: data,
@@ -138,7 +141,7 @@ class SendMessageRow extends StatelessWidget {
 }
 
 class MessageItem extends StatelessWidget {
-  MessageItem({super.key, required this.messageModel});
+  const MessageItem({super.key, required this.messageModel});
   final MessageModel messageModel;
 
   @override
@@ -173,7 +176,7 @@ class MessageItem extends StatelessWidget {
 }
 
 class Friendmessage extends StatelessWidget {
-  Friendmessage({super.key, required this.messageModel});
+  const Friendmessage({super.key, required this.messageModel});
   final MessageModel messageModel;
 
   @override

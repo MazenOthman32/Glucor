@@ -1,50 +1,24 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
+import 'package:gradution_project/features/testying/apicc.dart';
 import '../../../core/widgets/textfield.dart';
 import '../../../core/widgets/texts.dart';
-import 'cahtbot/chatbot.dart';
-import 'select_chat/chat.dart';
+import '../buttom_nav_bar/chat/cahtbot/chatbot.dart';
+import '../buttom_nav_bar/chat/widgets/allchats.dart';
+import 'chat_model.dart';
 
-class AllChatScreenDetails extends StatefulWidget {
-  const AllChatScreenDetails({super.key});
+class T2 extends StatefulWidget {
+  const T2({super.key});
 
   @override
-  State<AllChatScreenDetails> createState() => _AllChatScreenDetailsState();
+  State<T2> createState() => _AllChatScreenDetailsState();
 }
 
-class _AllChatScreenDetailsState extends State<AllChatScreenDetails> {
+class _AllChatScreenDetailsState extends State<T2> {
   @override
   void initState() {
-    _getUsers();
     super.initState();
   }
-
-  List<DocumentSnapshot> users = [];
-Future<void> _getUsers() async {
-  try {
-    // Get reference to the users collection
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').get();
-
-    // Store the documents in the users list
-    setState(() {
-      users = querySnapshot.docs;
-    });
-    // Print the data from each document for demonstration
-    for (var doc in users) {
-  Map<String, dynamic>? userData = doc.data() as Map<String, dynamic>?;
-
-  if (userData != null) {
-    // ignore: avoid_print
-    print('Phone: ${userData['phoneNumber']}');
-    // Access other fields as needed
-  }
-}
-  } catch (e) {
-    // ignore: avoid_print
-    print('Error retrieving users: $e');
-  }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +89,10 @@ class _AllchatsState extends State<Allchats> {
 
   final chatkey = GlobalKey<FormState>();
 
+  List<ChatUser> list = [];
+
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
     var size = MediaQuery.of(context).size;
     return Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -179,18 +154,40 @@ class _AllchatsState extends State<Allchats> {
             color: Colors.white,
           ),
         ),
-        body: ListView.separated(
-            shrinkWrap: false,
-            // physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) => InkWell(
-                onTap: () =>
-                    Navigator.of(context).pushNamed(ChatSelected.routeName),
-                    child: const Text("sa"),
-                // child: AllChatItem(size: size, user: ChatUser.fromJson(index),
-                // )
-                ),
-            separatorBuilder: (context, index) => const SizedBox(height: 20),
-            itemCount: 10));
+        body: StreamBuilder(
+            stream: Api.firebaseFirestore.collection('users').snapshots(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                case ConnectionState.none:
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: MainAssets.blue,
+                  ));
+                case ConnectionState.done:
+                case ConnectionState.active:
+                  final data = snapshot.data?.docs;
+                  list =
+                      data?.map((e) => ChatUser.fromJson(e.data())).toList() ??
+                          [];
+                  if (list.isNotEmpty) {
+                    return ListView.separated(
+                        shrinkWrap: false,
+                        // physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) => AllChatItem(
+                          size: size,
+                          user: list[index],
+                        ),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 20),
+                        itemCount: list.length);
+                  } else {
+                    return const Center(
+                      child: FontW25(text: 'No Messages Yet'),
+                    );
+                  }
+              }
+            }));
   }
 }
