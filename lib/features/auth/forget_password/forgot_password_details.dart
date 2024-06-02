@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_const_constructors_in_immutables, use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +11,7 @@ import '../../../core/widgets/textfield.dart';
 import 'package:http/http.dart' as http;
 
 class ForgotPasswordBody extends StatefulWidget {
-  ForgotPasswordBody({super.key});
+  const ForgotPasswordBody({super.key});
 
   @override
   State<ForgotPasswordBody> createState() => _ForgotPasswordBodyState();
@@ -27,7 +27,7 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://adc-8aar.onrender.com/request-password-reset'),
+        Uri.parse('https://adc-9v8m.onrender.com/request-password-reset'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'email': emaill,
@@ -36,14 +36,12 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
       if (response.statusCode == 200) {
         isLoading = false;
         setState(() {});
-        print('Forget successful');
       } else {
         isLoading = false;
         setState(() {});
-        print('Forget failed. Status code: ${response.statusCode}');
       }
+    // ignore: empty_catches
     } catch (e) {
-      print('Failed to connect to the server: $e');
     }
   }
 
@@ -101,6 +99,7 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
                       await FirebaseAuth.instance
                           .sendPasswordResetEmail(email: email.text);
 
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushNamed(
                         ResetPasswordScreen.routeName,
                         arguments: email.text, // Pass the email as an argument

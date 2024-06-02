@@ -32,7 +32,6 @@ class _NextMedicanState extends State<NextMedican> {
         sensorReading = snap.value as int;
         snti = sensorReading!;
       }
-
       setState(() {});
     });
   }

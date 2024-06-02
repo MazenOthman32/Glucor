@@ -38,10 +38,11 @@ class _ReportDetailsState extends State<ReportDetails> {
     final name = "Screenshot$time";
     await ImageGallerySaver.saveImage(byte, name: name);
   }
-  ReportModel reportModel=ReportModel();
-@override
+
+  ReportModel reportModel = ReportModel();
+  @override
   void initState() {
-        reportModel.fetchDataAndPrint();
+    reportModel.fetchDataAndPrint();
     super.initState();
   }
 
@@ -102,12 +103,12 @@ class Rowl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         ReportCard(
           iconData: FontAwesomeIcons.heartPulse,
-          measure: '133',
+          measure: '${MainAssets.heartRate}',
           unit: 'bmp',
           title: 'rate',
         ),
@@ -115,11 +116,10 @@ class Rowl extends StatelessWidget {
           iconData: FontAwesomeIcons.dumbbell,
           measure: '97',
           unit: 'lbs',
-          title: 'Weight',
+          title: Backend.weight.text,
         ),
       ],
     );
   }
-
-   
 }
+

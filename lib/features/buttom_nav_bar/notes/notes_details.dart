@@ -105,8 +105,6 @@ class _NotesDetailsState extends State<NotesDetails> {
                                                               context)
                                                           .showSnackBar(sBar);
                                                     });
-                                                    // ignore: avoid_print
-                                                    print(response);
                                                   },
                                                   child: const Text("Delete")),
                                             ],

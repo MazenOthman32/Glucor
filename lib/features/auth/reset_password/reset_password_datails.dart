@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_const_constructors_in_immutables, use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import '../../../core/widgets/texts.dart';
 import 'package:http/http.dart' as http;
 
 class ResetPasswordScreenHome extends StatefulWidget {
-  ResetPasswordScreenHome({super.key});
+  const ResetPasswordScreenHome({super.key});
 
   @override
   State<ResetPasswordScreenHome> createState() =>
@@ -31,7 +31,7 @@ class _ResetPasswordScreenHomeState extends State<ResetPasswordScreenHome> {
     super.didChangeDependencies();
     final email = ModalRoute.of(context)!.settings.arguments as String;
     _getResetToken(email);
-    print(email);
+
   }
 
   Future<void> _getResetToken(String email) async {
@@ -42,7 +42,7 @@ class _ResetPasswordScreenHomeState extends State<ResetPasswordScreenHome> {
       if (userDoc.exists) {
         setState(() {
           resetToken = userDoc.data()?['resetPasswordToken'];
-          print(resetToken);
+          
         });
       } else {
         setState(() {
@@ -66,7 +66,7 @@ class _ResetPasswordScreenHomeState extends State<ResetPasswordScreenHome> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://adc-8aar.onrender.com/reset-password'),
+        Uri.parse('https://adc-9v8m.onrender.com/reset-password'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'resetToken': resetToken,
@@ -77,16 +77,13 @@ class _ResetPasswordScreenHomeState extends State<ResetPasswordScreenHome> {
       if (response.statusCode == 200) {
         isLoading = false;
         setState(() {});
-        print('Reset successful');
       } else {
         isLoading = false;
         setState(() {});
-        print('Reset failed. Status code: ${response.statusCode}');
       }
     } catch (e) {
       isLoading = false;
         setState(() {});
-      print('Failed to connect to the server: $e');
     }
   }
 
@@ -127,6 +124,7 @@ class _ResetPasswordScreenHomeState extends State<ResetPasswordScreenHome> {
                           await _submit();
 
                           if (mounted) {
+                            // ignore: use_build_context_synchronously
                             Navigator.of(context)
                                 .pushNamed(LoginScreen.routeName);
                           }

@@ -41,9 +41,7 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
     _prefs = await SharedPreferences.getInstance();
     _token = _prefs.getString('token');
     if (_token != null) {
-      // Token exists, print it
-      // ignore: avoid_print
-      print('Token from login: $_token');
+      
     }
   }
 
@@ -54,7 +52,7 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://adc-8aar.onrender.com/login'),
+        Uri.parse('https://adc-9v8m.onrender.com/login'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'email': emaill,
@@ -64,8 +62,6 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
       if (response.statusCode == 200) {
         isLoading = false;
         setState(() {});
-        // ignore: avoid_print
-        print('Login successful');
 
         final responseData = jsonDecode(response.body);
         final token = responseData['token'];
@@ -77,13 +73,10 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
           context,
           MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
         );
-        // ignore: avoid_print
-        print('Token: $token');
+        
       } else {
         isLoading = false;
         setState(() {});
-        // ignore: avoid_print
-        print('Login failed. Status code: ${response.statusCode}');
         showDialog(
           // ignore: use_build_context_synchronously
           context: context,
@@ -102,8 +95,6 @@ class _LoginScreenHomeState extends State<LoginScreenHome> {
         );
       }
     } catch (e) {
-      // ignore: avoid_print
-      print('Failed to connect to the server: $e');
       showDialog(
         // ignore: use_build_context_synchronously
         context: context,

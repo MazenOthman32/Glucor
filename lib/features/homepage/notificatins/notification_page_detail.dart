@@ -41,8 +41,6 @@ class _NotificationPageDetailState extends State<NotificationPageDetail> {
   void initState() {
     readData();
     MainAssets.notificationIsOpend = true;
-    // ignore: avoid_print
-    print(MainAssets.notificationIsOpend);
 
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {

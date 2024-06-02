@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_nullable_for_final_variable_declarations, avoid_print
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,7 @@ class _GoogleButtonState extends State<GoogleButton> {
     if (googleUser == null) {
       return;
     }
+    // ignore: unnecessary_nullable_for_final_variable_declarations
     final GoogleSignInAuthentication? googleAuth =
         await googleUser.authentication;
 
@@ -38,7 +39,7 @@ class _GoogleButtonState extends State<GoogleButton> {
     Backend.fname.text = googleUser.displayName!.split(' ').first.toString();
     Backend.lname.text = googleUser.displayName!.split(' ').last.toString();
     Backend.email.text = googleUser.email;
-    print(googleUser.photoUrl);
+    
 
     Navigator.pushReplacement(
       // ignore: use_build_context_synchronously

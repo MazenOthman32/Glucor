@@ -58,9 +58,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     flex: 15,
                     child: SizedBox(
-                      height: 50,
+                      height: 70,
                       child: SendMessageTextField(
-                        onSubmitted: (data){},
+                        onSubmitted: (data) {},
                         hint: 'Ask Chatbot',
                         controller: _userInput,
                         validator: (val) {

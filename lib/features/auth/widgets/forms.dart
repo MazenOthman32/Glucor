@@ -1,4 +1,5 @@
-// ignore_for_file: curly_braces_in_flow_control_structures, body_might_complete_normally_nullable, avoid_print, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
+// ignore_for_file: curly_braces_in_flow_control_structures, body_might_complete_normally_nullable
+
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/textfield.dart';
@@ -35,6 +36,79 @@ class ResetPasswordForm extends StatelessWidget {
             keyboard: TextInputType.emailAddress,
             controller: pass,
             validator: (val) {
+              if (val!.isEmpty) {
+                return "This Field is empty";
+              } else if (val.length < 6)
+                return "password should be longer than 6";
+            },
+          ),
+          const SizedBox(height: 30),
+          MainTextField(
+            visibleFalse: Icons.visibility,
+            visibleTrue: Icons.visibility_off_sharp,
+            hint: '',
+            label: 'Confirm Password',
+            keyboard: TextInputType.emailAddress,
+            controller: passwordConfirm,
+            validator: (val) {
+              if (val!.isEmpty)
+                return "This Field is empty";
+              else if (val != pass.text) return "confirm password is wrong ";
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+class UpadtePasswordForm extends StatelessWidget {
+  const UpadtePasswordForm({
+    super.key,
+    required this.resetPasswordKey,
+    required this.pass,
+    required this.passwordConfirm, required this.oldPassword,
+  });
+  final Key resetPasswordKey;
+  final TextEditingController oldPassword;
+  final TextEditingController pass;
+  final TextEditingController passwordConfirm;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: resetPasswordKey,
+      child: Column(
+        children: [
+
+
+           MainTextField(
+            visibleFalse: Icons.visibility,
+            visibleTrue: Icons.visibility_off_sharp,
+            hint: '',
+            label: 'Old Password',
+            keyboard: TextInputType.emailAddress,
+            controller: oldPassword,
+            validator: (val) {
+              if (val!.isEmpty)
+                return "This Field is empty";
+              else if (val.length < 6)
+                return "password should be longer than 6";
+            },
+          ),
+          const SizedBox(height: 30),
+         
+          MainTextField(
+            visibleFalse: Icons.visibility,
+            visibleTrue: Icons.visibility_off_sharp,
+            hint: '',
+            label: 'Password',
+            keyboard: TextInputType.emailAddress,
+            controller: pass,
+            validator: (val) {
               if (val!.isEmpty)
                 return "This Field is empty";
               else if (val.length < 6)
@@ -60,6 +134,7 @@ class ResetPasswordForm extends StatelessWidget {
     );
   }
 }
+
 
 class SiggnUpForm extends StatelessWidget {
   const SiggnUpForm({
@@ -91,7 +166,7 @@ class SiggnUpForm extends StatelessWidget {
             keyboard: TextInputType.emailAddress,
             controller: email,
             validator: (val) {
-              print(val);
+
               if (val!.isEmpty) {
                 return "This Field is empty";
               } else if (!val.contains("@")) return "wrong email";
@@ -239,13 +314,15 @@ class _ProfileFormState extends State<ProfileForm> {
     final String heightt = height.text.trim();
 
     // Retrieve token from SharedPreferences
+    // ignore: no_leading_underscores_for_local_identifiers
     SharedPreferences _prefs = await SharedPreferences.getInstance();
+    // ignore: no_leading_underscores_for_local_identifiers
     var _token = _prefs.getString('token');
-    print('token: $_token');
+    
 
     try {
       final response = await http.patch(
-        Uri.parse('https://adc-8aar.onrender.com/userinfo'),
+        Uri.parse('https://adc-9v8m.onrender.com/userinfo'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'firstName': fnamee,
@@ -258,18 +335,10 @@ class _ProfileFormState extends State<ProfileForm> {
         }),
       );
       if (response.statusCode == 200) {
-        // Update successful
-        print('Update successful');
-        // Navigate to the next screen or perform further actions
       } else {
-        // Update failed
-        print('Update failed. Status code: ${response.statusCode}');
-        // Show error message or handle the failure accordingly
       }
+    // ignore: empty_catches
     } catch (e) {
-      // Handle connection error
-      print('Failed to connect to the server: $e');
-      // Show error message to the user
     }
   }
 
@@ -347,6 +416,7 @@ class _ProfileFormState extends State<ProfileForm> {
               fn: () async {
                 await _submit();
                 if (profilekey.currentState!.validate()) {
+                  // ignore: use_build_context_synchronously
                   Navigator.pushNamed(context, Qf2.routeName);
                 }
               },

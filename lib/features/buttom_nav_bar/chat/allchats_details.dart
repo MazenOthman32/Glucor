@@ -30,19 +30,14 @@ Future<void> _getUsers() async {
     setState(() {
       users = querySnapshot.docs;
     });
-    // Print the data from each document for demonstration
     for (var doc in users) {
   Map<String, dynamic>? userData = doc.data() as Map<String, dynamic>?;
 
   if (userData != null) {
-    // ignore: avoid_print
-    print('Phone: ${userData['phoneNumber']}');
-    // Access other fields as needed
   }
 }
+  // ignore: empty_catches
   } catch (e) {
-    // ignore: avoid_print
-    print('Error retrieving users: $e');
   }
 }
 

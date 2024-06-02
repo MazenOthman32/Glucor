@@ -52,8 +52,6 @@ class _SplashScreenState extends State<SplashScreen> {
         finalToken = obtained;
       });
     }
-    // ignore: avoid_print
-    print(finalToken);
   }
 
   @override

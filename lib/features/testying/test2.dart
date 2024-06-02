@@ -5,7 +5,7 @@ import '../../../core/widgets/textfield.dart';
 import '../../../core/widgets/texts.dart';
 import '../buttom_nav_bar/chat/cahtbot/chatbot.dart';
 import '../buttom_nav_bar/chat/widgets/allchats.dart';
-import 'chat_model.dart';
+import 'messages_model/chat_model.dart';
 
 class T2 extends StatefulWidget {
   const T2({super.key});

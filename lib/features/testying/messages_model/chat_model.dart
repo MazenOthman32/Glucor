@@ -17,6 +17,7 @@ class ChatUser {
     required this.age,
     required this.height,
   });
+  
   late final String lastName;
   late final String gender;
   late final String weight;

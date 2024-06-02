@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gradution_project/features/testying/chat_model.dart';
+import 'package:gradution_project/features/testying/messages_model/chat_model.dart';
 import '../select_chat/chat.dart';
 
 class AllChatItem extends StatelessWidget {
@@ -33,10 +33,9 @@ class AllChatItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                      colorFilter:
-                          const ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               placeholder: (context, url) => const CircularProgressIndicator(),
@@ -59,20 +58,11 @@ class AllChatItem extends StatelessWidget {
                         style: const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 16),
                       ),
-                      SizedBox(
-                        width: size.width / 1.7,
-                        child: const Text(
-                          "Hello Doctor , i need Your help ,need Your help",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 15, color: Colors.grey),
-                        ),
-                      ),
                     ],
                   ),
+                  
                   const Column(
                     children: [
-                      Text("09:56"),
                       Icon(
                         FontAwesomeIcons.check,
                         size: 18,

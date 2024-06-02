@@ -1,10 +1,14 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:gradution_project/core/util/constant.dart';
 import 'package:gradution_project/core/widgets/textfield.dart';
 import '../../../../model/messages_model.dart';
-import '../../../testying/chat_model.dart';
+import '../../../testying/messages_model/chat_model.dart';
 import '../widgets/app_bar_row.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 
 // ignore: must_be_immutable
 class ChatSelectedDetails extends StatefulWidget {
@@ -21,6 +25,33 @@ class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
   CollectionReference messages =
       FirebaseFirestore.instance.collection(kMessageCollectiion);
   final _scrollController = ScrollController();
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      // Upload the image to Firebase Storage
+      String imageUrl = await _uploadImageToFirebase(image);
+      // Send the image URL as a message
+      messages.add({
+        kMessage: imageUrl,
+        kCreatedAt: DateTime.now(),
+        'id': Backend.email.text,
+        'type': 'image'
+      });
+    }
+  }
+
+  Future<String> _uploadImageToFirebase(XFile image) async {
+    Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('chat_images/${DateTime.now().millisecondsSinceEpoch}');
+    UploadTask uploadTask = storageReference.putFile(File(image.path));
+    TaskSnapshot storageTaskSnapshot = await uploadTask;
+    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +59,7 @@ class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
         stream: messages.orderBy(kCreatedAt).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            // ignore: avoid_print
-            print(snapshot.data!.docs[0]['message']);
+            
             List<MessageModel> messagesList = [];
             for (int i = 0; i < snapshot.data!.docs.length; i++) {
               messagesList.add(MessageModel.fromJson(snapshot.data!.docs[i]));
@@ -42,20 +72,24 @@ class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       ChatAppBarRow(user: widget.user,),
+                      ChatAppBarRow(
+                        user: widget.user,
+                      ),
                       const SizedBox(height: 30),
                       Expanded(
                           child: ListView.separated(
                               controller: _scrollController,
                               itemBuilder: (context, index) {
-                                return messagesList[index].id ==
-                                        Backend.email.text
-                                    ? Friendmessage(
-                                        messageModel: messagesList[index],
-                                      )
-                                    : MessageItem(
-                                        messageModel: messagesList[index],
-                                      );
+                                var message = messagesList[index];
+                                if (message.id == Backend.email.text) {
+                                  return message.type == 'image'
+                                      ? ImageMessageItem(messageModel: message)
+                                      : Friendmessage(messageModel: message);
+                                } else {
+                                  return message.type == 'image'
+                                      ? ImageMessageItem(messageModel: message)
+                                      : MessageItem(messageModel: message);
+                                }
                               },
                               separatorBuilder: (context, index) =>
                                   const SizedBox(height: 10),
@@ -66,7 +100,8 @@ class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
                           messages.add({
                             kMessage: data,
                             kCreatedAt: DateTime.now(),
-                            'id': Backend.email.text
+                            'id': Backend.email.text,
+                            'type': 'text'
                           });
 
                           widget.message.clear();
@@ -77,6 +112,7 @@ class _ChatSelectedDetailsState extends State<ChatSelectedDetails> {
                         fn: () {
                           widget.message.clear();
                         },
+                        onImagePicked: _pickImage,
                       )
                     ],
                   ),
@@ -96,11 +132,12 @@ class SendMessageRow extends StatelessWidget {
     required this.widget,
     required this.fn,
     required this.onSubmitted,
+    required this.onImagePicked,
   });
   final String? Function(String?) onSubmitted;
-
   final ChatSelectedDetails widget;
   final VoidCallback fn;
+  final VoidCallback onImagePicked;
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +149,18 @@ class SendMessageRow extends StatelessWidget {
             child: SendMessageTextField(
               onSubmitted: onSubmitted,
               hint: 'message',
+              suffixIcon: GestureDetector(
+                onTap: onImagePicked,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: const Icon(
+                    Icons.image,
+                    color: MainAssets.blue,
+                    size: 20,
+                  ),
+                ),
+              ),
+
               controller: widget.message,
               // ignore: body_might_complete_normally_nullable
               validator: (mesage) {
@@ -136,6 +185,67 @@ class SendMessageRow extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+class ImageMessageItem extends StatelessWidget {
+  const ImageMessageItem({super.key, required this.messageModel});
+  final MessageModel messageModel;
+
+  void _showImageDialog(BuildContext context, String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.network(imageUrl),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: messageModel.id == Backend.email.text
+          ? Alignment.bottomRight
+          : Alignment.bottomLeft,
+      child: GestureDetector(
+        onTap: () => _showImageDialog(context, messageModel.message),
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: messageModel.id == Backend.email.text
+                ? MainAssets.blue
+                : MainAssets.babyBlue,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Image.network(
+                messageModel.message,
+                width: 150,
+                height: 150,
+                fit: BoxFit.cover,
+              ),
+              Text(
+                "${messageModel.time.toDate().hour}:${messageModel.time.toDate().minute}",
+                textAlign: TextAlign.end,
+                style: const TextStyle(color: Colors.black, fontSize: 10),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -12,7 +12,7 @@ class ResetPasswordScreen extends StatelessWidget {
         title: const Text("Reset Password"),
         centerTitle: true,
       ),
-      body: ResetPasswordScreenHome(),
+      body: const ResetPasswordScreenHome(),
     );
   }
 }

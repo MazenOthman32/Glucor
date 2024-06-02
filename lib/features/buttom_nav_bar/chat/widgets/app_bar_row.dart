@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gradution_project/features/testying/chat_model.dart';
+import 'package:gradution_project/features/testying/messages_model/chat_model.dart';
 import '../../../../core/widgets/texts.dart';
 
 class ChatAppBarRow extends StatelessWidget {
@@ -25,10 +25,9 @@ class ChatAppBarRow extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                  colorFilter:
-                      const ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+                image: imageProvider,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           placeholder: (context, url) => const CircularProgressIndicator(),

@@ -61,17 +61,15 @@ class _MainScreenState extends State<MainScreen> {
         String minutes = DateTime.now().minute.toString().padLeft(2, '0');
         LocalNotificationService.showBasicNotification(
             title, content, id.toString());
+        // ignore: unused_local_variable
         int response = await sqldata.insertData('''
             INSERT INTO notification (`title`,`content` ,`hour`,`minutes`) VALUES ("$title","$content","$hour","$minutes") 
             ''');
         MainAssets.notificationIsOpend = false;
-        // ignore: avoid_print
-        print(MainAssets.notificationIsOpend);
-        // ignore: unnecessary_brace_in_string_interps, avoid_print
-        print("${response}");
+
         if (snti > 250) {
-          const number = '01270498060'; //set the number here
-          await FlutterPhoneDirectCaller.callNumber(number);
+          //set the number here
+          await FlutterPhoneDirectCaller.callNumber(Backend.firstContact.text);
         }
       } else if (snti < 80) {
         String title = "Glocouse is Low";
@@ -80,22 +78,18 @@ class _MainScreenState extends State<MainScreen> {
         String minutes = DateTime.now().minute.toString().padLeft(2, '0');
         LocalNotificationService.showBasicNotification(
             title, content, id.toString());
+        // ignore: unused_local_variable
         int response = await sqldata.insertData('''
             INSERT INTO notification (`title`,`content` ,`hour`,`minutes`) VALUES ("$title","$content","$hour","$minutes") 
             ''');
         MainAssets.notificationIsOpend = false;
-        // ignore: avoid_print
-        print(MainAssets.notificationIsOpend);
-        // ignore: unnecessary_brace_in_string_interps, avoid_print
-        print("${response}");
+       
         if (snti < 60) {
-          const number = '01270498060'; //set the number here
-          await FlutterPhoneDirectCaller.callNumber(number);
+          await FlutterPhoneDirectCaller.callNumber(Backend.firstContact.text);
         }
       } else {
         MainAssets.notificationIsOpend = true;
-        // ignore: avoid_print
-        print(MainAssets.notificationIsOpend);
+        
       }
     } else if (Backend.type.text == "type2") {
       if (snti > 450) {
@@ -105,17 +99,14 @@ class _MainScreenState extends State<MainScreen> {
         String minutes = DateTime.now().minute.toString().padLeft(2, '0');
         LocalNotificationService.showBasicNotification(
             title, content, id.toString());
+        // ignore: unused_local_variable
         int response = await sqldata.insertData('''
             INSERT INTO notification (`title`,`content` ,`hour`,`minutes`) VALUES ("$title","$content","$hour","$minutes") 
             ''');
         MainAssets.notificationIsOpend = false;
-        // ignore: avoid_print
-        print(MainAssets.notificationIsOpend);
-        // ignore: unnecessary_brace_in_string_interps, avoid_print
-        print("${response}");
+        
         if (snti > 500) {
-          const number = '01270498060'; //set the number here
-          await FlutterPhoneDirectCaller.callNumber(number);
+          await FlutterPhoneDirectCaller.callNumber(Backend.firstContact.text);
         }
       } else if (snti < 80) {
         String title = "Glocouse is Low";
@@ -124,22 +115,17 @@ class _MainScreenState extends State<MainScreen> {
         String minutes = DateTime.now().minute.toString().padLeft(2, '0');
         LocalNotificationService.showBasicNotification(
             title, content, id.toString());
+        // ignore: unused_local_variable
         int response = await sqldata.insertData('''
             INSERT INTO notification (`title`,`content` ,`hour`,`minutes`) VALUES ("$title","$content","$hour","$minutes") 
             ''');
         MainAssets.notificationIsOpend = false;
-        // ignore: avoid_print
-        print(MainAssets.notificationIsOpend);
-        // ignore: unnecessary_brace_in_string_interps, avoid_print
-        print("${response}");
         if (snti < 60) {
-          const number = '01270498060'; //set the number here
-          await FlutterPhoneDirectCaller.callNumber(number);
+          await FlutterPhoneDirectCaller.callNumber(Backend.firstContact.text);
         }
       } else {
         MainAssets.notificationIsOpend = true;
-        // ignore: avoid_print
-        print(MainAssets.notificationIsOpend);
+        
       }
     }
   }

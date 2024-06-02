@@ -25,6 +25,9 @@ class Backend {
   static TextEditingController phone = TextEditingController();
   static TextEditingController type = TextEditingController();
   static TextEditingController time = TextEditingController();
+  static TextEditingController firstContact = TextEditingController();
+  // ignore: non_constant_identifier_names
+  static TextEditingController SecondContact = TextEditingController();
   static String? image;
   static Map<String, dynamic>? tokenData;
   static late SharedPreferences _prefs;
@@ -45,6 +48,8 @@ class Backend {
       weight.text = '${tokenData?['data'][5]}';
       type.text = '${tokenData?['data'][8]}';
       time.text = '${tokenData?['data'][9]}';
+      firstContact.text = '${tokenData?['data'][10]}';
+      SecondContact.text = '${tokenData?['data'][11]}';
 
       MainAssets.name = fname.text;
     }
@@ -107,16 +112,14 @@ class ReportModel {
         List<int> intValues = values.map((value) => value as int).toList();
         // You can assign intValues to list if you want
         lll = intValues;
-        // ignore: avoid_print
-        print(lll);
+        
       } else {
-        // ignore: avoid_print
-        print('Document does not exist');
       }
+    // ignore: empty_catches
     } catch (e) {
-      // ignore: avoid_print
-      print('Error fetching data: $e');
+    
     }
+
   }
 }
 

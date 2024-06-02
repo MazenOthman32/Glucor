@@ -21,7 +21,7 @@ class _Qf2State extends State<Qf2> {
 
   final TextEditingController time = TextEditingController();
 
-   Future<void> _submit() async {
+  Future<void> _submit() async {
     final String typee = type.text.trim();
     final String timee = time.text.trim();
 
@@ -30,37 +30,27 @@ class _Qf2State extends State<Qf2> {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     // ignore: no_leading_underscores_for_local_identifiers
     var _token = _prefs.getString('token');
-    // ignore: avoid_print
-    print('token: $_token');
+    
 
     try {
       final response = await http.patch(
-        Uri.parse('https://adc-8aar.onrender.com/diabeticInfo'),
+        Uri.parse('https://adc-9v8m.onrender.com/diabeticInfo'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
-          'diabetic_type':typee,
+          'diabetic_type': typee,
           'diabetic_time': timee,
           'token': _token,
         }),
       );
-    if (response.statusCode == 200) {
-      // Update successful
-      // ignore: avoid_print
-      print('Update successful');
-      // Navigate to the next screen or perform further actions
-    } else {
-      // Update failed
-      // ignore: avoid_print
-      print('Update failed. Status code: ${response.statusCode}');
-      // Show error message or handle the failure accordingly
+      if (response.statusCode == 200) {
+        
+      } else {
+      }
+    // ignore: empty_catches
+    } catch (e) {
     }
-  } catch (e) {
-    // Handle connection error
-    // ignore: avoid_print
-    print('Failed to connect to the server: $e');
-    // Show error message to the user
   }
-}
+
   final qukey = GlobalKey<FormState>();
 
   @override
@@ -133,7 +123,7 @@ class _Qf2State extends State<Qf2> {
               Center(
                 child: BlueButton(
                   buttonName: "Next",
-                  fn: () async{
+                  fn: () async {
                     await _submit();
                     if (qukey.currentState!.validate()) {
                       // ignore: use_build_context_synchronously

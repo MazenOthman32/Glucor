@@ -12,8 +12,9 @@ import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/widgets/circle_indecator.dart';
 import '../../../../core/widgets/rowas.dart';
-import '../widgets/profile_info.dart';
 import 'package:http/http.dart' as http;
+
+import 'widgets/profile_edit.dart';
 
 class ProfileInfoDetails extends StatefulWidget {
   const ProfileInfoDetails({super.key});
@@ -36,7 +37,9 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
   FocusNode heightNode = FocusNode();
   FocusNode weightNode = FocusNode();
   FocusNode typeNode = FocusNode();
-
+  // ignore: non_constant_identifier_names
+  FocusNode FContact = FocusNode();
+  FocusNode sContact = FocusNode();
   Map<String, dynamic>? tokenData;
   late SharedPreferences _prefs;
   String? _token;
@@ -92,7 +95,7 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
 
     if (_token != null) {
       Map<String, dynamic> decodedToken = parseJwt(_token!);
-      // ignore: avoid_print
+      
 
       setState(() {
         tokenData = decodedToken;
@@ -103,8 +106,9 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
         Backend.height.text = '${tokenData?['data'][6]}';
         Backend.weight.text = '${tokenData?['data'][5]}';
         Backend.type.text = '${tokenData?['data'][8]}';
-        Backend.type.text = '${tokenData?['data'][8]}';
-        time.text = '${tokenData?['data'][9]}';
+        Backend.firstContact.text = '${tokenData?['data'][10]}';
+        Backend.SecondContact.text = '${tokenData?['data'][11]}';
+        Backend.time.text = '${tokenData?['data'][9]}';
       });
     }
   }
@@ -151,11 +155,14 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
     final String heightt = Backend.height.text.trim();
     final String phonee = Backend.phone.text.trim();
     final String typee = Backend.type.text.trim();
+    final String fcontactt = Backend.firstContact.text.trim();
+    final String scontactt = Backend.SecondContact.text.trim();
+
     // refresh token
 
     try {
       final response = await http.patch(
-        Uri.parse('https://adc-8aar.onrender.com/updateinfo'),
+        Uri.parse('https://adc-9v8m.onrender.com/updateinfo'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           'firstName': fnamee,
@@ -165,6 +172,8 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
           'weight': weightt,
           'height': heightt,
           'diabetic_type': typee,
+          'firstContact': fcontactt,
+          'secondContact': scontactt,
           'token': _token
         }),
       );
@@ -176,26 +185,16 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
 
         // Save token to shared preferences
         await _prefs.setString('token', token);
-        // ignore: avoid_print
-        print('Token: $_token');
-        // ignore: avoid_print
-        print('update successful');
-        // ignore: avoid_print
+        
 
         // Show success message or perform further actions
       } else {
         isLoading = false;
         setState(() {});
-        // Update failed
-        // ignore: avoid_print
-        print('Update failed. Status code: ${response.statusCode}');
-        // Show error message or handle the failure accordingly
+        
       }
+    // ignore: empty_catches
     } catch (e) {
-      // Handle connection error
-      // ignore: avoid_print
-      print('Failed to connect to the server: $e');
-      // Show error message to the user
     }
   }
 
@@ -269,14 +268,23 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
                   ProfileEditForm(
                     fnameNode: fnameNode,
                     personalKey: personalKey,
-                    
                     fname: Backend.fname,
                     lname: Backend.lname,
                     genderrr: Backend.genderrr,
                     phone: Backend.phone,
                     height: Backend.height,
                     weight: Backend.weight,
-                    type: Backend.type, lnameNode: lnameNode, genderNode: genderNode, phoneNode: phoneNode, weightNode: weightNode, heightNode: heightNode, typeNode: typeNode,
+                    type: Backend.type,
+                    lnameNode: lnameNode,
+                    genderNode: genderNode,
+                    phoneNode: phoneNode,
+                    weightNode: weightNode,
+                    heightNode: heightNode,
+                    typeNode: typeNode,
+                    SecondContactNode: sContact,
+                    firstContactNode: FContact,
+                    firstContact: Backend.firstContact,
+                    SecondContact: Backend.SecondContact,
                   ),
                   const SizedBox(height: 100),
                   BlueButton(
@@ -310,115 +318,3 @@ class _ProfileInfoDetailsState extends State<ProfileInfoDetails> {
   }
 }
 
-class ProfileEditForm extends StatelessWidget {
-  const ProfileEditForm({
-    super.key,
-    required this.personalKey,
-    required this.fname,
-    required this.lname,
-    required this.genderrr,
-    required this.phone,
-    required this.height,
-    required this.weight,
-    required this.type,
-    required this.fnameNode,
-    required this.lnameNode,
-    required this.genderNode,
-    required this.phoneNode,
-    required this.weightNode,
-    required this.heightNode,
-    required this.typeNode,
-  });
-
-  final GlobalKey<FormState> personalKey;
-  final FocusNode lnameNode;
-  final FocusNode fnameNode;
-  final FocusNode genderNode;
-  final FocusNode phoneNode;
-  final FocusNode weightNode;
-  final FocusNode heightNode;
-  final FocusNode typeNode;
-
-  final TextEditingController fname;
-  final TextEditingController lname;
-  final TextEditingController genderrr;
-  final TextEditingController phone;
-  final TextEditingController height;
-  final TextEditingController weight;
-  final TextEditingController type;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-        key: personalKey,
-        child: Column(
-          children: [
-            RowOfEditProfile(
-              focusNode: fnameNode,
-              label: "First Name ",
-              text: fname,
-            ),
-            const Dividerr(),
-            RowOfEditProfile(
-                focusNode: lnameNode, label: "Last Name ", text: lname),
-            const Dividerr(),
-            RowOfEditProfile(
-              focusNode: genderNode,
-              label: "Gender ",
-              text: genderrr,
-            ),
-            const Dividerr(),
-            RowOfEditProfile(
-              focusNode: phoneNode,
-              label: "Phone ",
-              text: phone,
-            ),
-            const Dividerr(),
-            RowOfEditProfile(
-              focusNode: heightNode,
-              label: "Height ",
-              text: height,
-            ),
-            const Dividerr(),
-            RowOfEditProfile(
-              focusNode: weightNode,
-              label: "Weight ",
-              text: weight,
-            ),
-            const Dividerr(),
-            RowOfEditProfile(
-              focusNode: typeNode,
-              label: "Type of Glucose Level",
-              text: type,
-            ),
-            const SizedBox(height: 50),
-            const Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "Important Contacts",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            const SizedBox(height: 20),
-            RowOfEditProfile(
-              focusNode: typeNode,
-              label: "First contact ",
-              text: weight,
-            ),
-            const Dividerr(),
-            RowOfEditProfile(
-              focusNode: typeNode,
-              label: "Second contact ",
-              text: weight,
-            ),
-            const Dividerr(),
-            RowOfEditProfile(
-              focusNode: typeNode,
-              label: "Ambulance",
-              text: weight,
-            ),
-          ],
-        ));
-  }
-}

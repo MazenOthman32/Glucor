@@ -68,8 +68,6 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
                 child: BlueButton(
                   buttonName: "Verify",
                   fn: () {
-                    // ignore: avoid_print
-                    print('email from verification $email');
                     Navigator.pushNamed(context, SetProfile.routeName, arguments: email);
                   },
                 ),

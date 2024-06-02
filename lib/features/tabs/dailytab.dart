@@ -118,23 +118,18 @@ class _DailyTabsState extends State<DailyTabs>
             ),
             All_Details(
               size: MediaQuery.of(context).size,
-              oldreading: 9,
             ),
             All_Details(
               size: MediaQuery.of(context).size,
-              oldreading: 10,
             ),
             All_Details(
               size: MediaQuery.of(context).size,
-              oldreading: 11,
             ),
             All_Details(
               size: MediaQuery.of(context).size,
-              oldreading: 12,
             ),
             All_Details(
               size: MediaQuery.of(context).size,
-              oldreading: 13,
             ),
             All_Details(
               size: MediaQuery.of(context).size,

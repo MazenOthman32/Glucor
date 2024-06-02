@@ -1,14 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gradution_project/core/util/constant.dart';
-
 class MessageModel {
-
-  final String message;
   final String id;
+  final String message;
   final Timestamp time;
-  
-  MessageModel(this.message, this.id ,this.time);
-  factory MessageModel.fromJson(jsonData) {
-    return MessageModel(jsonData[kMessage], jsonData['id'],jsonData[kCreatedAt] );
+  final String type;
+
+  MessageModel({
+    required this.id,
+    required this.message,
+    required this.time,
+    required this.type,
+  });
+
+  factory MessageModel.fromJson(DocumentSnapshot doc) {
+    return MessageModel(
+      id: doc['id'],
+      message: doc['message'],
+      time: doc['createdAt'],
+      type: doc['type'] ?? 'text', // Default to 'text' if 'type' field is not present
+    );
   }
 }

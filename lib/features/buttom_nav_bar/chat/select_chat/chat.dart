@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gradution_project/features/testying/chat_model.dart';
+import 'package:gradution_project/features/testying/messages_model/chat_model.dart';
 
 import 'chat_detail.dart';
 

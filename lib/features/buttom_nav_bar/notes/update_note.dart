@@ -89,17 +89,14 @@ class _UpdateNoteState extends State<UpdateNote> {
                 buttonName: 'update note',
                 opacity: 0.2,
                 fn: () async {
+                  // ignore: unused_local_variable
                   int response = await sqldata.updateData('''
                             UPDATE notes SET 
                             content = "${content.text}" ,
                             title = "${title.text}"
                             WHERE id = ${widget.id}
                       ''');
-
-                  // ignore: unnecessary_brace_in_string_interps, avoid_print
-                  print("${response}");
                   setState(() {});
-                  // ignore: use_build_context_synchronously
                   Navigator.pushNamedAndRemoveUntil(
                       // ignore: use_build_context_synchronously
                       context,

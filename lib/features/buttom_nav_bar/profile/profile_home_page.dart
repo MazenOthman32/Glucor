@@ -129,8 +129,7 @@ class ProfileHomePage extends StatelessWidget {
                                               await SharedPreferences
                                                   .getInstance();
                                           await prefs.remove('token');
-                                          // ignore: avoid_print
-                                          print('logout Successfully!');
+                                          
                                           // ignore: use_build_context_synchronously
                                           Navigator.of(context)
                                               .pushReplacementNamed(

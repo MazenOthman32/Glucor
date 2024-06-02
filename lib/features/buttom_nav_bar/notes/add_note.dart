@@ -78,14 +78,12 @@ class _AddNoteState extends State<AddNote> {
                 buttonName: 'Add note',
                 opacity: 0.2,
                 fn: () async {
+                  // ignore: unused_local_variable
                   int response = await sqldata.insertData('''
               INSERT INTO notes (`title`,`content`) VALUES ("${title.text}","${content.text}")
               
               ''');
-                  // ignore: avoid_print
-                  print("${response}");
                   setState(() {});
-                  // ignore: use_build_context_synchronously
                   Navigator.pushNamedAndRemoveUntil(
                       // ignore: use_build_context_synchronously
                       context,
