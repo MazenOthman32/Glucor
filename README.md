@@ -91,4 +91,4 @@ build/app/outputs/flutter-apk/app-release.apk
 ## Contact
 For any questions or feedback, please reach out to:
 
-Email: georgeesbergen50@gmail.com
+Email: MazenOthman320@gmail.com
