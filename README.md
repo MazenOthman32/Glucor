@@ -17,7 +17,10 @@
 
 ## Description
 
-The Glucose Monitoring Application is a comprehensive health management tool designed to work with smartwatches. It monitors glucose levels, heart rate, and other personal health data, offering real-time alerts and a range of interactive features. The app supports seamless communication with healthcare professionals and provides a detailed overview of your health metrics.
+An Integrated IOT system designed to continuously monitor blood glucose levels non-invasively.
+The system consists of a custom-built medical device, a mobile application for real-time monitoring, and a landing page for user engagement.
+The Glucose Monitoring Application is a comprehensive health management tool designed to work with smartwatches. 
+It monitors glucose levels, heart rate, and other personal health data, offering real-time alerts and a range of interactive features. The app supports seamless communication with healthcare professionals and provides a detailed overview of your health metrics.
 
 
 
